@@ -1,0 +1,177 @@
+body {
+            background-color: #E6B9A6 !important;
+        }
+
+        .card {
+            background-color: #EEEDEB !important;
+            border-radius: 8px;
+            border-color: black;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+            border: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .card-content {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            margin: 0;
+        }
+
+        .card-description {
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .text-warning .fas.fa-star {
+            color: rgb(173, 173, 10);
+
+        }
+
+        .text-warning .fas.fa-star-half {
+            color: rgb(173, 173, 10);
+
+        }
+
+        .text-warning .far.fa-star {
+            color: rgb(173, 173, 10);
+
+        }
+
+        .crt {
+            display: flex;
+            justify-content: flex-start;
+            margin-top: 5%;
+        }
+
+        .card-text {
+            color: rgb(218, 0, 0);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        p.card-text.text-muted {
+            color: green !important;
+            text-decoration: line-through;
+        }
+
+        .card-body .fake {
+            display: flex;
+            gap: 1vw;
+        }
+
+        .pagination {
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination .page-item {
+            display: inline-block;
+        }
+
+        .pagination .page-item.disabled .page-link {
+            color: #6c757d;
+            pointer-events: none;
+            background-color: #d69191;
+            border-color: #dee2e6;
+        }
+
+        .pagination .page-item.disabled .page-link:hover {
+            background-color: #f8faf8;
+            border-color: #dee2e6;
+        }
+
+        .pagination .page-item.active .page-link {
+            z-index: 1;
+            color: #fff;
+            background-color: #f56e6e;
+            border-color: #000000;
+        }
+
+        .pagination .page-link {
+            position: relative;
+            display: block;
+            padding: 0.5rem 0.75rem;
+            margin-left: -1px;
+            line-height: 1.25;
+            color: #ffffff;
+            background-color: #939185;
+            border: 1px solid #dee2e6;
+        }
+
+        .pagination .page-link:hover {
+            z-index: 2;
+            color: #0056b3;
+            text-decoration: none;
+            /* background-color: #000000; */
+            background-color: #d69191;
+            border-color: #dee2e6;
+        }
+
+        .like-heart {
+            color: gray;
+            margin-left: 15vw;
+            cursor: pointer;
+        }
+
+        .like-heart.favorite-added {
+            color: red;
+        }
+
+        .custom-search {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 50px;
+            margin-top: 5vh
+        }
+
+        .custom-search form {
+            display: flex;
+            align-items: center;
+        }
+
+        .custom-search input[type="search"] {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 30px;
+            background-color: #ffffff;
+            border-color: rgb(243, 133, 150);
+        }
+
+        .custom-search button[type="submit"] {
+            background-color: #ffffff;
+            border-color: rgb(243, 133, 150);
+            color: #000000;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1vh;
+        }
+
+        .button .buton {
+            background-color: #fc7f7f;
+            border-radius: 30px;
+            border-color: #ffffff;
+            color: #ffffff;
+        }

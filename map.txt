@@ -1,0 +1,64 @@
+<head>
+<div class="col-lg-4 mb-4">
+                <div class="map-container">
+                    <button onclick="updateMapWithCurrentLocation()" id="location"
+                        class="btn btn-sm btn-dark mt-3 mb-2">Get Current
+                        Location</button>
+                    <input type="hidden" id="address-input" name="address">
+
+                    <iframe id="mapFrame"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d18805934.195410665!2d68.14712!3d23.4733243!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39e7b9b66b94d79b%3A0x5391010bf0beb02a!2sIndia!5e0!3m2!1sen!2sus!4v1649442680542!5m2!1sen!2sus"
+                        allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+</head>
+
+<script>
+    function showPosition(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        document.getElementById('mapFrame').src = `https://www.openstreetmap.org/export/embed.html?bbox=${longitude - 0.01},${latitude - 0.01},${longitude + 0.01},${latitude + 0.01}&layer=mapnik&marker=${latitude},${longitude}`;
+
+        // Fetch the address using OpenStreetMap Nominatim API
+        fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json&accept-language=en`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                if (data && data.address) {
+                    // Extract relevant components with fallbacks
+                    const road = data.address.road || '';
+                    const neighborhood = data.address.neighborhood || '';
+                    const city = data.address.city || data.address.town || data.address.village || '';
+                    const state = data.address.state || '';
+                    const country = data.address.country || '';
+
+                    // Concatenate components
+                    let addressParts = [];
+                    if (neighborhood) addressParts.push(neighborhood);
+                    if (road) addressParts.push(road);
+                    if (city) addressParts.push(city);
+                    if (state) addressParts.push(state);
+                    if (country) addressParts.push(country);
+
+                    // Create the final address string
+                    const address = addressParts.join(', ').trim();
+                    document.getElementById('address-input').value = address || 'Location not found';
+
+                    // Set the autocomplete input value to the fetched address
+                    document.getElementById('autocomplete').value = address; // Auto-fill the autocomplete field
+
+                    // Update the map to show the exact location retrieved with zoom level
+                    const locationMapUrl = `https://maps.google.com/maps?q=${latitude},${longitude}&z=15&output=embed`;
+                    mapFrame.src = locationMapUrl; // Update the map to show the fetched location
+                } else {
+                    console.error('No address found for this location.');
+                    document.getElementById('address-input').value = 'Location not found';
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching address:', error);
+                document.getElementById('address-input').value = 'Error fetching address';
+            });
+    }
+</script>
