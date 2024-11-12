@@ -179,7 +179,7 @@
             form.appendChild(hiddenInput);
             form.submit();
 
-            alert('Order placed successfully!');
+            // alert('Order placed successfully!');
         }
     </script>
 </body>

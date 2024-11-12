@@ -8,6 +8,7 @@
     <link rel="icon" type="image/x-icon" href="/storage/images/foods/burger.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         body {
             overflow-x: hidden;
@@ -134,11 +135,11 @@
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/profile">Profile</a></li>
                             <li>
-                                <form method="POST" action="{{ route('logout') }}">
+                                <form method="POST" action="{{ route('logout') }}" id="logout-form">
                                     @csrf
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); this.closest('form').submit();">{{ __('Logout')
-                                        }}</a>
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="confirmLogout(event)">
+                                        <i class="bi bi-box-arrow-left"></i> {{ __('Logout') }}
+                                    </a>
                                 </form>
                             </li>
                         </ul>
@@ -187,6 +188,22 @@
                 });
             }
         });
+        function confirmLogout(event) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: 'Are you sure you want to log out?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, log out'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('logout-form').submit();
+                }
+            });
+        }
     </script>
 </body>
 

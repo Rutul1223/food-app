@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/remove-from-cart/{id}', [CartController::class, 'removeFromCart'])->name('remove-from-cart');
     Route::get('/cart/checkout', [CartController::class, "checkout"])->name('cart.checkout');
     Route::get('/payment', [CartController::class, "payment"])->name("payment.payment");
-
+    Route::get('/payment/success', [OrderController::class, 'paymentSuccess'])->name('payment.success');
 
     Route::post('/process-order', [OrderController::class, 'store'])->name('process.order');
     Route::get('/orders', [OrderController::class, "view"])->name('order.view');

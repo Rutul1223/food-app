@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Admin</title>
     <link rel="icon" type="image/x-icon" href="/storage/images/foods/burger.png">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         @import url(https://unpkg.com/@webpixels/css@1.1.5/dist/index.css);
         @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css");
@@ -159,15 +160,18 @@
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('profile.edit') }}">
-                                <i class="bi bi-person-circle"></i> Profile
+                                <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile Image" class="rounded-circle my-2" style="width: 30px; height: 30px;">&nbsp;Profile
                             </a>
                         </li>
                         <li class="nav-item">
-                            <form method="POST" action="{{ route('logout') }}">
+                            <form method="POST" action="{{ route('logout') }}" id="logout-form">
                                 @csrf
-                                <a class="nav-link" href="{{ route('logout') }}"
+                                {{-- <a class="nav-link" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); this.closest('form').submit();"><i
                                         class="bi bi-box-arrow-left"></i> {{ __('Logout') }}
+                                </a> --}}
+                                <a class="nav-link" href="{{ route('logout') }}" onclick="confirmLogout(event)">
+                                    <i class="bi bi-box-arrow-left"></i> {{ __('Logout') }}
                                 </a>
                             </form>
                         </li>
@@ -678,6 +682,22 @@
             } else {
                 badge.textContent = ''; // Clear badge text if no pending orders
             }
+        }
+        function confirmLogout(event) {
+            event.preventDefault();
+
+            Swal.fire({
+                title: 'Are you sure you want to log out?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, log out'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('logout-form').submit();
+                }
+            });
         }
     </script>
 </body>
