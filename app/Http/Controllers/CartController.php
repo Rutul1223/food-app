@@ -25,11 +25,14 @@ class CartController extends Controller
                 'food_id' => $foodId,
                 'quantity' => 1
             ]);
+            // Get the updated cart count
+            $cartCount = Cart::where('user_id', $userId)->count();
 
             // Return a JSON response
             return response()->json([
                 'success' => true,
                 'message' => 'Item added to cart!',
+                'cartCount' => $cartCount,
             ]);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -53,9 +56,12 @@ class CartController extends Controller
         try {
             $cartItem = Cart::findOrFail($id);
             $cartItem->delete();
+            // Get the updated cart count
+            $cartCount = Cart::where('user_id', auth()->user()->id)->count();
             return response()->json([
                 'success' => true,
                 'message' => 'Item removed from cart.',
+                'cartCount' => $cartCount,
             ]);
         } catch (\Exception $e) {
             Log::error($e->getMessage());

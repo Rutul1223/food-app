@@ -51,6 +51,7 @@ class OrderController extends Controller
         $orders = Order::where('user_id', $userId)
             ->with('user')
             ->orderBy('created_at', 'desc')
+            ->take(5)
             ->get();
         return view("order.view", compact('orders'));
     }

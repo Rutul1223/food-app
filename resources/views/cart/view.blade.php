@@ -37,6 +37,30 @@
             margin-left: 1.1vw;
             color: #2F3645;
         }
+        .savings-message {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            background-color: #28a745; /* Green background for better visibility */
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none; /* Initially hidden */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow for better visibility */
+            animation: slideIn 0.5s ease-out; /* Optional animation for smooth appearance */
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
 
         form button {
             margin-left: 1vw;
@@ -69,6 +93,7 @@
     @include('layouts.navbar', ['cartItemCount' => $carts->count()])
     <div class="container mt-5">
         <div class="row justify-content-center">
+            <div class="savings-message" id="savings-message">You saved: ₹<span id="saved-amount">0.00</span></div>
             <div class="col-md-8">
                 <div>
                     @foreach ($carts as $cart)
@@ -81,8 +106,11 @@
                                 class="d-flex flex-column flex-md-row align-items-center justify-content-between ms-md-3 mt-3 mt-md-0">
                                 <div class="cont">
                                     <h2 class="card-title">{{ $cart->food->name }}</h2>
-                                    <h3>₹<span id="price-{{ $cart->id }}"
-                                            data-original-price="{{ $cart->food->price }}">{{ $cart->food->price }}</span>
+                                    <h3>
+                                        <span class="text-muted" style="text-decoration: line-through; margin-right: 5px; font-weight:350">
+                                            ₹{{ $cart->food->price + 50 }}
+                                        </span>
+                                        ₹<span id="price-{{ $cart->id }}" data-original-price="{{ $cart->food->price }}">{{ $cart->food->price }}</span>
                                     </h3>
                                     <div class="quantity-controls">
                                         <button type="button" class="btn1 btn-sm"
@@ -135,38 +163,46 @@
             let newPrice = (originalPrice * quantity).toFixed(2);
             document.getElementById('price-' + cartId).innerText = newPrice;
             updateTotalPrice();
-            updateQuantity(cartId, quantity); // Add this line to update quantity in localStorage
+            updateQuantity(cartId, quantity);
         }
 
         function updateTotalPrice() {
             let totalPrice = 0;
-            let cartIds = document.querySelectorAll('[id^="price-"]');
-            cartIds.forEach(function(element) {
-                let price = parseFloat(element.innerText);
-                totalPrice += price;
+            let originalTotalPrice = 0;
+
+            let cartItems = document.querySelectorAll('[id^="price-"]');
+            cartItems.forEach(function(element) {
+                let originalPrice = parseFloat(element.getAttribute('data-original-price'));
+                let quantity = parseInt(document.getElementById('quantity-' + element.id.split('-')[1]).value);
+
+                originalTotalPrice += (originalPrice + 50) * quantity; // Summing the original (crossed-out) prices
+                totalPrice += originalPrice * quantity; // Summing the discounted prices
             });
+
             document.getElementById('total-price').innerText = totalPrice.toFixed(2);
+
+            // Calculate saved amount and update the display
+            let savedAmount = originalTotalPrice - totalPrice;
+            document.getElementById('saved-amount').innerText = savedAmount.toFixed(2);
+
+            // Show or hide the savings message based on the amount saved
+            if (savedAmount > 0) {
+                document.getElementById('savings-message').style.display = 'block';
+            } else {
+                document.getElementById('savings-message').style.display = 'none';
+            }
+
             localStorage.setItem('totalPrice', totalPrice.toFixed(2));
         }
 
-        function updateQuantity(cartId, quantity) {
-            localStorage.setItem('quantity-' + cartId, quantity); // Store quantity in localStorage
-        }
         window.onload = function() {
             updateTotalPrice();
-            updateQuantities(); // Add this line to update quantities on page load
+            updateQuantities();
         }
 
-        function updateQuantities() {
-            let cartIds = document.querySelectorAll('[id^="quantity-"]');
-            cartIds.forEach(function(element) {
-                let cartId = element.id.split('-')[1];
-                let quantity = localStorage.getItem('quantity-' + cartId);
-                if (quantity) {
-                    element.value = quantity;
-                    updatePrice(cartId); // Update the price based on the retrieved quantity
-                }
-            });
+        function updateQuantity(cartId, quantity) {
+            // Save quantity to local storage
+            localStorage.setItem('quantity-' + cartId, quantity);
         }
 
         function increaseQuantity(cartId) {
@@ -174,6 +210,7 @@
             let quantity = parseInt(quantityElement.value);
             quantity++;
             quantityElement.value = quantity;
+            updateQuantity(cartId, quantity);  // Store the updated quantity
             updatePrice(cartId);
         }
 
@@ -183,6 +220,7 @@
             if (quantity > 1) {
                 quantity--;
                 quantityElement.value = quantity;
+                updateQuantity(cartId, quantity);  // Store the updated quantity
                 updatePrice(cartId);
             }
         }
@@ -221,7 +259,13 @@
                                     timer: 2000,
                                     timerProgressBar: true,
                                 });
+                                // Remove the cart item from the DOM immediately after success
+                                form.closest('.food-details-container').remove();
 
+                                updateTotalPrice();
+                                setTimeout(() => {
+                                    location.reload();  // This will reload the page
+                                }, 2000);
                                 // Optionally, remove the item from the DOM
                                 // Example: form.closest('.cart-item').remove(); // Adjust selector as needed
                             } else {

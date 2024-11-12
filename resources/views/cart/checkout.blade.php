@@ -35,7 +35,9 @@
                             <div class="bill-item">
                                 <div class="item-name">{{ $cart->food->name }}</div>
                                 <div class="item-quantity"><span id="quantity-{{ $cart->id }}"></span></div> <!-- Updated line for quantity -->
-                                <div class="item-price">₹{{ $cart->food->price }}</div>
+                                <div class="item-price" id="item-price-{{ $cart->id }}">
+                                    ₹{{ $cart->food->price }} x {{ $cart->quantity }} = ₹{{ $cart->food->price * $cart->quantity }}
+                                </div>
                                 @php
                                 $totalPrice += $cart->quantity * $cart->food->price;
                                 @endphp
@@ -61,22 +63,35 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const totalPrice = localStorage.getItem('totalPrice');
-            if (totalPrice) {
-                document.getElementById('total-amount').innerText = totalPrice;
-            } else {
-                document.getElementById('total-amount').innerText = '0.00';
-            }
+         document.addEventListener('DOMContentLoaded', (event) => {
+            let totalPrice = 0;
 
-            let cartIds = document.querySelectorAll('[id^="quantity-"]');
-            cartIds.forEach(function (element) {
-                let cartId = element.id.split('-')[1];
-                let quantity = localStorage.getItem('quantity-' + cartId);
-                if (quantity) {
-                    element.innerText = quantity;
+            // Loop through each cart item
+            @foreach ($carts as $cart)
+                @if ($cart->user_id == auth()->id())
+                {
+                    let cartId = "{{ $cart->id }}";
+                    let price = {{ $cart->food->price }};
+                    let quantity = localStorage.getItem('quantity-' + cartId) || {{ $cart->quantity }};
+
+                    // Update quantity displayed
+                    document.getElementById('quantity-' + cartId).innerText = quantity;
+
+                    // Update the price displayed
+                    let itemTotal = price * quantity;
+                    document.getElementById('item-price-' + cartId).innerText = '₹' + price + ' x ' + quantity + ' = ₹' + itemTotal;
+
+                    // Add to total price
+                    totalPrice += itemTotal;
                 }
-            });
+                @endif
+            @endforeach
+
+            // Update the total amount
+            document.getElementById('total-amount').innerText = '₹' + totalPrice.toFixed(2);
+
+            // Optionally, store the updated total in localStorage for later use (if needed)
+            localStorage.setItem('totalPrice', totalPrice.toFixed(2));
         });
     </script>
 </body>

@@ -39,7 +39,6 @@
             text-align: center;
             margin-bottom: 20px;
         }
-
         /* Styles for suggestions */
         .suggestions {
             position: absolute;

@@ -18,23 +18,23 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        body {
+       /* body {
             background-color: #E6B9A6 !important;
             font-family: Arial, sans-serif;
             color: #333;
-        }
+        }*/
 
 
         .card {
-            background-color: #939185 !important;
+            /*background-color: #939185 !important;*/
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
             border: none;
         }
 
         .card-header {
-            background-color: #333 !important;
-            color: #b8adad !important;
+            /*background-color: #333 !important;*/
+            /*color: #b8adad !important;*/
             padding: 12px 15px;
             border-bottom: none;
             display: flex;
@@ -78,10 +78,13 @@
         }
 
         .bg-pending {
-            color: yellow !important;
+            color: rgb(233, 233, 20) !important;
         }
         .created-at {
             margin-left: auto; /* Push created date to the right */
+        }
+        .card.link {
+            text-decoration: none;
         }
     </style>
 </head>
@@ -95,12 +98,12 @@
             {{-- <h2 class="text-center py-2">Order Status</h2> --}}
             <div id="appStaper" class="stepper"></div>
             @foreach ($orders as $order)
-                <div class="card">
+                <a href="{{ route('order.order_detail', ['id' => $order->id]) }}" class="card link">
                     <div class="card-header">
-                        <a href="{{ route('order.order_detail', ['id' => $order->id]) }}" class="link">Order
-                            #{{ $order->id }}</a>
+                        Order#{{ $order->id }}
                             <span class="created-at">{{ $order->created_at }}</span>
                     </div>
+
                     <div class="card-body">
                         <div class="order-info">
                             <div class="total-amount">Total Amount: ₹ {{ $order->total_amount }}</div>
@@ -111,7 +114,7 @@
                                 </span></div>
                         </div>
                     </div>
-                </div>
+                </a>
             @endforeach
         @else
             <div class="card">

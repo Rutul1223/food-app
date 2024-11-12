@@ -52,7 +52,7 @@ class CommentController extends Controller
                 $comments = comment::with('sender')
                     ->where('order_id', $orderId)
                     ->where('sender_id', $user->id) // Only fetch their own comments
-                    ->orderBy('created_at', 'desc')
+                    ->orderBy('created_at', 'asc')
                     ->get();
             }
 

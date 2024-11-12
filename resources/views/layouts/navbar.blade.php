@@ -68,7 +68,7 @@
             bottom: -3px;
             width: 0;
             height: 2px;
-            background-color: rgb(241, 202, 202);
+            background-color: rgb(0, 0, 0);
             transition: width 0.3s ease;
         }
 
@@ -145,7 +145,7 @@
                         @guest
                         @else
                     <li class="nav-item"><a class="nav-link" href="{{ route('cart.view') }}"
-                            style="color: #9c6060; text-decoration:none"><i style='font-size:20px'
+                            style="color: #000000; text-decoration:none"><i style='font-size:20px'
                                 class='fas'>&#xf07a;</i>
                             @if($cartCount > 0)
                             <span class="badge bg-danger">{{ $cartCount }}</span>
@@ -153,7 +153,7 @@
                         </a></li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('food.fav') }}"
-                            style="color: rgb(95, 35, 35); text-decoration:none">
+                            style="color: rgb(168, 20, 20); text-decoration:none">
                             <i style='font-size:20px' class='fas fa-heart fav'></i>
                         </a>
                     </li>
@@ -174,6 +174,18 @@
                     this.classList.add('active');
                 });
             });
+            const addToCartBtn = document.querySelector('.add-to-cart-btn');
+
+            if (addToCartBtn) {
+                addToCartBtn.addEventListener('click', function () {
+                    // Perform any additional logic for adding to the cart here
+
+                    // Wait for 3 seconds, then refresh the page
+                    setTimeout(function() {
+                        location.reload();  // Refresh the page
+                    }, 2000);
+                });
+            }
         });
     </script>
 </body>

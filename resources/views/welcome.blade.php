@@ -66,7 +66,7 @@
                                     @csrf
                                     <input type="hidden" name="food_id" value="{{ $food->id }}">
                                     <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="btn btn-danger">Add To Cart <i
+                                    <button type="submit" class="btn btn-danger add-to-cart-btn">Add To Cart <i
                                             class="fas">&#xf07a;</i></button>&nbsp;
                                 </form>
                                 <a href="{{ route('food.show', $food->id) }}" class="btn btn-dark">View</a>
