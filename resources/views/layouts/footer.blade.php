@@ -78,9 +78,8 @@
                 <hr>
                 <p><i class="fas fa-copyright"></i> 2024 Created By <span class="text-black font-semibold">Rutul Prajapati.</span> All rights reserved.</p>
                 <div class=>
-                    <i style='font-size:24px' class='fab'>&#xf16d;</i>&nbsp;&nbsp;
-                    <i style='font-size:24px' class='fab'>&#xf09a;</i>&nbsp;&nbsp;
-                    <i style='font-size:24px' class='fab'>&#xf09b;</i>
+                    <a href="https://www.instagram.com/rutul_1223" style="text-decoration:none; color:inherit;"><i style='font-size:24px' class='fab'>&#xf16d;</i>&nbsp;&nbsp;</a>
+                    <a href="https://www.linkedin.com/in/rutul-prajapati/" style="text-decoration:none; color:inherit;"> <i style='font-size:24px' class='fab'>&#xf0e1;</i>&nbsp;&nbsp;</a>
                 </div>
 
             </div>

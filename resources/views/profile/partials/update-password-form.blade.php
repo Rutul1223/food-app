@@ -15,20 +15,20 @@
 
         <div>
             <x-input-label for="update_password_current_password" :value="__('Current Password')" class="text-black" />
-            <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+            <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full input-validation" autocomplete="current-password" />
+            <div id="update_password_current_password-error" class="text-sm text-red-500 hidden mt-2"></div>
         </div>
 
         <div>
             <x-input-label for="update_password_password" :value="__('New Password')" class="text-black" />
-            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
+            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full input-validation" autocomplete="new-password" />
+            <div id="password-error" class="text-sm text-red-500 hidden mt-2"></div>
         </div>
 
         <div>
             <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" class="text-black" />
-            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
+            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full input-validation" autocomplete="new-password" />
+            <div id="password_confirmation-error" class="text-sm text-red-500 hidden mt-2"></div>
         </div>
 
         <div class="flex items-center gap-4">

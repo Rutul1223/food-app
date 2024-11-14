@@ -38,9 +38,10 @@ class ProfileController extends Controller
     }
 
     // Update the user's address and other fields
-    $user->fill($request->validated() + [
-        'address' => $request->address,
-    ]);
+    $user->fill($request->except(['image']));
+
+    // Ensure the address is updated, but prevent overwriting the image
+    $user->address = $request->address;
 
     // Check if the email is updated and reset email verification if necessary
     if ($user->isDirty('email')) {
@@ -49,6 +50,7 @@ class ProfileController extends Controller
 
     // Save the updated user information
     $user->save();
+    // dd($user->image);
 
     return Redirect::route('profile.edit')->with('status', 'profile-updated');
 }
