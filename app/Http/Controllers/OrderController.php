@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
+use Stripe\Charge;
+use Stripe\Stripe;
 
 class OrderController extends Controller
 {
@@ -26,6 +28,16 @@ class OrderController extends Controller
             $request->validate([
                 'total_amount' => 'required|numeric',
                 'address' => 'required|string',
+                'stripeToken' => 'required|string',
+            ]);
+            // Set your Stripe secret key
+            Stripe::setApiKey(env('STRIPE_SECRET'));
+            // Create the charge
+            $charge = Charge::create([
+                'amount' => $request->input('total_amount') * 100, // Convert to cents
+                'currency' => 'inr', // Assuming INR, adjust as needed
+                'source' => $request->input('stripeToken'),
+                'description' => 'food-app order Payment',
             ]);
             $order = new Order();
             $order->total_amount = $request->input('total_amount');

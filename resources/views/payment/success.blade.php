@@ -12,7 +12,7 @@
 
         <div class="card-body">
             <p><strong>Order ID:</strong> {{ $order->id }}</p>
-            <p><strong>Payment Method:</strong> {{ $order->payment_method ?? 'Not specified' }}</p>
+            <p><strong>Payment Method:</strong> {{ $order->payment_method ?? 'Credit and debit cards' }}</p>
             <p><strong>Total Amount:</strong> ₹{{ number_format($order->total_amount, 2) }}</p>
             <p><strong>Address:</strong> {{ $order->address }}</p>
             <p><strong>Order Status:</strong> {{ $order->status ?? 'Pending' }}</p>
