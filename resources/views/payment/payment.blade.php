@@ -12,7 +12,6 @@
         body {
             background-color: #E6B9A6;
         }
-
         .checkout-form {
             background-color: #EEEDEB;
             padding: 20px;
@@ -20,19 +19,16 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
         }
-
         .checkout-header {
             font-size: 20px;
             font-weight: bold;
             margin-bottom: 15px;
             text-align: center;
         }
-
         .form-control,
         .btn {
             border-radius: 20px;
         }
-
         .total-price {
             font-size: 18px;
             font-weight: bold;
@@ -50,14 +46,26 @@
             overflow-y: auto;
             border-radius: 5px;
         }
-
         .suggestion-item {
             padding: 10px;
             cursor: pointer;
         }
-
         .suggestion-item:hover {
             background-color: #f0f0f0;
+        }
+        /* Style for Stripe card element */
+        #card-element {
+            background-color: #FFF;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        #card-errors {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -70,18 +78,22 @@
                     <div class="checkout-header">Payment Section</div>
                     <div class="list-group-item">Total Amount: <b>₹<span id="total-amount">0.00</span></b></div>
                     <hr>
-                    <form id="payment-form" method="POST" action="{{ route('process.order') }}" onsubmit="return handleFormSubmit()">
+                    <form id="payment-form" method="POST" action="{{ route('process.order') }}"
+                        onsubmit="return handleFormSubmit()">
                         @csrf
                         <div class="mb-3">
                             <label for="total_amount" class="form-label">Total Amount</label>
-                            <input type="text" class="form-control" id="total_amount" name="total_amount" placeholder="Enter total amount" readonly>
+                            <input type="text" class="form-control" id="total_amount" name="total_amount"
+                                placeholder="Enter total amount" readonly>
                         </div>
                         <div class="mb-3 position-relative">
                             <label for="autocomplete" class="form-label">Address</label>
-                            <input type="text" class="form-control" id="autocomplete" name="address" placeholder="Enter address" required autocomplete="off">
+                            <input type="text" class="form-control" id="autocomplete" name="address"
+                                placeholder="Enter address" required autocomplete="off">
                             <div id="suggestions" class="suggestions" style="display: none;"></div>
                         </div>
                         <div class="mb-3">
+                            <label for="details" class="card-details">Card Details</label>
                             <div id="card-element"></div>
                             <div id="card-errors" role="alert"></div>
                         </div>
@@ -105,39 +117,41 @@
             const suggestionsContainer = document.getElementById('suggestions');
 
             autocompleteInput.addEventListener('input', function() {
-    const query = this.value;
-    if (query.length > 2) {
-        fetch(`https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=${query}&limit=10`)
-            .then(response => response.json())
-            .then(data => {
-                suggestionsContainer.innerHTML = '';
-                if (data.length > 0) {
-                    suggestionsContainer.style.display = 'block';
-                    data.forEach(item => {
-                        const suggestionItem = document.createElement('div');
-                        suggestionItem.className = 'suggestion-item';
-                        suggestionItem.innerText = item.display_name;
-                        suggestionItem.onclick = function() {
-                            autocompleteInput.value = item.display_name;
+                const query = this.value;
+                if (query.length > 2) {
+                    fetch(
+                            `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=${query}&limit=10`)
+                        .then(response => response.json())
+                        .then(data => {
+                            suggestionsContainer.innerHTML = '';
+                            if (data.length > 0) {
+                                suggestionsContainer.style.display = 'block';
+                                data.forEach(item => {
+                                    const suggestionItem = document.createElement('div');
+                                    suggestionItem.className = 'suggestion-item';
+                                    suggestionItem.innerText = item.display_name;
+                                    suggestionItem.onclick = function() {
+                                        autocompleteInput.value = item.display_name;
+                                        suggestionsContainer.style.display = 'none';
+                                    };
+                                    suggestionsContainer.appendChild(suggestionItem);
+                                });
+                            } else {
+                                suggestionsContainer.style.display = 'none';
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error fetching address suggestions:', error);
                             suggestionsContainer.style.display = 'none';
-                        };
-                        suggestionsContainer.appendChild(suggestionItem);
-                    });
+                        });
                 } else {
                     suggestionsContainer.style.display = 'none';
                 }
-            })
-            .catch(error => {
-                console.error('Error fetching address suggestions:', error);
-                suggestionsContainer.style.display = 'none';
             });
-    } else {
-        suggestionsContainer.style.display = 'none';
-    }
-});
 
             document.addEventListener('click', function(event) {
-                if (!autocompleteInput.contains(event.target) && !suggestionsContainer.contains(event.target)) {
+                if (!autocompleteInput.contains(event.target) && !suggestionsContainer.contains(event
+                        .target)) {
                     suggestionsContainer.style.display = 'none';
                 }
             });

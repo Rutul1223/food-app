@@ -15,14 +15,7 @@
 
 <body>
     @include('layouts.navbar')
-
-    <div class="custom-search">
-        <form action="{{ route('food.search') }}" method="GET">
-            <input class="form-control me-2" type="search" name="search" placeholder="Find Your Fav F🍔🥘d!!"
-                aria-label="Search">
-            <button class="btn btn-outline-dark" type="submit"><i class="fas fa-search"></i></button>
-        </form>
-    </div>
+    @include('layouts.carousel')
     <div class="container mt-5">
         <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach ($foods as $food)
@@ -150,7 +143,7 @@
 
                     const formData = new FormData(this);
                     const url = this.getAttribute(
-                    'data-url'); // Get the URL from data-url attribute
+                        'data-url'); // Get the URL from data-url attribute
 
                     fetch(url, {
                             method: 'POST',
