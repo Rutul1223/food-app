@@ -356,9 +356,9 @@
                                 <form id="filter-form" class="d-flex">
                                     <select id="event-filter" name="event" class="form-control mx-2 my-2">
                                         <option value="">Select Event</option>
-                                        {{-- @foreach ($events as $event)
+                                        @foreach ($events as $event)
                                             <option value="{{ $event }}">{{ $event }}</option>
-                                        @endforeach --}}
+                                        @endforeach
                                     </select>
                                     <input type="date" id="date-from" name="date_from"
                                         class="form-control mx-2 my-2">
@@ -380,7 +380,7 @@
                                             <th scope="col">Created At</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="activity-log-tbody">
                                         <!-- Content will be populated via AJAX -->
                                     </tbody>
                                 </table>

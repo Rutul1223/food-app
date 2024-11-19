@@ -21,10 +21,11 @@ class HomeController extends Controller
         $activities = Activity::with('causer') // Eager load the causer (user)
             ->latest()
             ->get();
+        $events = Activity::select('event')->distinct()->pluck('event')->filter();
         $comments = comment::with('sender')->latest()->get();
         $pendingCount = Order::where('status', 'pending')->count();
         //dd($activities);
-        return view('admin.dashboard', compact('foods', 'users', 'orders', 'activities', 'comments','pendingCount'));
+        return view('admin.dashboard', compact('foods', 'users', 'orders','events', 'activities', 'comments','pendingCount'));
     }
     public function create()
     {
