@@ -16,8 +16,8 @@
         .navbar {
             background-color: #EEEDEB;
             padding: 10px;
-            border-bottom-left-radius: 20px;
-            border-bottom-right-radius: 20px;
+            /* border-bottom-left-radius: 20px; */
+            /* border-bottom-right-radius: 20px; */
             box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
         }
         .navbar-brand {

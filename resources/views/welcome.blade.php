@@ -17,6 +17,7 @@
     @include('layouts.navbar')
     @include('layouts.carousel')
     <div class="container mt-5">
+        <h2 class="text-center my-3 ">Food Items</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4">
             @foreach ($foods as $food)
                 <div class="col">

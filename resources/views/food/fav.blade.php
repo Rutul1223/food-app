@@ -14,7 +14,49 @@
 
         img {
             height: 100px;
+        }
+        .no-favorites-container {
+            text-align: center;
+            padding: 40px;
+            background-color: #FFF5F3;
+            border: 2px dashed #FF6F61;
+            border-radius: 15px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            color: #333;
+        }
 
+        .no-favorites-container h3 {
+            font-size: 1.8rem;
+            color: #FF6F61;
+            margin-bottom: 10px;
+        }
+
+        .no-favorites-container p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .no-favorites-container img {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+
+        .no-favorites-container a {
+            display: inline-block;
+            background-color: #FF6F61;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .no-favorites-container a:hover {
+            background-color: #e35b50;
         }
 
         .food-details-container {
@@ -40,23 +82,6 @@
         .cont{
             gap: 6vw;
         }
-        .card {
-            background-color: #7d995c !important;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
-            border: none;
-        }
-
-        .card-header {
-            background-color: #333;
-            color: #fff;
-            padding: 12px 15px;
-            border-bottom: none;
-        }
-
-        .card-body {
-            padding: 15px;
-        }
     </style>
 </head>
 
@@ -66,6 +91,14 @@
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div>
+                    @if($favorites->isEmpty())
+                    <div class="no-favorites-container">
+                        <img src="/storage/images/foods/empty_favorites.png" alt="No Favorites">
+                        <h3>No Favorites Yet!</h3>
+                        <p>You haven’t added any items to your favorites. Start exploring and add your favorite items to this list.</p>
+                        <a href="{{ route('welcome') }}">Browse Food Items</a>
+                    </div>
+                    @else
                     @foreach($favorites as $favorite)
                     <div class="d-flex align-items-center food-details-container mb-3">
                         <div>
@@ -88,14 +121,7 @@
                         </div>
                     </div>
                     @endforeach
-                    {{-- <div class="card">
-                        <div class="card-header">
-                            Not found
-                        </div>
-                        <div class="card-body">
-                            <p class="card-text2">Any Favourite items have been added yet.</p>
-                        </div>
-                    </div> --}}
+                    @endif
                 </div>
             </div>
         </div>

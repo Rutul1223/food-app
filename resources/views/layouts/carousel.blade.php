@@ -21,10 +21,10 @@
         <div class="carousel-item">
             <div class="carousel-image-container">
                 <img src="{{ asset('storage/images/foods/0000.jpg') }}" class="d-block w-100" alt="Food Image 3">
-                {{-- <div class="carousel-text">
+                <div class="carousel-text">
                     <h2>Dosa</h2>
                     <p>A popular South Indian dish, dosa is a crispy, thin pancake made from fermented rice and lentil batter. Typically served with chutneys and sambar, it's a favorite breakfast or snack option.</p>
-                </div> --}}
+                </div>
             </div>
         </div>
     </div>
