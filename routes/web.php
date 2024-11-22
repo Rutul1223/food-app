@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialiteController;
+use App\Http\Controllers\SuperAdminController;
 use App\Models\Food;
 use Illuminate\Support\Facades\Route;
 
@@ -74,6 +75,7 @@ Route::middleware('auth', 'admin')->group(function () {
     Route::get('/order/{id}', [OrderController::class, 'orderDetails'])->name('admin.dashboard');
     Route::post('/order/{id}/status', [HomeController::class, 'updateOrderStatus'])->name('order.updateStatus');
 
+    Route::get("/superAdmin/analytics",[SuperAdminController::class,'getAnalytics']);
 });
 
 

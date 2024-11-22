@@ -155,6 +155,11 @@
                     </ul>
 
                     <hr class="navbar-divider my-5 opacity-20">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="/superAdmin/analytics" class="nav-link font-regular">Analytics log</a>
+                        </li>
+                    </ul>
 
                     <div class="mt-auto"></div>
                     <ul class="navbar-nav">
