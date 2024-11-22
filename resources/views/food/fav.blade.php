@@ -103,8 +103,8 @@
                     <div class="d-flex align-items-center food-details-container mb-3">
                         <div>
                             @if($favorite->food->image)
-                            <img src="{{ asset('storage/' . $favorite->food->image) }}" class="card-img-top"
-                                alt="Food Image">
+                            <a href={{ route('food.show',$favorite->food->id) }}><img src="{{ asset('storage/' . $favorite->food->image) }}" class="card-img-top"
+                                alt="Food Image"></a>
                             @else
                             <div class="card-img-top text-center py-3">No Image</div>
                             @endif

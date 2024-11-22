@@ -41,14 +41,49 @@
                                 <div class="crt">
                                     <button type="submit" class="btn btn-sm btn-danger">Add To Cart <i
                                             class="fas fa-dolly"></i></button>
-                                    <button type="button" class="btn btn-sm btn-success ms-2"><a
-                                            href="{{ route('cart.checkout') }}" style="color: inherit;">Buy
+                                    <button type="button" class="btn btn-sm btn-success ms-2 buy"><a
+                                            href="{{ route('cart.checkout') }}"
+                                            style="color: inherit; text-decoration:none;">Buy
                                             Now</a></button>
                                 </div>
                             </form>
                         </div>
                     </div>
                 </div>
+
+                <!-- Pagination Section -->
+                <div class="container mt-5">
+                    <h4 class="text-center">More Items You May Like</h4>
+                    <div class="d-flex align-items-center position-relative">
+                        <!-- Previous Button -->
+                        <button class="btn btn-sm btn-primary me-3 position-absolute start-0" onclick="previousPage()">
+                            &laquo;
+                        </button>
+
+                        <!-- Food Items -->
+                        <div id="food-items-container" class="row2 flex-grow-1 mx-5">
+                            @foreach ($foods as $index => $foodItem)
+                                <div class="card">
+                                    <img class="card-img-top" src="{{ asset('storage/' . $foodItem->image) }}"
+                                        alt="{{ $foodItem->name }}">
+                                    <h5 class="card-title">{{ $foodItem->name }}</h5>
+                                    <p class="card-text">Rs. {{ $foodItem->price }}</p>
+                                    <button class="btn btn-sm btn-warning mark-favorite" data-id="{{ $foodItem->id }}">
+                                        <i class="{{ $foodItem->isFavorite ? 'fas' : 'far' }} fa-heart"></i>
+                                        {{ $foodItem->isFavorite ? 'Unmark' : 'Mark as Favorite' }}
+                                    </button>
+                                </div>
+                            @endforeach
+                        </div>
+
+                        <!-- Next Button -->
+                        <button class="btn btn-sm btn-primary ms-3 position-absolute end-0" onclick="nextPage()">
+                            &raquo;
+                        </button>
+                    </div>
+                </div>
+
+
                 <div class="text-center mt-3">
                     <a href="/welcome" class="btn btn-sm btn-light"><i class="fas fa-angle-double-left"></i>&nbsp;Go
                         Back</a>
@@ -56,6 +91,8 @@
             </div>
         </div>
     </div>
+    <!-- Toastr JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
 
     <script>
         var currentPage = 0;
@@ -89,6 +126,61 @@
                 showItems(currentPage);
             }
         }
+        document.querySelectorAll('.mark-favorite').forEach(button => {
+            button.addEventListener('click', function() {
+                var foodId = this.dataset.id;
+                var icon = this.querySelector('i');
+                var isFavorite = icon.classList.contains('fas');
+
+                // Make an AJAX request to toggle favorite
+                fetch(`/favorite`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            food_id: foodId
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Toggle the icon class based on the current status
+                            icon.classList.toggle('fas', !isFavorite);
+                            icon.classList.toggle('far', isFavorite);
+                            this.textContent = isFavorite ? 'Mark as Favorite' : 'Unmark';
+
+                            // Show SweetAlert toast notification
+                            if (isFavorite) {
+                                Swal.fire({
+                                    toast: true,
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Item removed from favorites!',
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                    timerProgressBar: true
+                                });
+                            } else {
+                                Swal.fire({
+                                    toast: true,
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Item marked as favorite!',
+                                    showConfirmButton: false,
+                                    timer: 2000,
+                                    timerProgressBar: true
+                                });
+                            }
+                        } else {
+                            console.error('Error:', data.error);
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+
         showItems(currentPage);
     </script>
 </body>

@@ -1,0 +1,119 @@
+body {
+    background-color: #E6B9A6 !important;
+}
+
+.food-details-container {
+    background-color: #EEEDEB;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+img {
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+}
+
+.cont h3 {
+    margin-left: 1vw;
+    color: #2F3645;
+}
+
+.card-title {
+    margin-left: 1.1vw;
+    color: #2F3645;
+}
+.savings-message {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #28a745; /* Green background for better visibility */
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-align: center;
+    margin-bottom: 20px;
+    display: none; /* Initially hidden */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow for better visibility */
+    animation: slideIn 0.5s ease-out; /* Optional animation for smooth appearance */
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+form button {
+    margin-left: 1vw;
+    margin-top: 2px;
+}
+
+.quantity-controls {
+    margin-left: 1vw;
+}
+
+.btn1 {
+    background-color: #d69191;
+    border-radius: 15px;
+}
+
+.btn1,
+.btn {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.btn1:hover,
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.no-carts-container {
+    text-align: center;
+    padding: 40px;
+    background-color: #FFF5F3;
+    border: 2px dashed #FF6F61;
+    border-radius: 15px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    color: #333;
+}
+
+.no-carts-container h3 {
+    font-size: 1.8rem;
+    color: #FF6F61;
+    margin-bottom: 10px;
+}
+
+.no-carts-container p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.no-carts-container img {
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+
+.no-carts-container a {
+    display: inline-block;
+    background-color: #FF6F61;
+    color: white;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.no-carts-container a:hover {
+    background-color: #e35b50;
+}

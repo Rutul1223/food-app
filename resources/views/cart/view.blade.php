@@ -9,84 +9,7 @@
     <link rel="icon" type="image/x-icon" href="/storage/images/foods/burger.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
-    <style>
-        body {
-            background-color: #E6B9A6 !important;
-        }
-
-        .food-details-container {
-            background-color: #EEEDEB;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-        }
-
-        img {
-            height: 100px;
-            width: 100px;
-            border-radius: 50px;
-        }
-
-        .cont h3 {
-            margin-left: 1vw;
-            color: #2F3645;
-        }
-
-        .card-title {
-            margin-left: 1.1vw;
-            color: #2F3645;
-        }
-        .savings-message {
-            font-size: 18px;
-            font-weight: bold;
-            color: #fff;
-            background-color: #28a745; /* Green background for better visibility */
-            padding: 10px 20px;
-            border-radius: 8px;
-            text-align: center;
-            margin-bottom: 20px;
-            display: none; /* Initially hidden */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow for better visibility */
-            animation: slideIn 0.5s ease-out; /* Optional animation for smooth appearance */
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateY(-20px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        form button {
-            margin-left: 1vw;
-            margin-top: 2px;
-        }
-
-        .quantity-controls {
-            margin-left: 1vw;
-        }
-
-        .btn1 {
-            background-color: #d69191;
-            border-radius: 15px;
-        }
-
-        .btn1,
-        .btn {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .btn1:hover,
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/cartView.css') }}">
 </head>
 
 <body>
@@ -96,6 +19,14 @@
             <div class="savings-message" id="savings-message">You saved: ₹<span id="saved-amount">0.00</span></div>
             <div class="col-md-8">
                 <div>
+                    @if($carts->isEmpty())
+                    <div class="no-carts-container">
+                        <img src="/storage/images/foods/empty_carts.png" alt="No cart">
+                        <h3>No carts Yet!</h3>
+                        <p>You haven’t added any items to your carts. Start exploring and add your cart items to this list.</p>
+                        <a href="{{ route('welcome') }}">Browse Food Items</a>
+                    </div>
+                    @else
                     @foreach ($carts as $cart)
                         <div class="d-flex align-items-center food-details-container mb-3">
                             <div>
@@ -131,6 +62,7 @@
                             </div>
                         </div>
                     @endforeach
+                    @endif
                 </div>
             </div>
         </div>
