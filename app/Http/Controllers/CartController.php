@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 
@@ -17,8 +18,17 @@ class CartController extends Controller
                 'food_id' => 'required|exists:food,id',
             ]);
 
+
             $foodId = $validatedData['food_id'];
             $userId = auth()->user()->id;
+            $existingCartItem = Cart::where('user_id', $userId)->where('food_id', $foodId)->first();
+
+        if ($existingCartItem) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Item already in cart!',
+            ]);
+        }
 
             Cart::create([
                 'user_id' => $userId,
@@ -88,6 +98,45 @@ class CartController extends Controller
 
     public function payment()
     {
-        return view('payment.payment');
+        $userId = Auth::id();
+        $carts = Cart::where('user_id', $userId)->with('food')->get();
+
+
+        $totalPrice = $carts->sum(function ($cart) {
+            return $cart->quantity * $cart->food->price;
+        });
+        return view('payment.payment', compact('carts', 'totalPrice'));
+    }
+    public function updateQuantity(Request $request, $id)
+    {
+        try {
+            // Validate the input
+            $validatedData = $request->validate([
+                'quantity' => 'required|integer|min:1',
+            ]);
+
+            // Find the cart item
+            $cartItem = Cart::findOrFail($id);
+            $cartItem->quantity = $validatedData['quantity'];
+            $cartItem->save();
+
+            // Recalculate the total price
+            $totalPrice = Cart::where('user_id', auth()->user()->id)->sum(function ($cart) {
+                return $cart->quantity * $cart->food->price;
+            });
+
+            // Return the updated total price and success message
+            return response()->json([
+                'success' => true,
+                'message' => 'Quantity updated successfully.',
+                'totalPrice' => $totalPrice,
+            ]);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage());
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to update quantity.',
+            ], 500);
+        }
     }
 }

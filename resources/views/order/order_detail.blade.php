@@ -37,7 +37,8 @@
         display: inline-block;
 
     }
-    .download{
+
+    .download {
         margin-left: auto;
     }
 </style>
@@ -83,6 +84,17 @@
                     <tr>
                         <td>Created At</td>
                         <td>{{ $order->created_at->format('d-m-Y H:i') }}</td>
+                    </tr>
+                    <!-- Display Ordered Food Details -->
+                    <tr>
+                        <td>Ordered Food</td>
+                        <td>
+                            <ul>
+                                @foreach ($order->foods as $food)
+                                    <li>{{ $food->name }} (Quantity: {{ $food->pivot->quantity }})</li>
+                                @endforeach
+                            </ul>
+                        </td>
                     </tr>
                     <tr>
                         <td>QR Code</td>

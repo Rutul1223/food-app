@@ -44,6 +44,12 @@ class OrderController extends Controller
             $order->address = $request->input('address');
             $order->user_id = Auth::id();
             $order->save();
+            // Add food items to the order
+            $foodItems = Cart::where('user_id', Auth::id())->get();
+            foreach ($foodItems as $item) {
+                // Assuming you have a `food_id` and `quantity` field in your Cart model
+                $order->foodItems()->attach($item->food_id, ['quantity' => $item->quantity]);
+            }
             $this->clearCart(Auth::id());
             // dd($order);
 
@@ -58,14 +64,14 @@ class OrderController extends Controller
         }
     }
     public function paymentSuccess()
-{
-    // Get the latest order of the authenticated user
-    $order = Order::where('user_id', Auth::id())
-                  ->orderBy('created_at', 'desc')
-                  ->first(); // Fetch the latest order
+    {
+        // Get the latest order of the authenticated user
+        $order = Order::with('foodItems')->where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->first(); // Fetch the latest order
 
-    return view('payment.success', compact('order')); // Pass the order to the view
-}
+        return view('payment.success', compact('order')); // Pass the order to the view
+    }
 
     public function view()
     {
@@ -79,7 +85,7 @@ class OrderController extends Controller
     }
     public function orderDetails($orderId)
     {
-        $order = Order::find($orderId);
+        $order = Order::with('foods')->find($orderId);
         // Fetch the related orders if needed
         $orders = $order ? [$order] : []; // If $order is found, put it in an array; otherwise, initialize as empty.
 
@@ -88,34 +94,32 @@ class OrderController extends Controller
     public function downloadCsv($id)
     {
         // Fetch the order details
-        $order = Order::findOrFail($id);
+        $order = Order::with('foods')->findOrFail($id);
 
-        // Define CSV content
+        // Define CSV content for basic order details
         $csvContent = [
             ['Order ID', $order->id],
             ['Total Amount', '₹' . $order->total_amount],
             ['Address', $order->address],
             ['Status', $order->status],
-            ['Created At', $order->created_at->format('d-m-Y H:i')]
+            ['Created At', $order->created_at->format('d-m-Y H:i')],
+            [], // Add an empty row for better readability
+            ['Ordered Food Items'], // Header for food items section
+            ['Food Name', 'Quantity'], // Sub-header for food details
         ];
 
-        // Open a temporary output stream
-        $file = fopen('php://output', 'w');
+        // Append food item details to the CSV content
+        foreach ($order->foods as $food) {
+            $csvContent[] = [$food->name, $food->pivot->quantity];
+        }
 
-        // Set CSV headers
+        // Prepare the response as a streamed CSV download
         $headers = [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => "attachment; filename=order_{$order->id}_details.csv",
         ];
 
-        // Write each row to the output stream
-        foreach ($csvContent as $row) {
-            fputcsv($file, $row);
-        }
-        fclose($file);
-
-        // Return the response with the CSV headers
-        return Response::streamDownload(function () use ($csvContent) {
+        return response()->streamDownload(function () use ($csvContent) {
             $file = fopen('php://output', 'w');
             foreach ($csvContent as $row) {
                 fputcsv($file, $row);

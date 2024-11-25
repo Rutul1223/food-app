@@ -48,11 +48,16 @@ class Order extends Model
 
     public function foods()
     {
-        return $this->hasMany(Food::class, 'order_id', 'id'); // Define the relationship with explicit keys
+        return $this->belongsToMany(Food::class, 'order_food_item')->withPivot('quantity');
     }
 
     public function comments()
     {
         return $this->hasMany(Comment::class, 'order_id', 'id'); // Assumes order_id is the foreign key in comments
+    }
+    public function foodItems()
+    {
+        return $this->belongsToMany(Food::class, 'order_food_item', 'order_id', 'food_id')
+            ->withPivot('quantity');
     }
 }

@@ -17,6 +17,12 @@
             <p><strong>Address:</strong> {{ $order->address }}</p>
             <p><strong>Order Status:</strong> {{ $order->status ?? 'Pending' }}</p>
             <p><strong>Created At:</strong> {{ $order->created_at->format('d-m-Y H:i') }}</p>
+            <h5>Food Items:</h5>
+            <ul>
+                @foreach ($order->foodItems as $food)
+                    <li>{{ $food->name }} (Quantity: {{ $food->pivot->quantity }})</li>
+                @endforeach
+            </ul>
         </div>
     </div>
 
@@ -25,4 +31,3 @@
         <a href="/welcome" class="btn btn-secondary">Continue Shopping</a>
     </div>
 </div>
-

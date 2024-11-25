@@ -16,52 +16,55 @@
     @include('layouts.navbar', ['cartItemCount' => $carts->count()])
     <div class="container mt-5">
         <div class="row justify-content-center">
-            <div class="savings-message" id="savings-message">You saved: ₹<span id="saved-amount">0.00</span></div>
             <div class="col-md-8">
                 <div>
-                    @if($carts->isEmpty())
-                    <div class="no-carts-container">
-                        <img src="/storage/images/foods/empty_carts.png" alt="No cart">
-                        <h3>No carts Yet!</h3>
-                        <p>You haven’t added any items to your carts. Start exploring and add your cart items to this list.</p>
-                        <a href="{{ route('welcome') }}">Browse Food Items</a>
-                    </div>
-                    @else
-                    @foreach ($carts as $cart)
-                        <div class="d-flex align-items-center food-details-container mb-3">
-                            <div>
-                                <img src="{{ asset('storage/' . $cart->food->image) }}" class=""
-                                    alt="{{ $cart->food->name }}">
-                            </div>
-                            <div
-                                class="d-flex flex-column flex-md-row align-items-center justify-content-between ms-md-3 mt-3 mt-md-0">
-                                <div class="cont">
-                                    <h2 class="card-title">{{ $cart->food->name }}</h2>
-                                    <h3>
-                                        <span class="text-muted" style="text-decoration: line-through; margin-right: 5px; font-weight:350">
-                                            ₹{{ $cart->food->price + 50 }}
-                                        </span>
-                                        ₹<span id="price-{{ $cart->id }}" data-original-price="{{ $cart->food->price }}">{{ $cart->food->price }}</span>
-                                    </h3>
-                                    <div class="quantity-controls">
-                                        <button type="button" class="btn1 btn-sm"
-                                            onclick="decreaseQuantity({{ $cart->id }})">-</button>
-                                        <input type="text" name="quantity" id="quantity-{{ $cart->id }}"
-                                            value="1" class="form-control d-inline"
-                                            style="width: 40px; height:33px; text-align: center;border-radius:50%;background-color:rgb(243, 133, 150);color:white;"
-                                            readonly>
-                                        <button type="button" class="btn1 btn-sm"
-                                            onclick="increaseQuantity({{ $cart->id }})">+</button>
-                                    </div>
-                                </div>
-                                <form id="removeCartForm{{ $cart->id }}" data-url="{{ route('remove-from-cart', ['id' => $cart->id]) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">Remove</button>
-                                </form>
-                            </div>
+                    @if ($carts->isEmpty())
+                        <div class="no-carts-container">
+                            <img src="/storage/images/foods/empty_carts.png" alt="No cart">
+                            <h3>No carts Yet!</h3>
+                            <p>You haven’t added any items to your carts. Start exploring and add your cart items to
+                                this list.</p>
+                            <a href="{{ route('welcome') }}">Browse Food Items</a>
                         </div>
-                    @endforeach
+                    @else
+                        @foreach ($carts as $cart)
+                            <div class="d-flex align-items-center food-details-container mb-3">
+                                <div>
+                                    <img src="{{ asset('storage/' . $cart->food->image) }}" class=""
+                                        alt="{{ $cart->food->name }}">
+                                </div>
+                                <div
+                                    class="d-flex flex-column flex-md-row align-items-center justify-content-between ms-md-3 mt-3 mt-md-0">
+                                    <div class="cont">
+                                        <h2 class="card-title">{{ $cart->food->name }}</h2>
+                                        <h3>
+                                            <span class="text-muted"
+                                                style="text-decoration: line-through; margin-right: 5px; font-weight:350">
+                                                ₹{{ $cart->food->price + 50 }}
+                                            </span>
+                                            ₹<span id="price-{{ $cart->id }}"
+                                                data-original-price="{{ $cart->food->price }}">{{ $cart->food->price }}</span>
+                                        </h3>
+                                        <div class="quantity-controls">
+                                            <button type="button" class="btn1 btn-sm"
+                                                onclick="decreaseQuantity({{ $cart->id }})">-</button>
+                                            <input type="text" name="quantity" id="quantity-{{ $cart->id }}"
+                                                value="1" class="form-control d-inline"
+                                                style="width: 40px; height:33px; text-align: center;border-radius:50%;background-color:rgb(243, 133, 150);color:white;"
+                                                readonly>
+                                            <button type="button" class="btn1 btn-sm"
+                                                onclick="increaseQuantity({{ $cart->id }})">+</button>
+                                        </div>
+                                    </div>
+                                    <form id="removeCartForm{{ $cart->id }}"
+                                        data-url="{{ route('remove-from-cart', ['id' => $cart->id]) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                                    </form>
+                                </div>
+                            </div>
+                        @endforeach
                     @endif
                 </div>
             </div>
@@ -89,80 +92,86 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
-        function updatePrice(cartId) {
-            let originalPrice = parseFloat(document.getElementById('price-' + cartId).getAttribute('data-original-price'));
-            let quantity = parseInt(document.getElementById('quantity-' + cartId).value);
-            let newPrice = (originalPrice * quantity).toFixed(2);
-            document.getElementById('price-' + cartId).innerText = newPrice;
-            updateTotalPrice();
-            updateQuantity(cartId, quantity);
-        }
-
+        // Function to update the total price after changes in the cart
         function updateTotalPrice() {
             let totalPrice = 0;
-            let originalTotalPrice = 0;
 
-            let cartItems = document.querySelectorAll('[id^="price-"]');
-            cartItems.forEach(function(element) {
-                let originalPrice = parseFloat(element.getAttribute('data-original-price'));
-                let quantity = parseInt(document.getElementById('quantity-' + element.id.split('-')[1]).value);
-
-                originalTotalPrice += (originalPrice + 50) * quantity; // Summing the original (crossed-out) prices
-                totalPrice += originalPrice * quantity; // Summing the discounted prices
+            // Loop through each cart item and calculate the total
+            document.querySelectorAll('[id^="price-"]').forEach(priceElement => {
+                let price = parseFloat(priceElement.innerText); // Get the price from the element
+                totalPrice += price; // Add it to the total
             });
 
+            // Update the displayed total price
             document.getElementById('total-price').innerText = totalPrice.toFixed(2);
-
-            // Calculate saved amount and update the display
-            let savedAmount = originalTotalPrice - totalPrice;
-            document.getElementById('saved-amount').innerText = savedAmount.toFixed(2);
-
-            // Show or hide the savings message based on the amount saved
-            if (savedAmount > 0) {
-                document.getElementById('savings-message').style.display = 'block';
-            } else {
-                document.getElementById('savings-message').style.display = 'none';
-            }
-
-            localStorage.setItem('totalPrice', totalPrice.toFixed(2));
         }
 
-        window.onload = function() {
-            updateTotalPrice();
-            updateQuantities();
+        // Update the price of the item and update the total
+        function updatePrice(cartId) {
+            let quantity = parseInt(document.getElementById('quantity-' + cartId).value);
+            let price = parseFloat(document.getElementById('price-' + cartId).getAttribute('data-original-price'));
+            let newPrice = (price * quantity).toFixed(2);
+            document.getElementById('price-' + cartId).innerText = newPrice;
+
+            updateTotalPrice(); // Recalculate the total price
+            updateQuantityInDatabase(cartId, quantity); // Optionally update the quantity in the backend
         }
 
-        function updateQuantity(cartId, quantity) {
-            // Save quantity to local storage
-            localStorage.setItem('quantity-' + cartId, quantity);
+        // Update the quantity in the database (if needed)
+        function updateQuantityInDatabase(cartId, quantity) {
+            fetch(`/cart/update-quantity/${cartId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    },
+                    body: JSON.stringify({
+                        quantity: quantity
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        updateTotalPrice(); // Recalculate total after successful update
+                    } else {
+                        console.log('Error updating quantity:', data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         }
 
+        // Increase the quantity of an item
         function increaseQuantity(cartId) {
             let quantityElement = document.getElementById('quantity-' + cartId);
             let quantity = parseInt(quantityElement.value);
             quantity++;
             quantityElement.value = quantity;
-            updateQuantity(cartId, quantity);  // Store the updated quantity
-            updatePrice(cartId);
+            updatePrice(cartId); // Update the price based on the new quantity
         }
 
+        // Decrease the quantity of an item
         function decreaseQuantity(cartId) {
             let quantityElement = document.getElementById('quantity-' + cartId);
             let quantity = parseInt(quantityElement.value);
             if (quantity > 1) {
                 quantity--;
                 quantityElement.value = quantity;
-                updateQuantity(cartId, quantity);  // Store the updated quantity
-                updatePrice(cartId);
+                updatePrice(cartId); // Update the price based on the new quantity
             }
         }
+
+        // Listen for document load and initialize the total price
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize the total price when the page loads
+            updateTotalPrice();
+        });
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('form[id^="removeCartForm"]').forEach(form => {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault(); // Prevent the default form submission
 
                     const url = this.getAttribute(
-                    'data-url'); // Get the URL from data-url attribute
+                        'data-url'); // Get the URL from data-url attribute
                     const formData = new FormData(this);
 
                     fetch(url, {
@@ -196,7 +205,7 @@
 
                                 updateTotalPrice();
                                 setTimeout(() => {
-                                    location.reload();  // This will reload the page
+                                    location.reload(); // This will reload the page
                                 }, 2000);
                                 // Optionally, remove the item from the DOM
                                 // Example: form.closest('.cart-item').remove(); // Adjust selector as needed

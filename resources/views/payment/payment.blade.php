@@ -12,6 +12,7 @@
         body {
             background-color: #E6B9A6;
         }
+
         .checkout-form {
             background-color: #EEEDEB;
             padding: 20px;
@@ -19,22 +20,26 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
         }
+
         .checkout-header {
             font-size: 20px;
             font-weight: bold;
             margin-bottom: 15px;
             text-align: center;
         }
+
         .form-control,
         .btn {
             border-radius: 20px;
         }
+
         .total-price {
             font-size: 18px;
             font-weight: bold;
             text-align: center;
             margin-bottom: 20px;
         }
+
         /* Styles for suggestions */
         .suggestions {
             position: absolute;
@@ -46,13 +51,16 @@
             overflow-y: auto;
             border-radius: 5px;
         }
+
         .suggestion-item {
             padding: 10px;
             cursor: pointer;
         }
+
         .suggestion-item:hover {
             background-color: #f0f0f0;
         }
+
         /* Style for Stripe card element */
         #card-element {
             background-color: #FFF;
@@ -62,6 +70,7 @@
             margin-bottom: 15px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         #card-errors {
             color: red;
             font-size: 14px;
@@ -76,7 +85,8 @@
             <div class="col-lg-6 mb-4 mx-auto">
                 <div class="checkout-form">
                     <div class="checkout-header">Payment Section</div>
-                    <div class="list-group-item">Total Amount: <b>₹<span id="total-amount">0.00</span></b></div>
+                    <div class="list-group-item">Total Amount: <b>₹<span
+                                id="total-amount">{{ number_format($totalPrice, 2) }}</span></b></div>
                     <hr>
                     <form id="payment-form" method="POST" action="{{ route('process.order') }}"
                         onsubmit="return handleFormSubmit()">
@@ -84,7 +94,7 @@
                         <div class="mb-3">
                             <label for="total_amount" class="form-label">Total Amount</label>
                             <input type="text" class="form-control" id="total_amount" name="total_amount"
-                                placeholder="Enter total amount" readonly>
+                                value="{{ number_format($totalPrice, 2) }}" readonly>
                         </div>
                         <div class="mb-3 position-relative">
                             <label for="autocomplete" class="form-label">Address</label>
@@ -108,54 +118,50 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://js.stripe.com/v3/"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            const totalPrice = localStorage.getItem('totalPrice');
-            document.getElementById('total-amount').innerText = totalPrice ? totalPrice : '0.00';
-            document.getElementById('total_amount').value = totalPrice ? totalPrice : '0.00';
+        const autocompleteInput = document.getElementById('autocomplete');
+        const suggestionsContainer = document.getElementById('suggestions');
 
-            const autocompleteInput = document.getElementById('autocomplete');
-            const suggestionsContainer = document.getElementById('suggestions');
-
-            autocompleteInput.addEventListener('input', function() {
-                const query = this.value;
-                if (query.length > 2) {
-                    fetch(
-                            `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=${query}&limit=10`)
-                        .then(response => response.json())
-                        .then(data => {
-                            suggestionsContainer.innerHTML = '';
-                            if (data.length > 0) {
-                                suggestionsContainer.style.display = 'block';
-                                data.forEach(item => {
-                                    const suggestionItem = document.createElement('div');
-                                    suggestionItem.className = 'suggestion-item';
-                                    suggestionItem.innerText = item.display_name;
-                                    suggestionItem.onclick = function() {
-                                        autocompleteInput.value = item.display_name;
-                                        suggestionsContainer.style.display = 'none';
-                                    };
-                                    suggestionsContainer.appendChild(suggestionItem);
-                                });
-                            } else {
-                                suggestionsContainer.style.display = 'none';
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error fetching address suggestions:', error);
+        autocompleteInput.addEventListener('input', function() {
+            const query = this.value;
+            if (query.length > 2) {
+                fetch(
+                        `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&q=${query}&limit=10`
+                        )
+                    .then(response => response.json())
+                    .then(data => {
+                        suggestionsContainer.innerHTML = '';
+                        if (data.length > 0) {
+                            suggestionsContainer.style.display = 'block';
+                            data.forEach(item => {
+                                const suggestionItem = document.createElement('div');
+                                suggestionItem.className = 'suggestion-item';
+                                suggestionItem.innerText = item.display_name;
+                                suggestionItem.onclick = function() {
+                                    autocompleteInput.value = item.display_name;
+                                    suggestionsContainer.style.display = 'none';
+                                };
+                                suggestionsContainer.appendChild(suggestionItem);
+                            });
+                        } else {
                             suggestionsContainer.style.display = 'none';
-                        });
-                } else {
-                    suggestionsContainer.style.display = 'none';
-                }
-            });
-
-            document.addEventListener('click', function(event) {
-                if (!autocompleteInput.contains(event.target) && !suggestionsContainer.contains(event
-                        .target)) {
-                    suggestionsContainer.style.display = 'none';
-                }
-            });
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching address suggestions:', error);
+                        suggestionsContainer.style.display = 'none';
+                    });
+            } else {
+                suggestionsContainer.style.display = 'none';
+            }
         });
+
+        document.addEventListener('click', function(event) {
+            if (!autocompleteInput.contains(event.target) && !suggestionsContainer.contains(event
+                    .target)) {
+                suggestionsContainer.style.display = 'none';
+            }
+        });
+
 
         var stripe = Stripe('{{ config('services.stripe.key') }}');
         var elements = stripe.elements();
