@@ -21,11 +21,11 @@ class HomeController extends Controller
         $activities = Activity::with('causer') // Eager load the causer (user)
             ->latest()
             ->get();
-        $events = Activity::select('event')->distinct()->pluck('event')->filter();
+        $nonAdminUsers = User::where('usertype', '!=', 'admin')->get();
         $comments = comment::with('sender')->latest()->get();
         $pendingCount = Order::where('status', 'pending')->count();
         //dd($activities);
-        return view('admin.dashboard', compact('foods', 'users', 'orders','events', 'activities', 'comments','pendingCount'));
+        return view('admin.dashboard', compact('foods', 'users', 'orders','nonAdminUsers', 'activities', 'comments','pendingCount'));
     }
     public function create()
     {
@@ -97,8 +97,8 @@ class HomeController extends Controller
     $query = Activity::with('causer') // Eager load the user
                      ->latest();
 
-    if ($request->has('event') && $request->event) {
-        $query->where('event', $request->event);
+    if ($request->has('user_id') && $request->user_id) {
+        $query->where('causer_id', $request->user_id); // Filter by user ID
     }
 
     if ($request->has('date_from') && $request->date_from) {

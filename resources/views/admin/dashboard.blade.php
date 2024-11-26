@@ -359,10 +359,10 @@
                                 <h5 class="mb-0">Activity Log</h5>
                                 <!-- Filter form -->
                                 <form id="filter-form" class="d-flex">
-                                    <select id="event-filter" name="event" class="form-control mx-2 my-2">
-                                        <option value="">Select Event</option>
-                                        @foreach ($events as $event)
-                                            <option value="{{ $event }}">{{ $event }}</option>
+                                    <select id="user-filter" name="user_id" class="form-control mx-2 my-2">
+                                        <option value="">Select User</option>
+                                        @foreach ($nonAdminUsers as $user)
+                                            <option value="{{ $user->id }}">{{ $user->name }}</option>
                                         @endforeach
                                     </select>
                                     <input type="date" id="date-from" name="date_from"
@@ -479,19 +479,19 @@
         });
 
         document.getElementById('filter-btn').addEventListener('click', function() {
-            const eventFilter = document.getElementById('event-filter').value;
+            const userFilter = document.getElementById('user-filter').value;
             const dateFrom = document.getElementById('date-from').value;
             const dateTo = document.getElementById('date-to').value;
 
             // Call the function to fetch the filtered data
-            fetchActivityLog(eventFilter, dateFrom, dateTo);
+            fetchActivityLog(userFilter, dateFrom, dateTo);
         });
 
-        function fetchActivityLog(eventFilter, dateFrom, dateTo) {
+        function fetchActivityLog(userId, dateFrom, dateTo) {
             const url = new URL('/admin/activity-log', window.location.href);
             const params = new URLSearchParams();
 
-            if (eventFilter) params.append('event', eventFilter);
+            if (userId) params.append('user_id', userId);
             if (dateFrom) params.append('date_from', dateFrom);
             if (dateTo) params.append('date_to', dateTo);
 
