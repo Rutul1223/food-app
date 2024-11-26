@@ -76,4 +76,12 @@ class FoodController extends Controller
         $foods = Food::where('name', 'like', "%$search%")->paginate(9);
         return view('welcome', compact('foods'));
     }
+    public function getFoodItems()
+    {
+        // Fetch food items from the database
+        $foodItems = Food::all(); // or customize your query here
+
+        // Return food items as JSON
+        return response()->json($foodItems);
+    }
 }

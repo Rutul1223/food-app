@@ -34,6 +34,9 @@ Route::get('/search', [FoodController::class, 'search'])->name('food.search');
 
 Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
 
+// In routes/web.php or routes/api.php
+Route::get('/food-items', [FoodController::class, 'getFoodItems'])->name('food.items');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/food/{id}', [FoodController::class, 'show'])->name('food.show');
