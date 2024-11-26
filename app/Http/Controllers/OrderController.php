@@ -50,12 +50,12 @@ class OrderController extends Controller
                 // Assuming you have a `food_id` and `quantity` field in your Cart model
                 $order->foodItems()->attach($item->food_id, ['quantity' => $item->quantity]);
             }
+            Mail::to(auth()->user()->email)->send(new OrderPlaced($order));
             $this->clearCart(Auth::id());
             // dd($order);
 
-            // Mail::to(auth()->user()->email)->send(new OrderPlaced($order));
-
             return Redirect::route('payment.success')->with('success', 'Order placed successfully');
+
         } catch (\Exception $e) {
 
             Log::error('Error occurred while processing order:', ['exception' => $e]);
