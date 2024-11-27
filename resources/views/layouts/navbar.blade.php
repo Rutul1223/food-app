@@ -24,11 +24,11 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- Search Section -->
-            <form action="{{ route('food.search') }}" method="GET" class="d-flex ms-3"
-                style="max-width: 300px; width: 100%;">
-                <input class="form-control me-2" type="search" name="search" placeholder="Find Your Fav F🍔🥘d!!"
+            <form action="{{ route('food.search') }}" method="GET" class="d-flex ms-3 "
+                style="max-width: 300px; width: 100%;color">
+                <input class="form-control bg-gray-300 me-2 rounded" type="search" name="search" placeholder="Find Your Fav F🍔🥘d!!"
                     aria-label="Search">
-                <button class="btn btn-outline-dark" type="submit"><i class="fas fa-search"></i></button>
+                <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
             </form>
 
             <!-- Navbar Content -->
@@ -36,31 +36,31 @@
                 <!-- Center Links -->
                 <ul class="navbar-nav mx-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/welcome" style="color: #2F3645; text-decoration:none">Home</a>
+                        <a class="nav-link" href="/main" style="color: #ffffff; text-decoration:none">Home</a>
                     </li>
                     @guest
                     @else
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('order.view') }}"
-                                style="color: #2F3645; text-decoration:none">Orders</a>
+                                style="color: #ffffff; text-decoration:none">Orders</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link" href="#" style="color: #2F3645; text-decoration:none"
+                            <a class="nav-link" href="#" style="color: #ffffff; text-decoration:none"
                                 id="menuLink">Menu</a>
                             <!-- Dropdown will be populated here -->
                             <ul class="dropdown-menu" id="foodDropdown"></ul>
                         </li>
                     @endguest
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="color: #2F3645; text-decoration:none">About us</a>
+                        <a class="nav-link" href="#" style="color: #ffffff; text-decoration:none">About us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="color: #2F3645; text-decoration:none">Contact us</a>
+                        <a class="nav-link" href="#" style="color: #ffffff; text-decoration:none">Contact us</a>
                     </li>
                 </ul>
 
                 <!-- Right-Aligned Icons and Dropdown -->
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto mr-6">
                     @guest
                         <li class="nav-item">
                             <a href="/login" class="btn btn-sm btn-danger">Login</a>
@@ -72,7 +72,7 @@
                         <!-- Cart Icon -->
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('cart.view') }}"
-                                style="color: #000000; text-decoration:none">
+                                style="color: #ffffff; text-decoration:none">
                                 <i style="font-size:20px" class="fas">&#xf07a;</i>
                                 @if ($cartCount > 0)
                                     <span class="badge bg-danger">{{ $cartCount }}</span>
@@ -80,7 +80,7 @@
                             </a>
                         </li>
                         <!-- Favorite Icon -->
-                        <li class="nav-item">
+                        <li class="nav-item mr-4">
                             <a class="nav-link" href="{{ route('food.fav') }}"
                                 style="color: rgb(168, 20, 20); text-decoration:none">
                                 <i style="font-size:20px" class="fas fa-heart fav"></i>

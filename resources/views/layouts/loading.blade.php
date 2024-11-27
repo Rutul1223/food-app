@@ -114,7 +114,7 @@
         @import url("https://fonts.googleapis.com/css?family=Amatic+SC");
 
         body {
-            background-color: #E6B9A6;
+            background-color: #000000;
             height: 100vh;
             width: 100vw;
             overflow: hidden;
@@ -128,7 +128,7 @@
             margin: 0;
             font-family: "Amatic SC", cursive;
             font-size: 6vh;
-            color: #333;
+            color: #ffffff;
             opacity: 0.75;
             animation: pulse 2.5s linear infinite;
             text-align: center;
@@ -411,7 +411,7 @@
     <script>
         setTimeout(function() {
             // document.getElementById('loader').style.display = 'none';
-            window.location.href = '/welcome';
+            window.location.href = '/main';
         }, 2000);
     </script>
 

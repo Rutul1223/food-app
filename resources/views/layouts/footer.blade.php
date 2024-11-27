@@ -15,12 +15,11 @@
 
         /* Footer styles */
         .footer {
-            background-color: #a55650;
+            background-color: #000000;
             color: #ffffff;
-            /* Text color */
+            font-family: "Times New Roman", Times, serif;
             padding: 40px 0;
             text-align: center;
-            font-family: Arial, sans-serif;
         }
 
         .footer h4 {
@@ -43,6 +42,10 @@
 
         .footer p {
             font-size: 14px;
+        }
+        .font-semibold{
+            color: dodgerblue;
+            font-weight:bold;
         }
 
 
@@ -76,7 +79,7 @@
         <div class="row">
             <div class="col-md-12">
                 <hr>
-                <p><i class="fas fa-copyright"></i> 2024 Created By <span class="text-black font-semibold">Rutul Prajapati.</span> All rights reserved.</p>
+                <p><i class="fas fa-copyright"></i> 2024 Created By <span class="font-semibold">Rutul Prajapati.</span> All rights reserved.</p>
                 <div class=>
                     <a href="https://www.instagram.com/rutul_1223" style="text-decoration:none; color:inherit;"><i style='font-size:24px' class='fab'>&#xf16d;</i>&nbsp;&nbsp;</a>
                     <a href="https://www.linkedin.com/in/rutul-prajapati/" style="text-decoration:none; color:inherit;"> <i style='font-size:24px' class='fab'>&#xf0e1;</i>&nbsp;&nbsp;</a>

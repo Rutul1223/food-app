@@ -16,9 +16,9 @@
     @vite(['resources/css/app.css', 'resources/js/app.js','resources/js/validation.js'])
 </head>
 
-<body class="font-sans antialiased" style="background-color: #E6B9A6">
+<body class="font-sans antialiased bg-dark">
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-        <div class="w-full sm:max-w-md mt-6 px-6 py-4 shadow-md overflow-hidden sm:rounded-lg" style="background-color: #EEEDEB">
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 shadow-md overflow-hidden sm:rounded-lg">
             {{ $slot }}
         </div>
     </div>

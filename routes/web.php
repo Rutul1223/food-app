@@ -22,6 +22,11 @@ Route::get('/welcome', function () {
 })->name('welcome');
 Route::get('/dashboard', function () {})->name('dashboard');
 
+Route::get('/main', function () {
+    $categories = Food::distinct()->get(['category']);
+    return view('main',compact('categories'));
+})->name('main');
+
 Route::get('/404', function () {
     return view('404');
 })->name('404');
