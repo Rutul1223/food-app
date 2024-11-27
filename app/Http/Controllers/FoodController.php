@@ -6,6 +6,7 @@ use App\Models\Favorite;
 use App\Models\Food;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class FoodController extends Controller
 {
@@ -78,10 +79,11 @@ class FoodController extends Controller
     }
     public function getFoodItems()
     {
-        // Fetch food items from the database
-        $foodItems = Food::all(); // or customize your query here
+        // Group food items by category and count the items in each category
+        $foodCategories = Food::select('category', DB::raw('count(*) as item_count'))
+                                ->groupBy('category')
+                                ->get();
 
-        // Return food items as JSON
-        return response()->json($foodItems);
+        return response()->json($foodCategories);
     }
 }

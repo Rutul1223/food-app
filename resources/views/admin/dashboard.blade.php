@@ -165,7 +165,8 @@
                     <ul class="navbar-nav">
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('profile.edit') }}">
-                                <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile Image" class="rounded-circle my-2" style="width: 30px; height: 30px;">&nbsp;Profile
+                                <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile Image"
+                                    class="rounded-circle my-2" style="width: 30px; height: 30px;">&nbsp;Profile
                             </a>
                         </li>
                         <li class="nav-item">
@@ -223,6 +224,7 @@
                                             <th scope="col">Description</th>
                                             <th scope="col">Price</th>
                                             <th scope="col">Id</th>
+                                            <th scope="col">Category</th>
                                             <th scope="col">Schedule</th>
                                             <th></th>
                                         </tr>
@@ -238,6 +240,7 @@
                                                 <td>{{ $food->description }}</td>
                                                 <td>{{ $food->price }}</td>
                                                 <td>{{ $food->id }}</td>
+                                                <td>{{ $food->category }}</td>
                                                 <td>
                                                     <span class="badge badge-lg badge-dot">
                                                         <i class="bg-success"></i>Scheduled
@@ -688,6 +691,7 @@
                 badge.textContent = ''; // Clear badge text if no pending orders
             }
         }
+
         function confirmLogout(event) {
             event.preventDefault();
 

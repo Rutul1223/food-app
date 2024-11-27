@@ -16,6 +16,7 @@ class Food extends Model
         'image',
         'description',
         'price',
+        'category',
     ];
     public function favorites()
     {

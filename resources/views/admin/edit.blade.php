@@ -39,6 +39,17 @@
                                     value="{{ $food->name }}">
                             </div>
                             <div class="mb-3">
+                                <label for="category" class="form-label">Food Category</label>
+                                <select class="form-control" id="category" name="category">
+                                    <option value="" disabled>Select a category</option>
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category }}"
+                                            {{ $food->category == $category ? 'selected' : '' }}>
+                                            {{ ucfirst($category) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
                                 <label for="image" class="form-label">Food Image</label>
                                 <input type="file" class="form-control" id="image" name="image"
                                     accept="image/*">

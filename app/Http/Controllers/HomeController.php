@@ -25,16 +25,19 @@ class HomeController extends Controller
         $comments = comment::with('sender')->latest()->get();
         $pendingCount = Order::where('status', 'pending')->count();
         //dd($activities);
-        return view('admin.dashboard', compact('foods', 'users', 'orders','nonAdminUsers', 'activities', 'comments','pendingCount'));
+        return view('admin.dashboard', compact('foods', 'users', 'orders', 'nonAdminUsers', 'activities', 'comments', 'pendingCount'));
     }
     public function create()
     {
-        return view('admin.create');
+        $categories = Food::distinct()->pluck('category');
+
+        return view('admin.create', compact('categories'));
     }
     public function store(Request $request)
     {
         $data = $request->validate([
             'name' => 'required',
+            'category' => 'required|exists:food,category',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'price' => 'required|numeric|min:0',
             'description' => 'nullable|string',
@@ -55,13 +58,17 @@ class HomeController extends Controller
     public function edit($id)
     {
         $food = Food::findOrFail($id); // Assuming you have a Food model and 'id' is the primary key
-        return view('admin.edit', compact('food'));
+        $categories = Food::select('category')->distinct()->pluck('category');
+
+        // Pass the food item and categories to the view
+        return view('admin.edit', compact('food', 'categories'));
     }
 
     public function update(Request $request, Food $food)
     {
         $data = $request->validate([
             'name' => 'required',
+            'category' => 'required|exists:food,category',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'price' => 'required|numeric|min:0',
             'description' => 'nullable|string',
@@ -84,35 +91,36 @@ class HomeController extends Controller
         return view('admin.view', ['food' => $food]);
     }
 
-    public function destroy(Food $food){
-    activity()->performedOn($food)
-    ->causedBy(auth()->user()) // Associate the activity with the logged-in user
-    ->event('updated')
-    ->log('deleted');
+    public function destroy(Food $food)
+    {
+        activity()->performedOn($food)
+            ->causedBy(auth()->user()) // Associate the activity with the logged-in user
+            ->event('updated')
+            ->log('deleted');
         $food->delete();
         return redirect(route('admin.dashboard'));
     }
     public function getActivityLog(Request $request)
-{
-    $query = Activity::with('causer') // Eager load the user
-                     ->latest();
+    {
+        $query = Activity::with('causer') // Eager load the user
+            ->latest();
 
-    if ($request->has('user_id') && $request->user_id) {
-        $query->where('causer_id', $request->user_id); // Filter by user ID
+        if ($request->has('user_id') && $request->user_id) {
+            $query->where('causer_id', $request->user_id); // Filter by user ID
+        }
+
+        if ($request->has('date_from') && $request->date_from) {
+            $query->whereDate('created_at', '>=', $request->date_from);
+        }
+
+        if ($request->has('date_to') && $request->date_to) {
+            $query->whereDate('created_at', '<=', $request->date_to);
+        }
+
+        $activities = $query->get();
+
+        return response()->json($activities);
     }
-
-    if ($request->has('date_from') && $request->date_from) {
-        $query->whereDate('created_at', '>=', $request->date_from);
-    }
-
-    if ($request->has('date_to') && $request->date_to) {
-        $query->whereDate('created_at', '<=', $request->date_to);
-    }
-
-    $activities = $query->get();
-
-    return response()->json($activities);
-}
 
 
     public function fetchComments()
@@ -164,5 +172,4 @@ class HomeController extends Controller
 
         return redirect()->back()->with('error', 'Order not found.');
     }
-
 }

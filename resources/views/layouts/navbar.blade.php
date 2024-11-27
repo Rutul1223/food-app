@@ -9,97 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        body {
-            overflow-x: hidden;
-        }
-        .navbar {
-            background-color: #EEEDEB;
-            padding: 10px;
-            /* border-bottom-left-radius: 20px; */
-            /* border-bottom-right-radius: 20px; */
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .navbar-brand {
-            color: rgba(7, 58, 2, 0.288) !important;
-            font-weight: bold;
-        }
-        .navbar ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-        .navbar li {
-            padding: 0 15px;
-        }
-        .navbar-nav .nav-link {
-            position: relative;
-            transition: color 0.3s ease;
-        }
-        .navbar-nav .nav-link::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -3px;
-            width: 0;
-            height: 2px;
-            background-color: rgb(0, 0, 0);
-            transition: width 0.3s ease;
-        }
-        .navbar-nav .nav-link:hover::after {
-            width: 100%;
-        }
-           /* Simplified dropdown styles */
-        .profile-dropdown {
-            position: relative;
-        }
-
-        .profile-dropdown img {
-            cursor: pointer;
-            border: 2px solid #EEEDEB;
-            transition: border-color 0.3s;
-        }
-
-        .profile-dropdown img:hover {
-            border-color: #ccc;
-        }
-
-        .dropdown-menu {
-            position: absolute;
-            right: 0;
-            top: 100%;
-            margin-top: 5px;
-            background-color: white;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            display: none; /* Hidden by default */
-            z-index: 10;
-        }
-
-        .dropdown-menu.show {
-            display: block; /* Show dropdown when toggled */
-        }
-
-        .dropdown-menu .dropdown-item {
-            padding: 10px 20px;
-            color: #2F3645;
-            text-align: left;
-            transition: background-color 0.3s;
-        }
-
-        .dropdown-menu .dropdown-item:hover {
-            background-color: #f7f7f7;
-        }
-        /* Menu Dropdown */
-    .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
-        display: block;  /* Show dropdown on hover */
-    }
-
-    .dropdown-menu li {
-        list-style-type: none;
-    }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/navbar.css') }}">
 </head>
 
 <body>
@@ -109,12 +19,15 @@
             <a class="navbar-brand" href="/">Food</a>
 
             <!-- Navbar Toggler for Mobile View -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- Search Section -->
-            <form action="{{ route('food.search') }}" method="GET" class="d-flex ms-3" style="max-width: 300px; width: 100%;">
-                <input class="form-control me-2" type="search" name="search" placeholder="Find Your Fav F🍔🥘d!!" aria-label="Search">
+            <form action="{{ route('food.search') }}" method="GET" class="d-flex ms-3"
+                style="max-width: 300px; width: 100%;">
+                <input class="form-control me-2" type="search" name="search" placeholder="Find Your Fav F🍔🥘d!!"
+                    aria-label="Search">
                 <button class="btn btn-outline-dark" type="submit"><i class="fas fa-search"></i></button>
             </form>
 
@@ -125,23 +38,25 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/welcome" style="color: #2F3645; text-decoration:none">Home</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link" href="#" style="color: #2F3645; text-decoration:none" id="menuLink">Menu</a>
-                        <!-- Dropdown will be populated here -->
-                        <ul class="dropdown-menu" id="foodDropdown"></ul>
-                    </li>
+                    @guest
+                    @else
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('order.view') }}"
+                                style="color: #2F3645; text-decoration:none">Orders</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#" style="color: #2F3645; text-decoration:none"
+                                id="menuLink">Menu</a>
+                            <!-- Dropdown will be populated here -->
+                            <ul class="dropdown-menu" id="foodDropdown"></ul>
+                        </li>
+                    @endguest
                     <li class="nav-item">
                         <a class="nav-link" href="#" style="color: #2F3645; text-decoration:none">About us</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" style="color: #2F3645; text-decoration:none">Contact us</a>
                     </li>
-                    @guest
-                    @else
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('order.view') }}" style="color: #2F3645; text-decoration:none">Orders</a>
-                        </li>
-                    @endguest
                 </ul>
 
                 <!-- Right-Aligned Icons and Dropdown -->
@@ -156,7 +71,8 @@
                     @else
                         <!-- Cart Icon -->
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('cart.view') }}" style="color: #000000; text-decoration:none">
+                            <a class="nav-link" href="{{ route('cart.view') }}"
+                                style="color: #000000; text-decoration:none">
                                 <i style="font-size:20px" class="fas">&#xf07a;</i>
                                 @if ($cartCount > 0)
                                     <span class="badge bg-danger">{{ $cartCount }}</span>
@@ -165,18 +81,16 @@
                         </li>
                         <!-- Favorite Icon -->
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('food.fav') }}" style="color: rgb(168, 20, 20); text-decoration:none">
+                            <a class="nav-link" href="{{ route('food.fav') }}"
+                                style="color: rgb(168, 20, 20); text-decoration:none">
                                 <i style="font-size:20px" class="fas fa-heart fav"></i>
                             </a>
                         </li>
                         <!-- User Dropdown -->
                         <div class="profile-dropdown">
                             <!-- Profile Image -->
-                            <img src="{{ asset('storage/' . Auth::user()->image) }}"
-                                 alt="Profile Image"
-                                 class="rounded-circle"
-                                 style="width: 40px; height: 40px;"
-                                 id="dropdownToggle">
+                            <img src="{{ asset('storage/' . Auth::user()->image) }}" alt="Profile Image"
+                                class="rounded-circle" style="width: 40px; height: 40px;" id="dropdownToggle">
                             <!-- Dropdown Menu -->
                             <ul class="dropdown-menu" id="profileDropdown">
                                 <li><a class="dropdown-item" href="/profile">Profile</a></li>
@@ -199,34 +113,30 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        $(document).ready(function() {
+            // Fetch food categories and item counts via AJAX
+            $.ajax({
+                url: '{{ route('food.items') }}', // URL to the route
+                method: 'GET',
+                success: function(data) {
+                    // Check if there is any data
+                    if (data.length > 0) {
+                        let dropdown = $('#foodDropdown');
+                        dropdown.empty(); // Clear the dropdown
 
-$(document).ready(function() {
-    // Fetch food items via AJAX
-    $.ajax({
-        url: '{{ route("food.items") }}', // URL to the route
-        method: 'GET',
-        success: function(data) {
-            // Check if there is any data
-            if (data.length > 0) {
-                let dropdown = $('#foodDropdown');
-                dropdown.empty(); // Clear the dropdown
-
-                // Add a default "Select a food item" option
-                dropdown.append('<li><a class="dropdown-item" href="#">Select a food item</a></li>');
-
-                // Loop through each food item and add to the dropdown
-                data.forEach(function(food) {
-                    dropdown.append(`
-                        <li><a class="dropdown-item" href="#">${food.name}</a></li>
-                    `);
-                });
-            }
-        },
-        error: function(xhr, status, error) {
-            console.log("Error fetching food items: " + error);
-        }
-    });
-});
+                        // Loop through each category and display category name with item count
+                        data.forEach(function(category) {
+                            dropdown.append(`
+                                <li><a class="dropdown-item" href="#">${category.category} <span class="badge bg-primary">${category.item_count}</span></a></li>
+                            `);
+                        });
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log("Error fetching food categories: " + error);
+                }
+            });
+        });
 
         document.addEventListener("DOMContentLoaded", function() {
             const navbarLinks = document.querySelectorAll('.navbar-nav .nav-link');
@@ -251,20 +161,20 @@ $(document).ready(function() {
         });
 
         // Toggle Dropdown Visibility
-    document.getElementById('dropdownToggle').addEventListener('click', function () {
-        const dropdown = document.getElementById('profileDropdown');
-        dropdown.classList.toggle('show');
-    });
+        document.getElementById('dropdownToggle').addEventListener('click', function() {
+            const dropdown = document.getElementById('profileDropdown');
+            dropdown.classList.toggle('show');
+        });
 
-    // Close dropdown if clicked outside
-    document.addEventListener('click', function (e) {
-        const dropdown = document.getElementById('profileDropdown');
-        const toggle = document.getElementById('dropdownToggle');
+        // Close dropdown if clicked outside
+        document.addEventListener('click', function(e) {
+            const dropdown = document.getElementById('profileDropdown');
+            const toggle = document.getElementById('dropdownToggle');
 
-        if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
-            dropdown.classList.remove('show');
-        }
-    });
+            if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
 
         function confirmLogout(event) {
             event.preventDefault();
