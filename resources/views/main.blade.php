@@ -23,15 +23,17 @@
                     $image = $images[$food->category] ?? 'https://img.freepik.com/free-photo/delicious-burger-with-fresh-ingredients_23-2150857908.jpg?semt=ais_hybrid'; // Default image
                 @endphp
                 <div class="col-4 col-md-4 mb-4">
-                    <div class="category-card shadow-lg overflow-hidden position-relative">
-                        <!-- Category Image -->
-                        <img src="{{ $image }}" alt="{{ $food->category }}" class="img-fluid w-100 category-img">
+                    <a href="{{ route('welcome', ['category' => $food->category]) }}">
+                        <div class="category-card shadow-lg overflow-hidden position-relative">
+                            <!-- Category Image -->
+                            <img src="{{ $image }}" alt="{{ $food->category }}" class="img-fluid w-100 category-img">
 
-                        <!-- Category Overlay Text -->
-                        <div class="category-overlay d-flex align-items-center justify-content-center">
-                            <h4 class="text-white font-weight-bold">{{ $food->category }}</h4>
+                            <!-- Category Overlay Text -->
+                            <div class="category-overlay d-flex align-items-center justify-content-center">
+                                <h4 class="text-white font-weight-bold">{{ $food->category }}</h4>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
             @endforeach
         </div>

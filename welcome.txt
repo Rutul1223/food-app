@@ -15,6 +15,7 @@
 
 <body>
     @include('layouts.navbar')
+    @include('layouts.carousel')
     <div class="container mt-5">
         <h2 class="text-center my-3 ">Food Items</h2>
         <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -29,7 +30,7 @@
                             @endif
                         </a>
                         <div class="card-body">
-                            <h5 class="card-title text-white">{{ $food->name }}
+                            <h5 class="card-title">{{ $food->name }}
                                 @auth
                                     <i data-food-id="{{ $food->id }}"
                                         class="fas fa-heart like-heart {{ $food->isFavorite ? 'favorite-added' : '' }}"
@@ -68,6 +69,34 @@
                     </div>
                 </div>
             @endforeach
+        </div>
+        <div class="row">
+            <div class="col">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination justify-content-center">
+                        @if ($foods->onFirstPage())
+                            <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                        @else
+                            <li class="page-item"><a class="page-link"
+                                    href="{{ $foods->previousPageUrl() }}">&laquo;</a>
+                            </li>
+                        @endif
+
+                        @foreach ($foods->getUrlRange(1, $foods->lastPage()) as $page => $url)
+                            <li class="page-item {{ $page == $foods->currentPage() ? 'active' : '' }}">
+                                <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                            </li>
+                        @endforeach
+
+                        @if ($foods->hasMorePages())
+                            <li class="page-item"><a class="page-link" href="{{ $foods->nextPageUrl() }}">&raquo;</a>
+                            </li>
+                        @else
+                            <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                        @endif
+                    </ul>
+                </nav>
+            </div>
         </div>
     </div>
     @include('layouts.footer')

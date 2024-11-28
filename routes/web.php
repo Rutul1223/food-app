@@ -44,6 +44,9 @@ Route::get('/food-items', [FoodController::class, 'getFoodItems'])->name('food.i
 
 
 Route::middleware('auth')->group(function () {
+
+    Route::get('/welcome/{category?}', [FoodController::class, 'categoryIndex'])->name('welcome');
+
     Route::get('/food/{id}', [FoodController::class, 'show'])->name('food.show');
     Route::post('/favorite', [FoodController::class, 'favorite'])->name('food.favorite');
     Route::get('/favorites', [FoodController::class, 'showFavorites'])->name('food.fav');

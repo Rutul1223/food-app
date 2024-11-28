@@ -14,7 +14,6 @@ class FoodController extends Controller
     {
          $food = Food::findOrFail($id);
     $foods = Food::all();
-
     // Check if the authenticated user has marked the food as favorite
     $user = Auth::user();
     if ($user) {
@@ -85,5 +84,17 @@ class FoodController extends Controller
                                 ->get();
 
         return response()->json($foodCategories);
+    }
+    public function categoryIndex($category = null){
+        if ($category) {
+            // Fetch items by the selected category
+            $foods = Food::where('category', $category)->get();
+        } else {
+            // Fetch all items if no category is selected
+            $foods = Food::all();
+        }
+
+        // Pass the items to the view
+        return view('welcome', compact('foods'));
     }
 }

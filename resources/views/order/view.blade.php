@@ -18,12 +18,6 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-       /* body {
-            background-color: #E6B9A6 !important;
-            font-family: Arial, sans-serif;
-            color: #333;
-        }*/
-
 
         .card {
             /*background-color: #939185 !important;*/
@@ -89,7 +83,7 @@
     </style>
 </head>
 
-<body>
+<body style="background-color: #303030">
     @include('layouts.navbar')
 
     <div class="container">

@@ -5,10 +5,6 @@
         </h2>
     </x-slot>
 
-    {{-- <button style="color: white; margin: 3px; padding: 5px 10px; cursor: pointer;" class="bg-black rounded-xl">
-        <a href="/welcome" style="text-decoration: none; color: white;">&lt;- Back To Food</a>
-    </button> --}}
-
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <!-- Grid layout for Update Profile and Update Password side by side -->

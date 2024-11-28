@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-color: #E6B9A6 !important;
+            background-color: #303030 !important;
         }
 
         img {
@@ -18,7 +18,7 @@
         .no-favorites-container {
             text-align: center;
             padding: 40px;
-            background-color: #FFF5F3;
+            background-color: #494949;
             border: 2px dashed #FF6F61;
             border-radius: 15px;
             box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -34,7 +34,7 @@
 
         .no-favorites-container p {
             font-size: 1rem;
-            color: #555;
+            color: #d3d3d3;
             margin-bottom: 20px;
         }
 
@@ -45,7 +45,7 @@
 
         .no-favorites-container a {
             display: inline-block;
-            background-color: #FF6F61;
+            background-color: #332c2c;
             color: white;
             padding: 10px 20px;
             font-size: 1rem;
@@ -56,11 +56,11 @@
         }
 
         .no-favorites-container a:hover {
-            background-color: #e35b50;
+            background-color: #000000;
         }
 
         .food-details-container {
-            background-color: #EEEDEB;
+            background-color: #494949;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -77,7 +77,7 @@
 
         .card-text {
             font-size: 1rem;
-            color: #333;
+            color: rgb(156, 154, 154);
         }
         .cont{
             gap: 6vw;
@@ -96,7 +96,7 @@
                         <img src="/storage/images/foods/empty_favorites.png" alt="No Favorites">
                         <h3>No Favorites Yet!</h3>
                         <p>You haven’t added any items to your favorites. Start exploring and add your favorite items to this list.</p>
-                        <a href="{{ route('welcome') }}">Browse Food Items</a>
+                        <a href="{{ route('main') }}">Browse Food Items</a>
                     </div>
                     @else
                     @foreach($favorites as $favorite)
@@ -112,7 +112,7 @@
                         <div
                             class="d-flex flex-column flex-md-row align-items-center justify-content-between ms-md-3 mt-3 mt-md-0">
                             <div class="cont d-flex">
-                                <h5 class="card-title">{{ $favorite->food->name }}</h5>
+                                <h5 class="card-title text-white">{{ $favorite->food->name }}</h5>
                                 <p class="card-text"><b>Rs. {{ $favorite->food->price }}</b></p>
                                 <i class="fas fa-heart like-heart" style="color: red;"><form id="favoriteForm{{ $favorite->food->id }}" action="{{ route('food.favorite') }}" method="POST"
                                     style="display: none;"></form>

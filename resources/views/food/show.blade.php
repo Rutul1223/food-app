@@ -63,11 +63,11 @@
                         <!-- Food Items -->
                         <div id="food-items-container" class="row2 flex-grow-1 mx-5">
                             @foreach ($foods as $index => $foodItem)
-                                <div class="card">
+                                <div class="card bg-dark">
                                     <img class="card-img-top" src="{{ asset('storage/' . $foodItem->image) }}"
                                         alt="{{ $foodItem->name }}">
-                                    <h5 class="card-title">{{ $foodItem->name }}</h5>
-                                    <p class="card-text">Rs. {{ $foodItem->price }}</p>
+                                    <h5 class="card-title text-white">{{ $foodItem->name }}</h5>
+                                    <p class="card-text text-white">Rs. {{ $foodItem->price }}</p>
                                     <button class="btn btn-sm btn-warning mark-favorite" data-id="{{ $foodItem->id }}">
                                         <i class="{{ $foodItem->isFavorite ? 'fas' : 'far' }} fa-heart"></i>
                                         {{ $foodItem->isFavorite ? 'Unmark' : 'Mark as Favorite' }}

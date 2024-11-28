@@ -1,11 +1,11 @@
 /* General Body Styling */
 body {
-    background-color: #E6B9A6 !important;
+    background-color: #303030 !important;
 }
 
 /* Food Details Container */
 .food-details-container {
-    background-color: #EEEDEB;
+    background-color: #000000;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -15,6 +15,15 @@ body {
 .detail-img {
     width: 100%;
     border-radius: 8px;
+}
+.row h3{
+    color: red;
+}
+.row h2{
+    color: dimgray;
+}
+.row h4{
+    color: lightslategrey;
 }
 
 .crt {
@@ -56,9 +65,7 @@ body {
     width: 150px; /* Set a fixed width for cards */
     height: auto;
     text-align: center;
-    background: #FFF;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
 }
 

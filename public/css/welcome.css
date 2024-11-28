@@ -1,71 +1,19 @@
 body {
-    background-color: #E6B9A6 !important;
+    background-color: #303030 !important;
 }
 .container h2 {
     background: linear-gradient(90deg, #1d0b07, #c2c2c2); /* Gradient for header */
     color: white; /* Text color for contrast */
-    padding: 15px; /* Padding for better spacing */
     border-radius: 8px; /* Rounded corners */
-    font-family: 'Poppins', sans-serif; /* Modern font */
-    font-weight: 600; /* Bolder font weight */
+    font-weight: 100; /* Bolder font weight */
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     text-transform: uppercase; /* Make text uppercase */
     letter-spacing: 1.5px; /* Add some spacing between letters */
     font-family: Georgia, serif;
 }
 
-.carousel-image-container {
-    position: relative;
-    width: 100%;
-}
-
-.carousel-text {
-    position: absolute;
-    top: 50%;
-    left: 20px;
-    transform: translateY(-50%);
-    color: white;
-    font-family: Arial, sans-serif;
-    z-index: 2;
-    background: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
-    padding: 20px;
-    border-radius: 8px;
-}
-
-.carousel-text h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
-}
-
-.carousel-text p {
-    font-size: 1rem;
-    margin-bottom: 0;
-    line-height: 1.5;
-}
-
-.carousel-inner img {
-    object-fit: cover; /* Ensures the image covers the container */
-    width: 100%;
-    height: 400px; /* Set height for mobile view */
-    transition: all 0.5s ease; /* Smooth transition */
-}
-
-/* Make adjustments for desktop view */
-@media (min-width: 768px) {
-    .carousel-inner img {
-        height: 600px; /* Increase image height for desktop */
-    }
-
-    .carousel-text h2 {
-        font-size: 3rem; /* Larger text on desktop */
-    }
-
-    .carousel-text p {
-        font-size: 1.2rem; /* Larger paragraph text on desktop */
-    }
-}
 .card {
-    background-color: #EEEDEB !important;
+    background-color: #000000 !important;
     border-radius: 8px;
     border-color: black;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

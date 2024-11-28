@@ -74,7 +74,7 @@
                 <div class="food-details-container">
                     <div class="d-flex justify-content-between align-items-center">
                         @if ($carts->count() > 0)
-                            <div style="color: #2F3645;">
+                            <div style="color: #fff7f7; font-size:large">
                                 Total Price: ₹ <span id="total-price">0.00</span>
                             </div>
 

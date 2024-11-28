@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-red-100 ">
+<nav x-data="{ open: false }" class="bg-black ">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -10,22 +10,15 @@
                     </a>
                 </div>
 
-                <!-- Navigation Links -->
-                {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-black">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div> --}}
-
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     @if (auth()->user() && auth()->user()->usertype === 'admin')
                         <!-- Link for admin users -->
-                        <x-nav-link :href="url('admin/dashboard')" :active="request()->routeIs('admin.admin/dashboard')" class="text-black">
+                        <x-nav-link :href="url('admin/dashboard')" :active="request()->routeIs('admin.admin/dashboard')" class="text-white">
                             {{ __('Admin Dashboard') }}
                         </x-nav-link>
                     @else
                         <!-- Link for regular users -->
-                        <x-nav-link :href="route('welcome')" :active="request()->routeIs('welcome')" class="text-black">
+                        <x-nav-link :href="route('welcome')" :active="request()->routeIs('main')" class="text-white">
                             {{ __('Home') }}
                         </x-nav-link>
                     @endif
@@ -37,7 +30,7 @@
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
-                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-pink-200 focus:outline-none transition ease-in-out duration-150">
+                            class="inline-flex items-center px-3 py-2 border border-transparent leading-4 font-large  text-gray-300 bg-black focus:outline-none transition ease-in-out duration-150">
                             <div>{{ Auth::user()->name }}</div>
                             <div class="ms-1">
                                 <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg"
@@ -88,8 +81,8 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
+            <x-responsive-nav-link :href="route('main')" :active="request()->routeIs('main')">
+                {{ __('Home') }}
             </x-responsive-nav-link>
         </div>
 

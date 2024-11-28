@@ -126,8 +126,13 @@
 
                         // Loop through each category and display category name with item count
                         data.forEach(function(category) {
+                            let categoryRoute = `{{ url('/welcome') }}/${category.category}`;
                             dropdown.append(`
-                                <li><a class="dropdown-item" href="#">${category.category} <span class="badge bg-primary">${category.item_count}</span></a></li>
+                                <li>
+                                    <a class="dropdown-item" href="${categoryRoute}">
+                                        ${category.category} <span class="badge bg-primary">${category.item_count}</span>
+                                    </a>
+                                </li>
                             `);
                         });
                     }

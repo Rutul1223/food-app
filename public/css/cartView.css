@@ -1,9 +1,9 @@
 body {
-    background-color: #E6B9A6 !important;
+    background-color: #303030 !important;
 }
 
 .food-details-container {
-    background-color: #EEEDEB;
+    background-color: #494949;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -18,25 +18,12 @@ img {
 
 .cont h3 {
     margin-left: 1vw;
-    color: #2F3645;
+    color: red;
 }
 
-.card-title {
+.cont .card-title {
     margin-left: 1.1vw;
-    color: #2F3645;
-}
-.savings-message {
-    font-size: 18px;
-    font-weight: bold;
-    color: #fff;
-    background-color: #28a745; /* Green background for better visibility */
-    padding: 10px 20px;
-    border-radius: 8px;
-    text-align: center;
-    margin-bottom: 20px;
-    display: none; /* Initially hidden */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add a shadow for better visibility */
-    animation: slideIn 0.5s ease-out; /* Optional animation for smooth appearance */
+    color: #929292;
 }
 
 @keyframes slideIn {
@@ -77,12 +64,12 @@ form button {
 .no-carts-container {
     text-align: center;
     padding: 40px;
-    background-color: #FFF5F3;
+    background-color: #494949;
     border: 2px dashed #FF6F61;
     border-radius: 15px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
-    color: #333;
+    color: #d3d3d3;
 }
 
 .no-carts-container h3 {
@@ -93,7 +80,7 @@ form button {
 
 .no-carts-container p {
     font-size: 1rem;
-    color: #555;
+    color: #d3d3d3;
     margin-bottom: 20px;
 }
 
@@ -104,7 +91,7 @@ form button {
 
 .no-carts-container a {
     display: inline-block;
-    background-color: #FF6F61;
+    background-color: #332c2c;
     color: white;
     padding: 10px 20px;
     font-size: 1rem;
@@ -115,5 +102,5 @@ form button {
 }
 
 .no-carts-container a:hover {
-    background-color: #e35b50;
+    background-color: #000000;
 }
