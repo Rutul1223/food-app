@@ -105,7 +105,8 @@ class CartController extends Controller
         $totalPrice = $carts->sum(function ($cart) {
             return $cart->quantity * $cart->food->price;
         });
-        return view('payment.payment', compact('carts', 'totalPrice'));
+        $userAddress = Auth::user()->address;
+        return view('payment.payment', compact('carts', 'totalPrice','userAddress'));
     }
     public function updateQuantity(Request $request, $id)
     {

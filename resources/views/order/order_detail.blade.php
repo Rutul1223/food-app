@@ -5,6 +5,12 @@
 </head>
 @include('layouts.navbar')
 <style>
+    body{
+        background-color: #303030;
+    }
+    .container h2{
+        color:#929292;
+    }
     .bg-accept {
         background-color: green !important;
         color: white !important;
@@ -42,6 +48,7 @@
         margin-left: auto;
     }
 </style>
+<body>
 <div class="container">
     <h2 class="text-center py-2">Order Details</h2>
 
@@ -126,6 +133,7 @@
         </div>
     </div>
 </div>
+</body>
 
 
 <!-- Include chat view -->
