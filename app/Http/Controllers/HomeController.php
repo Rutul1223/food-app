@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\OrderStatusUpdated;
 use App\Models\comment;
 use App\Models\Food;
 use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Spatie\Activitylog\Models\Activity;
 
 class HomeController extends Controller
@@ -166,8 +168,10 @@ class HomeController extends Controller
         if ($order) {
             $order->status = $request->status; // Update status
             $order->save();
+
+            Mail::to($order->user->email)->send(new OrderStatusUpdated($order, $request->status));
             // Optionally, you can return a response or redirect
-            return redirect()->route('admin.dashboards', $orderId)->with('success', 'Order status updated successfully.');
+            return redirect()->route('admin.dashboards', $orderId)->with('success', 'Order status updated and email sent successfully.');
         }
 
         return redirect()->back()->with('error', 'Order not found.');

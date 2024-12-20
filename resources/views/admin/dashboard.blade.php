@@ -224,7 +224,7 @@
                                                 <td>{{ $order->user_id }}</td>
                                                 <td>
                                                     @foreach (json_decode($order->foods) as $food)
-                                                        <b>{{ $food->name }} (Quantity: {{ $food->pivot->quantity }})<br></b>
+                                                        <b>{{ $food->name }} (Quantity: {{ $food->pivot->quantity }})<br>
                                                     @endforeach
                                                 </td>
                                                 <td>{{ $order->total_amount }}</td>
@@ -301,7 +301,7 @@
                     <div id="commentsContent" style="display:none;">
                         <div class="card shadow border-0 mb-7">
                             <div class="card-body">
-                                <div id="commentsList" class="mb-3" style="max-height: 300px; overflow-y: auto;">
+                                <div id="commentsList" class="mb-3" style="max-height: 600px; overflow-y: auto;">
                                     <!-- Comments will be populated here -->
                                 </div>
                             </div>
