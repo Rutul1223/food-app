@@ -8,110 +8,7 @@
     <title>Admin</title>
     <link rel="icon" type="image/x-icon" href="/storage/images/foods/burger.png">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <style>
-        @import url(https://unpkg.com/@webpixels/css@1.1.5/dist/index.css);
-        @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.4.0/font/bootstrap-icons.min.css");
-
-        .navbar-brand {
-            color: rgba(7, 58, 2, 0.288) !important;
-            font-weight: bold;
-        }
-
-        .notification {
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 0.375rem;
-            padding: 10px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .timestamp {
-            font-size: 0.8rem;
-            color: #6c757d;
-        }
-
-        .page-item.active .page-link {
-            background-color: #000000;
-
-            border-color: #28a745;
-        }
-
-        .page-link {
-            color: #000000;
-            background-color: white;
-            border: 1px solid #dee2e6;
-        }
-
-        .page-link:focus {
-            box-shadow: none;
-            /* Remove focus outline */
-        }
-
-        .custom-badge {
-            background-color: #ff4757;
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.75rem;
-            font-weight: bold;
-            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-            display: inline-block;
-            min-width: 1.5rem;
-            text-align: center;
-        }
-
-        .custom-badge:empty {
-            display: none;
-        }
-
-        .popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-            width: 400px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1000;
-            display: none;
-        }
-
-        .popup-content {
-            background-color: white;
-            padding: 20px;
-            border-radius: 5px;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        button {
-            padding: 10px 20px;
-            margin-top: 10px;
-            border-radius: 5px;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            color: white;
-            border: none;
-        }
-
-        .btn-secondary {
-            background-color: #6c757d;
-            color: white;
-            border: none;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
 </head>
 
 <body>
@@ -312,6 +209,7 @@
                                         <tr>
                                             <th scope="col">Order Id</th>
                                             <th scope="col">User Id</th>
+                                            <th scope="col">Food detail</th>
                                             <th scope="col">Total Amount (Rs)</th>
                                             <th scope="col">Address</th>
                                             <th scope="col">Request At</th>
@@ -324,6 +222,11 @@
                                             <tr>
                                                 <td>{{ $order->id }}</td>
                                                 <td>{{ $order->user_id }}</td>
+                                                <td>
+                                                    @foreach (json_decode($order->foods) as $food)
+                                                        <b>{{ $food->name }} (Quantity: {{ $food->pivot->quantity }})<br></b>
+                                                    @endforeach
+                                                </td>
                                                 <td>{{ $order->total_amount }}</td>
                                                 <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
                                                     title="{{ $order->address }}">
