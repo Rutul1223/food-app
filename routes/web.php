@@ -42,6 +42,14 @@ Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')
 // In routes/web.php or routes/api.php
 Route::get('/food-items', [FoodController::class, 'getFoodItems'])->name('food.items');
 
+Route::get('/about-us', function () {
+    return view('abouts-us.about-us');
+})->name('about-us');
+
+Route::get('/contact-us', function () {
+    return view('contact-us.contact-us');
+})->name('contact-us');
+
 
 Route::middleware('auth')->group(function () {
 

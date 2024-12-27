@@ -52,10 +52,10 @@
                         </li>
                     @endguest
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="color: #ffffff; text-decoration:none">About us</a>
+                        <a class="nav-link" href="/about-us" style="color: #ffffff; text-decoration:none">About us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="color: #ffffff; text-decoration:none">Contact us</a>
+                        <a class="nav-link" href="/contact-us" style="color: #ffffff; text-decoration:none">Contact us</a>
                     </li>
                 </ul>
 

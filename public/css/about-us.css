@@ -1,0 +1,94 @@
+.about-us-page {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #b92222, #251111);
+    color: #fff;
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.hero-section h1 {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.hero-section p {
+    font-size: 18px;
+}
+
+.about-section {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+.about-section h2 {
+    font-size: 32px;
+    color: #b30b0b;
+    margin-bottom: 20px;
+}
+
+.about-section p {
+    font-size: 18px;
+    color: #b1a9a9;
+}
+
+.about-stats {
+    padding: 40px 20px;
+}
+
+.stats-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    width: 200px;
+}
+
+.stat-item h3 {
+    font-size: 36px;
+    color: #ff6f00;
+}
+
+.stat-item p {
+    font-size: 16px;
+    color: #777;
+}
+
+.team-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.team-member {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    width: 250px;
+}
+
+.team-member img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
