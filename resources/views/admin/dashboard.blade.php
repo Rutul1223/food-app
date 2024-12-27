@@ -33,20 +33,28 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" id="allItemsTab" class="nav-link active">All Items</a>
+                            <a href="#" id="allItemsTab" class="nav-link active">
+                                <i class="bi bi-bag"></i>All Items
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" id="sharedTab" class="nav-link font-regular">Users</a>
+                            <a href="#" id="sharedTab" class="nav-link font-regular">
+                                <i class="bi bi-people"></i>Users
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" id="foodRequestsTab" class="nav-link font-regular">Food Requests<span
+                            <a href="#" id="foodRequestsTab" class="nav-link font-regular">
+                                <i class="bi bi-bell"></i>Food Requests<span
                                     id="pendingBadge" class="badge custom-badge">{{ $pendingCount }}</span></a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" id="activityLogTab" class="nav-link font-regular">Activity Log</a>
+                            <a href="#" id="activityLogTab" class="nav-link font-regular">
+                                <i class="bi bi-hourglass"></i>Activity Log
+                            </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#" id="commentsTab" class="nav-link font-regular">Comments<span
+                            <a href="#" id="commentsTab" class="nav-link font-regular">
+                                <i class="bi bi-chat"></i>Comments<span
                                     id="unreadBadge" class="badge custom-badge"></span></a>
                         </li>
                     </ul>
@@ -54,7 +62,8 @@
                     <hr class="navbar-divider my-5 opacity-20">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="/superAdmin/analytics" class="nav-link font-regular">Analytics log</a>
+                            <a href="/superAdmin/analytics" class="nav-link font-regular">
+                                <i class="bi bi-graph-up"></i>Analytics log</a>
                         </li>
                     </ul>
 
