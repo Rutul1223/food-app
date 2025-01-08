@@ -52,6 +52,10 @@
                                 <small class="form-text text-muted">Upload an image file for the product.</small>
                             </div>
                             <div class="mb-3">
+                                <label for="time" class="form-label">Time:</label>
+                                <input type="time" id="time" name="time" required>
+                            </div>
+                            <div class="mb-3">
                                 <label for="description" class="form-label">Food Description</label>
                                 <textarea class="form-control" id="description" name="description" placeholder="Enter food description"></textarea>
                             </div>
