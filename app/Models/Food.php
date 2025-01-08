@@ -17,6 +17,7 @@ class Food extends Model
         'description',
         'price',
         'category',
+        'time',
     ];
     public function favorites()
     {
