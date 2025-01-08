@@ -41,6 +41,7 @@ class HomeController extends Controller
             'name' => 'required',
             'category' => 'required|exists:food,category',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'time' => 'required|date_format:H:i',
             'price' => 'required|numeric|min:0',
             'description' => 'nullable|string',
         ]);
@@ -72,6 +73,7 @@ class HomeController extends Controller
             'name' => 'required',
             'category' => 'required|exists:food,category',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'time' => 'required|date_format:H:i',
             'price' => 'required|numeric|min:0',
             'description' => 'nullable|string',
         ]);
