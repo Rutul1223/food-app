@@ -220,9 +220,9 @@
                                         <tr>
                                             <th scope="col">Order Id</th>
                                             <th scope="col">User Id</th>
-                                            <th scope="col">Food detail</th>
+                                            <th scope="col">Ordered detail</th>
                                             <th scope="col">Total Amount (Rs)</th>
-                                            <th scope="col">Address</th>
+                                            {{-- <th scope="col">Address</th> --}}
                                             <th scope="col">Request At</th>
                                             <th scope="col">status</th>
                                             <th></th>
@@ -234,15 +234,37 @@
                                                 <td>{{ $order->id }}</td>
                                                 <td>{{ $order->user_id }}</td>
                                                 <td>
-                                                    @foreach (json_decode($order->foods) as $food)
-                                                        <b>{{ $food->name }} (Quantity: {{ $food->pivot->quantity }})<br>
-                                                    @endforeach
+                                                    <!-- Food Details Toggle -->
+                                                    <div>
+                                                        <button class="btn btn-link p-0 text-dark" data-bs-toggle="collapse"
+                                                            data-bs-target="#foodDetails{{ $order->id }}" aria-expanded="false" aria-controls="foodDetails{{ $order->id }}">
+                                                            <i class="bi bi-chevron-down"></i> Food Details
+                                                        </button>
+                                                        <div class="rowCollapse mt-2" id="foodDetails{{ $order->id }}">
+                                                            <ul style="padding-left: 20px; margin-bottom: 0;">
+                                                                @foreach (json_decode($order->foods) as $food)
+                                                                    <li>{{ $food->name }} (Qty: {{ $food->pivot->quantity }})</li>
+                                                                @endforeach
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Address Toggle -->
+                                                    <div>
+                                                        <button class="btn btn-link p-0 text-dark mt-2" data-bs-toggle="collapse"
+                                                            data-bs-target="#addressDetails{{ $order->id }}" aria-expanded="false" aria-controls="addressDetails{{ $order->id }}">
+                                                            <i class="bi bi-chevron-down"></i> Address
+                                                        </button>
+                                                        <div class="collapse mt-2" id="addressDetails{{ $order->id }}">
+                                                            <p>{{ $order->address }}</p>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <td>{{ $order->total_amount }}</td>
-                                                <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
+                                                {{-- <td style="max-width: 200px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
                                                     title="{{ $order->address }}">
                                                     {{ Str::limit($order->address, 30, '...') }}
-                                                </td>
+                                                </td> --}}
                                                 <td>{{ $order->created_at }}</td>
                                                 <td>{{ $order->status }}</td>
                                                 <td class="text-end">
@@ -622,6 +644,15 @@
                 }
             });
         }
+        document.addEventListener('click', function (e) {
+            const button = e.target.closest('[data-bs-toggle="collapse"]');
+            if (button) {
+                const icon = button.querySelector('i');
+                if (icon) {
+                    icon.classList.toggle('collapsed');
+                }
+            }
+        });
     </script>
 </body>
 

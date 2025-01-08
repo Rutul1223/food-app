@@ -100,3 +100,19 @@
             color: white;
             border: none;
         }
+        button.btn-link {
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+
+        .collapse {
+            padding: 0.5rem 0;
+        }
+
+        .bi-chevron-down {
+            transition: transform 0.3s;
+        }
+
+        .bi-chevron-down.collapsed {
+            transform: rotate(180deg);
+        }
