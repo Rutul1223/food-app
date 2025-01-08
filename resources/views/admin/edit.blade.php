@@ -64,6 +64,10 @@
                                 @endif
                             </div>
                             <div class="mb-3">
+                                <label for="time" class="form-label">Time:</label>
+                                <input type="time" id="time" name="time" value="{{ $food->time }}" required>
+                            </div >
+                            <div class="mb-3">
                                 <label for="description" class="form-label">Food Description</label>
                                 <textarea class="form-control" id="description" name="description">{{ $food->description }}</textarea>
                             </div>
