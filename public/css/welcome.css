@@ -27,6 +27,11 @@ body {
     height: 200px; /* Adjust the height as needed */
     object-fit: cover;
 }
+.time-badge {
+    font-size: 0.9rem; /* Adjust font size */
+    font-weight: bold;
+    z-index: 10; /* Ensure it's above the image */
+}
 
 .card-content {
     padding: 20px;

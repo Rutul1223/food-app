@@ -27,6 +27,9 @@
                             @else
                                 <div class="card-img-top text-center py-3">No Image</div>
                             @endif
+                            <div class="time-badge position-absolute top-0 end-0 bg-success text-white px-2 py-1 rounded-start">
+                                {{ $food->time ? \Carbon\Carbon::parse($food->time)->format('i') . ' minutes' : 'N/A' }}
+                            </div>
                         </a>
                         <div class="card-body">
                             <h5 class="card-title text-white">{{ $food->name }}
