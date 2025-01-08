@@ -129,6 +129,7 @@
                                             <th scope="col">Name</th>
                                             <th scope="col">Description</th>
                                             <th scope="col">Price</th>
+                                            <th scope="col">Time</th>
                                             <th scope="col">Id</th>
                                             <th scope="col">Category</th>
                                             <th scope="col">Schedule</th>
@@ -145,6 +146,7 @@
                                                 </td>
                                                 <td>{{ $food->description }}</td>
                                                 <td>{{ $food->price }}</td>
+                                                <td>{{ $food->time ? \Carbon\Carbon::parse($food->time)->format('i') . ' minutes' : 'N/A' }}</td>
                                                 <td>{{ $food->id }}</td>
                                                 <td>{{ $food->category }}</td>
                                                 <td>
