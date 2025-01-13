@@ -27,6 +27,10 @@
                         <div class="col-md-6">
                             <h2 class="mt-4"> {{ $food->name }}</h2>
                             <h3> Rs. {{ $food->price }}</h3>
+                            <div class="time-badge my-3">
+                                <i class="fas fa-clock"></i>
+                                {{ $food->time ? \Carbon\Carbon::parse($food->time)->format('i') . ' minutes' : 'N/A' }}
+                            </div>
                             <h4 class="card-description">{{ $food->description }}</h4>
                             <div class="text-warning">
                                 <i class="fas fa-star"></i>
