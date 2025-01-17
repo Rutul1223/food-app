@@ -9,6 +9,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialiteController;
 use App\Http\Controllers\SuperAdminController;
 use App\Models\Food;
+use App\Models\Order;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 
@@ -43,7 +45,10 @@ Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')
 Route::get('/food-items', [FoodController::class, 'getFoodItems'])->name('food.items');
 
 Route::get('/about-us', function () {
-    return view('abouts-us.about-us');
+    $orders = Order::all();
+    $foods = Food::all();
+    $users = User::all();
+    return view('abouts-us.about-us',compact('orders','foods','users'));
 })->name('about-us');
 
 Route::get('/contact-us', function () {

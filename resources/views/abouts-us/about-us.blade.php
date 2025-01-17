@@ -26,16 +26,16 @@
         <section class="about-stats">
             <div class="stats-grid">
                 <div class="stat-item">
-                    <h3>50M+</h3>
+                    <h3>{{ $orders->count() }}</h3>
                     <p>Orders Delivered</p>
                 </div>
                 <div class="stat-item">
-                    <h3>500+</h3>
-                    <p>Cities Covered</p>
+                    <h3>{{ $foods->count()  }}</h3>
+                    <p>Total Items Covered</p>
                 </div>
                 <div class="stat-item">
-                    <h3>100K+</h3>
-                    <p>Restaurant Partners</p>
+                    <h3>{{ $users->count()  }}</h3>
+                    <p>Customers</p>
                 </div>
             </div>
         </section>
@@ -54,17 +54,17 @@
             <h2>Meet the Team</h2>
             <div class="team-grid">
                 <div class="team-member">
-                    <img src="/images/team1.jpg" alt="CEO">
+                    <img src="https://images.unsplash.com/photo-1511765392540-a4f3d816bfbb?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="CEO">
                     <h3>Rutul Prj</h3>
                     <p>Founder & CEO</p>
                 </div>
                 <div class="team-member">
-                    <img src="/images/team2.jpg" alt="CTO">
+                    <img src="https://images.unsplash.com/photo-1495576596703-e0063a132b6e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTQ3fHxzaGFkb3clMjBwaWN8ZW58MHx8MHx8fDA%3D" alt="CTO">
                     <h3>Jane Smith</h3>
                     <p>Chief Technology Officer</p>
                 </div>
                 <div class="team-member">
-                    <img src="/images/team3.jpg" alt="COO">
+                    <img src="https://plus.unsplash.com/premium_photo-1664199486611-3e1277e150cd?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDV8fHVzZXJ8ZW58MHx8MHx8fDA%3D" alt="COO">
                     <h3>Mark Johnson</h3>
                     <p>Chief Operating Officer</p>
                 </div>
