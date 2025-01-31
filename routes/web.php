@@ -19,7 +19,6 @@ Route::get('/', function () {
 });
 
 Route::get('/welcome', function () {
-    $foods = Food::paginate(9);
     return view('welcome', compact('foods'));
 })->name('welcome');
 Route::get('/dashboard', function () {})->name('dashboard');
