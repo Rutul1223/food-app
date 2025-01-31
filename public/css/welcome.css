@@ -88,54 +88,6 @@ p.card-text.text-muted {
     gap: 1vw;
 }
 
-.pagination {
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.pagination .page-item {
-    display: inline-block;
-}
-
-.pagination .page-item.disabled .page-link {
-    color: #6c757d;
-    pointer-events: none;
-    background-color: #d69191;
-    border-color: #dee2e6;
-}
-
-.pagination .page-item.disabled .page-link:hover {
-    background-color: #f8faf8;
-    border-color: #dee2e6;
-}
-
-.pagination .page-item.active .page-link {
-    z-index: 1;
-    color: #fff;
-    background-color: #f56e6e;
-    border-color: #000000;
-}
-
-.pagination .page-link {
-    position: relative;
-    display: block;
-    padding: 0.5rem 0.75rem;
-    margin-left: -1px;
-    line-height: 1.25;
-    color: #ffffff;
-    background-color: #939185;
-    border: 1px solid #dee2e6;
-}
-
-.pagination .page-link:hover {
-    z-index: 2;
-    color: #0056b3;
-    text-decoration: none;
-    /* background-color: #000000; */
-    background-color: #d69191;
-    border-color: #dee2e6;
-}
-
 .like-heart {
     color: gray;
     margin-left: 15vw;
