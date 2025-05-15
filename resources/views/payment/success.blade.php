@@ -28,6 +28,6 @@
 
     <div class="mt-4 text-center">
         <a href="{{ route('orders.downloadCsv', $order->id) }}" class="btn btn-primary">Download Order Details</a>
-        <a href="/welcome" class="btn btn-secondary">Continue Shopping</a>
+        <a href="/" class="btn btn-secondary">Continue Shopping</a>
     </div>
 </div>

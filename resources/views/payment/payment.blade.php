@@ -114,7 +114,7 @@
                             <div id="card-errors" role="alert"></div>
                         </div>
                         <button type="submit" id="submit-payment" class="btn btn-sm btn-success">Buy Now</button>
-                        <a href="/welcome" class="btn btn-sm btn-danger">Cancel</a>
+                        <a href="/" class="btn btn-sm btn-danger">Cancel</a>
                     </form>
                 </div>
             </div>

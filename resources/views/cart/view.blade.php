@@ -24,7 +24,7 @@
                             <h3>No carts Yet!</h3>
                             <p>You haven’t added any items to your carts. Start exploring and add your cart items to
                                 this list.</p>
-                            <a href="{{ route('welcome') }}">Browse Food Items</a>
+                            <a href="{{ route('main') }}">Browse Food Items</a>
                         </div>
                     @else
                         @foreach ($carts as $cart)

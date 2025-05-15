@@ -89,7 +89,7 @@
 
 
                 <div class="text-center mt-3">
-                    <a href="/welcome" class="btn btn-sm btn-light"><i class="fas fa-angle-double-left"></i>&nbsp;Go
+                    <a href="/" class="btn btn-sm btn-light"><i class="fas fa-angle-double-left"></i>&nbsp;Go
                         Back</a>
                 </div>
             </div>

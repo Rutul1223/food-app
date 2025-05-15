@@ -35,6 +35,6 @@ class SocialiteController extends Controller
             Auth::login($newUser, true);
         }
 
-        return redirect()->intended('/welcome'); // Redirect to your intended page
+        return redirect()->intended('/'); // Redirect to your intended page
     }
 }
