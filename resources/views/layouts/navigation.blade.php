@@ -18,7 +18,7 @@
                         </x-nav-link>
                     @else
                         <!-- Link for regular users -->
-                        <x-nav-link :href="route('welcome')" :active="request()->routeIs('main')" class="text-white">
+                        <x-nav-link :href="route('main')" :active="request()->routeIs('main')" class="text-white">
                             {{ __('Home') }}
                         </x-nav-link>
                     @endif
