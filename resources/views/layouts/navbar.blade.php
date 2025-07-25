@@ -16,7 +16,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container-fluid">
             <!-- Brand Logo -->
-            <a class="navbar-brand" href="/">Food</a>
+            <a class="navbar-brand" href="/">FOODIE</a>
 
             <!-- Navbar Toggler for Mobile View -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
@@ -24,12 +24,12 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <!-- Search Section -->
-            <form action="{{ route('food.search') }}" method="GET" class="d-flex ms-3 "
+            {{-- <form action="{{ route('food.search') }}" method="GET" class="d-flex ms-3 "
                 style="max-width: 300px; width: 100%;color">
                 <input class="form-control bg-gray-300 me-2 rounded" type="search" name="search" placeholder="Find Your Fav F🍔🥘d!!"
                     aria-label="Search">
                 <button class="btn btn-outline-light" type="submit"><i class="fas fa-search"></i></button>
-            </form>
+            </form> --}}
 
             <!-- Navbar Content -->
             <div class="collapse navbar-collapse" id="navbarContent">
@@ -55,7 +55,8 @@
                         <a class="nav-link" href="/about-us" style="color: #ffffff; text-decoration:none">About us</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/contact-us" style="color: #ffffff; text-decoration:none">Contact us</a>
+                        <a class="nav-link" href="/contact-us" style="color: #ffffff; text-decoration:none">Contact
+                            us</a>
                     </li>
                 </ul>
 
@@ -63,16 +64,16 @@
                 <ul class="navbar-nav ms-auto mr-6">
                     @guest
                         <li class="nav-item">
-                            <a href="/login" class="btn btn-sm btn-danger">Login</a>
+                            <a href="/login" class="login-button">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/register" class="btn btn-sm btn-danger">Register</a>
+                            <a href="/register" class="register-button">Register</a>
                         </li>
                     @else
                         <!-- Cart Icon -->
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('cart.view') }}"
-                                style="color: #ffffff; text-decoration:none">
+                                style="color: #FFD28D; text-decoration:none">
                                 <i style="font-size:20px" class="fas">&#xf07a;</i>
                                 @if ($cartCount > 0)
                                     <span class="badge bg-danger">{{ $cartCount }}</span>
@@ -81,8 +82,7 @@
                         </li>
                         <!-- Favorite Icon -->
                         <li class="nav-item mr-4">
-                            <a class="nav-link" href="{{ route('food.fav') }}"
-                                style="color: rgb(168, 20, 20); text-decoration:none">
+                            <a class="nav-link" href="{{ route('food.fav') }}" style="color: #FFD28D; text-decoration:none">
                                 <i style="font-size:20px" class="fas fa-heart fav"></i>
                             </a>
                         </li>
@@ -116,87 +116,104 @@
         $(document).ready(function() {
             // Fetch food categories and item counts via AJAX
             $.ajax({
-                url: '{{ route('food.items') }}', // URL to the route
+                url: '{{ route('food.items') }}',
                 method: 'GET',
                 success: function(data) {
-                    // Check if there is any data
-                    if (data.length > 0) {
+                    console.log('Food categories:', data); // Log response for debugging
+                    if (data && Array.isArray(data) && data.length > 0) {
                         let dropdown = $('#foodDropdown');
-                        dropdown.empty(); // Clear the dropdown
-
-                        // Loop through each category and display category name with item count
+                        dropdown.empty();
                         data.forEach(function(category) {
-                            let categoryRoute = `{{ url('/welcome') }}/${category.category}`;
+                            let categoryRoute =
+                                `{{ url('/welcome') }}/${encodeURIComponent(category.category)}`;
                             dropdown.append(`
-                                <li>
-                                    <a class="dropdown-item" href="${categoryRoute}">
-                                        ${category.category} <span class="badge bg-primary">${category.item_count}</span>
-                                    </a>
-                                </li>
-                            `);
+                        <li>
+                            <a class="dropdown-item" href="${categoryRoute}">
+                                ${category.category} <!-- <span class="badge bg-primary">${category.item_count}</span> -->
+                            </a>
+                        </li>
+                    `);
                         });
+                    } else {
+                        console.log('No categories found or invalid data format');
+                        $('#foodDropdown').append(
+                            '<li><a class="dropdown-item" href="#">No categories available</a></li>'
+                            );
                     }
                 },
                 error: function(xhr, status, error) {
-                    console.log("Error fetching food categories: " + error);
+                    console.error('Error fetching food categories:', status, error, xhr.responseText);
+                    $('#foodDropdown').append(
+                        '<li><a class="dropdown-item" href="#">Error loading categories</a></li>');
                 }
             });
-        });
 
-        document.addEventListener("DOMContentLoaded", function() {
-            const navbarLinks = document.querySelectorAll('.navbar-nav .nav-link');
-            navbarLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    navbarLinks.forEach(l => l.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-            const addToCartBtn = document.querySelector('.add-to-cart-btn');
-
-            if (addToCartBtn) {
-                addToCartBtn.addEventListener('click', function() {
-                    // Perform any additional logic for adding to the cart here
-
-                    // Wait for 3 seconds, then refresh the page
-                    setTimeout(function() {
-                        location.reload(); // Refresh the page
-                    }, 2000);
-                });
-            }
-        });
-
-        // Toggle Dropdown Visibility
-        document.getElementById('dropdownToggle').addEventListener('click', function() {
-            const dropdown = document.getElementById('profileDropdown');
-            dropdown.classList.toggle('show');
-        });
-
-        // Close dropdown if clicked outside
-        document.addEventListener('click', function(e) {
-            const dropdown = document.getElementById('profileDropdown');
-            const toggle = document.getElementById('dropdownToggle');
-
-            if (!dropdown.contains(e.target) && !toggle.contains(e.target)) {
-                dropdown.classList.remove('show');
-            }
-        });
-
-        function confirmLogout(event) {
-            event.preventDefault();
-
-            Swal.fire({
-                title: 'Are you sure you want to log out?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, log out'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('logout-form').submit();
+            // Toggle menu dropdown on click for mobile
+            $('.nav-item.dropdown .nav-link').on('click', function(e) {
+                if ($(window).width() < 992) {
+                    e.preventDefault();
+                    const dropdownMenu = $(this).next('.dropdown-menu');
+                    dropdownMenu.toggleClass('show');
                 }
             });
-        }
+
+            // Toggle profile dropdown on click
+            $('#dropdownToggle').on('click', function() {
+                const dropdown = $('#profileDropdown');
+                dropdown.toggleClass('show');
+            });
+
+            // Close all dropdowns if clicked outside
+            $(document).on('click', function(e) {
+                const profileDropdown = $('#profileDropdown');
+                const profileToggle = $('#dropdownToggle');
+                const menuDropdowns = $('.navbar-nav .dropdown-menu');
+                const menuToggles = $('.nav-item.dropdown .nav-link');
+
+                if (!profileDropdown.is(e.target) && profileDropdown.has(e.target).length === 0 && !
+                    profileToggle.is(e.target)) {
+                    profileDropdown.removeClass('show');
+                }
+
+                if ($(window).width() < 992) {
+                    if (!menuDropdowns.is(e.target) && menuDropdowns.has(e.target).length === 0 && !
+                        menuToggles.is(e.target)) {
+                        menuDropdowns.removeClass('show');
+                    }
+                }
+            });
+
+            // Active link highlighting
+            const navbarLinks = $('.navbar-nav .nav-link');
+            navbarLinks.on('click', function() {
+                navbarLinks.removeClass('active');
+                $(this).addClass('active');
+            });
+
+            // Cart button page refresh
+            $('.add-to-cart-btn').on('click', function() {
+                setTimeout(function() {
+                    location.reload();
+                }, 2000);
+            });
+
+            // Logout confirmation
+            window.confirmLogout = function(event) {
+                event.preventDefault();
+                Swal.fire({
+                    title: 'Are you sure you want to log out?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, log out'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $('#logout-form').submit();
+                    }
+                });
+            };
+        });
     </script>
 </body>
 
