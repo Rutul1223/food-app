@@ -1,3 +1,17 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #333;
+    background-color: #f8f8f8;
+}
+
 /* Loader Overlay */
 .loader-overlay {
     position: fixed;
@@ -5,120 +19,207 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.8);
+    background-color: rgba(255, 255, 255, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 9999;
 }
 
-/* Loader Animation */
 .loader {
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #3498db;
+    border: 6px solid #f3f3f3;
+    border-top: 6px solid #c19b76; /* Gold accent */
     border-radius: 50%;
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     animation: spin 1s linear infinite;
 }
 
-/* Spinner Animation */
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
-/* General card design */
+/* Hero Section */
+.hero-section {
+    position: relative;
+    height: 80vh;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Slightly darker overlay for contrast */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+    color: #fff;
+    padding: 50px 0;
+}
+
+.hero-title {
+    font-family: 'Baskervville';
+    font-size: 2rem;
+    font-weight: 500;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+    margin-top: 2rem;
+    color: #fff; /* White text */
+}
+
+.hero-subtitle {
+    font-family: 'Prompt', sans-serif;
+    font-size: 1rem;
+    font-weight: 100;
+    margin-bottom: 2rem;
+    margin-top: 2rem;
+    color: #f1f1f1; /* Slightly off-white for subtlety */
+    max-width: 500px; /* Limit width for readability */
+
+}
+.hero-restaurant {
+    font-family: 'Baskervville';
+    font-size: 2rem;
+    font-weight: 100;
+    margin-bottom: 2rem;
+    color: #f8da9a;
+    text-decoration: underline;
+    text-decoration-color: #c19b76;
+    text-underline-position: below;
+
+}
+.explore-button {
+    background-color: #FFD28D; /* Gold accent */
+    color: #000000;
+    padding: 12px 30px;
+    border-radius: 25px;
+    text-transform: uppercase;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.explore-button:hover {
+    background-color: #a07b50; /* Darker gold on hover */
+}
+
+/* Categories Section */
+main {
+    padding: 60px 0;
+    background-color: #fff;
+}
+
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #2b2b2b;
+    margin-bottom: 3rem;
+}
+
 .category-card {
     position: relative;
     overflow: hidden;
-    transition: transform 0.3s ease-in-out;
-    border-radius: 10px; /* Slightly rounded corners */
+    border-radius: 15px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* Hover effect for category card */
 .category-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
 }
 
-/* Make the images smaller with consistent height */
 .category-img {
     object-fit: cover;
     width: 100%;
-    height: 200px; /* Fixed height for images */
-    border-radius: 10px; /* Rounded corners for image */
+    height: 250px;
+    border-radius: 15px;
 }
 
-/* The overlay that appears on top of the image */
 .category-overlay {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.4); /* Dark transparent overlay */
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
     transition: background 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-/* Text on top of the overlay */
 .category-overlay h4 {
-    font-size: 18px;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 1px;
+    color: #fff;
 }
 
-/* Change overlay on hover */
 .category-card:hover .category-overlay {
-    background: rgba(0, 0, 0, 0.6); /* Darker on hover */
+    background: rgba(0, 0, 0, 0.7);
 }
 
-/* Title Styling */
-main {
-    background-image: url('https://static.vecteezy.com/system/resources/thumbnails/033/250/522/small_2x/space-for-text-on-textured-background-with-delicious-sandwich-on-the-side-from-top-view-background-image-ai-generated-photo.jpg');
-    background-size: cover; /* Ensure the image covers the entire page */
-    background-position: center center; /* Center the image */
-    background-attachment: fixed; /* Keep the background fixed while scrolling */
-    padding: 50px 0;
-    min-height: 100vh; /* Ensure the background covers the entire viewport height */
-}
-
-/* Title Styling */
-h1 {
-    font-family: 'Roboto', sans-serif;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6); /* Add shadow for readability */
-}
-
-
-/* Media Queries for Mobile */
+/* Responsive Design */
 @media (max-width: 767px) {
-    /* Adjust layout on mobile */
-    .category-card {
-        margin-bottom: 15px;
+    .hero-section {
+        height: 60vh;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+        max-width: 90%;
+    }
+
+    .btn-primary {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+    }
+
+    .hero-content {
+        padding: 30px 0;
+    }
+
+    .section-title {
+        font-size: 2rem;
     }
 
     .category-img {
-        height: 150px; /* Smaller height for images on mobile */
+        height: 180px;
     }
 
     .category-overlay h4 {
-        font-size: 14px; /* Smaller text on mobile */
+        font-size: 1.2rem;
     }
 
-    /* Stack the items in two rows on mobile, 3 items per row */
-    .col-4 {
-        width: 33.33% !important; /* Ensures 3 items per row */
+    .col-sm-6 {
+        width: 50%;
+    }
+}
+
+@media (max-width: 576px) {
+    .col-sm-6 {
+        width: 100%;
     }
 
-    /* Fix margin for last column */
-    .col-4:nth-child(3n) {
-        margin-bottom: 0;
-    }
-    main {
-        padding: 30px 0; /* Reduce padding on smaller screens */
+    .hero-title {
+        font-size: 2rem;
     }
 
-    h1 {
-        font-size: 28px; /* Smaller font size on mobile */
+    .hero-subtitle {
+        font-size: 0.9rem;
     }
 }
