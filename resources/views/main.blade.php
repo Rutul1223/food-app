@@ -18,7 +18,7 @@
     </div>
     @include('layouts.navbar')
     @include('layouts.hero')
-
+    @include('opening-hours.hours')
     <!-- Categories Section -->
     <main id="categories">
         <div class="container">
