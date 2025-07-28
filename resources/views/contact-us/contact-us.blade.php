@@ -42,7 +42,7 @@
             background-image: url('{{ asset('contact.png') }}');
             background-size: cover;
             background-position: center;
-            padding: 120px 0;
+            padding: 120px 20px;
             position: relative;
             text-align: center;
             color: var(--white);
@@ -66,13 +66,12 @@
         }
 
         .contact-subtitle {
-            font-family: 'Baskervville';
+            font-family: 'Baskervville', serif;
             font-style: italic;
             font-size: 14px;
             margin-bottom: 10px;
             position: relative;
             color: var(--white);
-            text-decoration: none;
         }
 
         .contact-subtitle a {
@@ -92,14 +91,15 @@
             gap: 40px;
         }
 
-        .contact-info {
+        .contact-info,
+        .contact-form,
+        .map-container {
             flex: 1;
             min-width: 300px;
         }
 
-        .contact-form {
-            flex: 1;
-            min-width: 300px;
+        .map-container {
+            height: 400px;
         }
 
         .info-box {
@@ -122,8 +122,7 @@
         }
 
         .info-text h3 {
-            margin-top: 0;
-            margin-bottom: 10px;
+            margin: 0 0 10px;
             font-size: 22px;
         }
 
@@ -136,12 +135,21 @@
             margin-bottom: 25px;
         }
 
+        .form-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
         .form-control {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid #e1e1e1;
             background-color: #f9f9f9;
-            font-family: 'Poppins', sans-serif;
             font-size: 14px;
             transition: all 0.3s;
         }
@@ -158,20 +166,20 @@
         }
 
         .btn-primary {
-            background-color: var(--primary-color);
-            color: var(--white);
+            background-color: var(--white);
             border: none;
             padding: 14px 30px;
             font-size: 14px;
             font-weight: 500;
             letter-spacing: 1px;
             text-transform: uppercase;
+            margin-top: 1rem;
             cursor: pointer;
             transition: all 0.3s;
         }
 
         .btn-primary:hover {
-            background-color: var(--secondary-color);
+            background-color: rgb(206, 199, 199);
         }
 
         .section-title {
@@ -202,16 +210,71 @@
             margin: 0 auto;
         }
 
-        /* .map-container {
-            margin-top: 80px;
-        } */
-
         .map-container iframe {
             height: 100%;
-            display: block;
-            border: none;
             width: 100%;
+            border: none;
             filter: grayscale(100%) invert(90%) contrast(120%);
+        }
+
+        /* ✅ Keeping original location style but fixing wrapping */
+        .nearby-locations {
+            margin-top: 80px;
+        }
+
+        .locations-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+        }
+
+        .location-box {
+            border-right: 1px solid #FFD28D;
+            border-bottom: 1px solid #FFD28D;
+            /* ✅ Added horizontal line */
+            flex: 1 1 33.33%;
+            padding: 60px;
+            box-sizing: border-box;
+        }
+
+        /* ✅ Remove right border for last column in row */
+        .location-box:nth-child(3n) {
+            border-right: none;
+        }
+
+        /* ✅ Remove bottom border for last row */
+        .location-box:nth-last-child(-n+3) {
+            border-bottom: none;
+        }
+
+        @media (max-width: 992px) {
+            .location-box {
+                flex: 1 1 50%;
+            }
+
+            .location-box:nth-child(2n) {
+                border-right: none;
+            }
+
+            .location-box:nth-last-child(-n+2) {
+                border-bottom: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .location-box {
+                flex: 1 1 100%;
+                border-right: none;
+                padding: 40px;
+            }
+
+            .location-box {
+                border-bottom: 1px solid #FFD28D;
+            }
+
+            .location-box:last-child {
+                border-bottom: none;
+            }
         }
 
         @media (max-width: 768px) {
@@ -222,6 +285,10 @@
             .contact-content {
                 flex-direction: column;
             }
+
+            .map-container {
+                height: 300px;
+            }
         }
     </style>
 </head>
@@ -231,8 +298,7 @@
 
     <div class="contact-header">
         <div class="contact-subtitle">
-            <a href="/">Home</a>
-            / Contact Us
+            <a href="/">Home</a> / Contact Us
         </div>
         <h1>Contact Us</h1>
         <p>We'd love to hear from you! Whether you have a question about our services, want to make a reservation, or
@@ -240,87 +306,74 @@
     </div>
 
     <div class="contact-container">
-        <div class="section-title">
-            <h2>Get In Touch</h2>
-            <p>Our team is here to answer your questions and provide the best service possible. Fill out the form below
-                or contact us directly.</p>
-        </div>
-
         <div class="contact-content">
-            {{-- <div class="contact-info">
-                <div class="info-box">
-                    <div class="info-icon">
-                        <i class="fas fa-map-marker-alt"></i>
-                    </div>
-                    <div class="info-text">
-                        <h3>Our Location</h3>
-                        <p>123 Restaurant Street, Foodville, CA 90210</p>
-                    </div>
-                </div>
-
-                <div class="info-box">
-                    <div class="info-icon">
-                        <i class="fas fa-phone-alt"></i>
-                    </div>
-                    <div class="info-text">
-                        <h3>Phone Number</h3>
-                        <p>+1 (555) 123-4567</p>
-                        <p>+1 (555) 765-4321</p>
-                    </div>
-                </div>
-
-                <div class="info-box">
-                    <div class="info-icon">
-                        <i class="fas fa-envelope"></i>
-                    </div>
-                    <div class="info-text">
-                        <h3>Email Address</h3>
-                        <p>info@yourrestaurant.com</p>
-                        <p>reservations@yourrestaurant.com</p>
-                    </div>
-                </div>
-
-                <div class="info-box">
-                    <div class="info-icon">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="info-text">
-                        <h3>Opening Hours</h3>
-                        <p>Monday - Friday: 11:00 AM - 10:00 PM</p>
-                        <p>Saturday - Sunday: 10:00 AM - 11:00 PM</p>
-                    </div>
-                </div>
-            </div> --}}
-            <div class="map-container">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96652.27317354927!2d-74.33557928194516!3d40.79756494697628!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c3a82f1352d0dd%3A0x81d4f72c4435aab5!2sTroy+Meadows+Wetlands!5e0!3m2!1sen!2sbd!4v1563075599994!5m2!1sen!2sbd""
-                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
             <div class="contact-form">
+                <center><h1 style="color: var(--primary-color); margin-bottom: 3rem">Contact Us</h1></center>
                 <form action="#" method="POST">
                     @csrf
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="name" placeholder="Your Name" required>
+                    <div class="form-row">
+                        <div class="form-group"><input type="text" class="form-control" name="name"
+                                placeholder="Your Name" required></div>
+                        <div class="form-group"><input type="email" class="form-control" name="email"
+                                placeholder="Your Email" required></div>
                     </div>
-
                     <div class="form-group">
-                        <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+                        <textarea class="form-control" rows="5" name="comment" placeholder="Comment" required></textarea>
                     </div>
-
-                    <div class="form-group">
-                        <input type="tel" class="form-control" name="phone" placeholder="Phone Number" required>
-                    </div>
-
-                    <div class="form-group">
-                        <textarea class="form-control" name="message" placeholder="Your Message" required></textarea>
-                    </div>
-
-                    <button type="submit" class="btn-primary">Send Message</button>
+                    <button type="submit" class="btn-primary">Contact Us</button>
                 </form>
+            </div>
+            <div class="map-container">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96652.27317354927!2d-74.33557928194516!3d40.79756494697628!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c3a82f1352d0dd%3A0x81d4f72c4435aab5!2sTroy+Meadows+Wetlands!5e0!3m2!1sen!2sbd!4v1563075599994!5m2!1sen!2sbd"
+                    allowfullscreen="" loading="lazy"></iframe>
             </div>
         </div>
 
-
+        <div class="nearby-locations">
+            <div class="section-title">
+                <p style="color: var(--primary-color); margin-top: 3rem">Visit us</p>
+                <h2 style="color: var(--primary-color)">Nearby Find Us</h2>
+            </div>
+            <div class="locations-grid">
+                <div class="location-box">
+                    <h3 style="color: var(--primary-color)">New York</h3>
+                    <p style="color: var(--white)">901 N Pitt Str., Suite 170</p>
+                    <p style="color: var(--white)">Alexandria, NY, USA</p>
+                    <p style="color: var(--white)">info@example.com</p>
+                </div>
+                <div class="location-box">
+                    <h3 style="color: var(--primary-color)">Los Angeles</h3>
+                    <p style="color: var(--white)">901 N Pitt Str., Suite 170</p>
+                    <p style="color: var(--white)">Alexandria, NY, USA</p>
+                    <p style="color: var(--white)">info@example.com</p>
+                </div>
+                <div class="location-box">
+                    <h3 style="color: var(--primary-color)">Chicago</h3>
+                    <p style="color: var(--white)">901 N Pitt Str., Suite 170</p>
+                    <p style="color: var(--white)">Alexandria, NY, USA</p>
+                    <p style="color: var(--white)">info@example.com</p>
+                </div>
+                <div class="location-box">
+                    <h3 style="color: var(--primary-color)">Houston</h3>
+                    <p style="color: var(--white)">901 N Pitt Str., Suite 170</p>
+                    <p style="color: var(--white)">Alexandria, NY, USA</p>
+                    <p style="color: var(--white)">info@example.com</p>
+                </div>
+                <div class="location-box">
+                    <h3 style="color: var(--primary-color)">Phoenix</h3>
+                    <p style="color: var(--white)">901 N Pitt Str., Suite 170</p>
+                    <p style="color: var(--white)">Alexandria, NY, USA</p>
+                    <p style="color: var(--white)">info@example.com</p>
+                </div>
+                <div class="location-box">
+                    <h3 style="color: var(--primary-color)">San Diego</h3>
+                    <p style="color: var(--white)">901 N Pitt Str., Suite 170</p>
+                    <p style="color: var(--white)">Alexandria, NY, USA</p>
+                    <p style="color: var(--white)">info@example.com</p>
+                </div>
+            </div>
+        </div>
     </div>
 
     @include('layouts.footer')
