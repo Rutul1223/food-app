@@ -43,6 +43,8 @@ Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit')
 // In routes/web.php or routes/api.php
 Route::get('/food-items', [FoodController::class, 'getFoodItems'])->name('food.items');
 
+Route::get('/food-item-details', [FoodController::class, 'getFoodItemDetails'])->name('food.item.details');
+
 Route::get('/about-us', function () {
     $orders = Order::all();
     $foods = Food::all();

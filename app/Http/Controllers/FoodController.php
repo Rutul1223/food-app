@@ -85,6 +85,15 @@ class FoodController extends Controller
 
         return response()->json($foodCategories);
     }
+
+    public function getFoodItemDetails()
+    {
+        $foodItems = Food::select('name', 'description', 'price')
+                        ->take(8) // Limit to 8 items to match frontend
+                        ->get();
+        return response()->json($foodItems);
+    }
+
     public function categoryIndex($category = null){
         if ($category) {
             // Fetch items by the selected category

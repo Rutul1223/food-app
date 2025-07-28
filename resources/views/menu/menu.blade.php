@@ -16,61 +16,63 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        $.ajax({
-            url: '{{ route('food.items') }}',
-            method: 'GET',
-            success: function(data) {
-                console.log('Menu items:', data); // Log response for debugging
-                let leftContainer = $('#menuItemsLeft');
-                let rightContainer = $('#menuItemsRight');
-                leftContainer.empty();
-                rightContainer.empty();
-                if (data && Array.isArray(data) && data.length > 0) {
-                    // Split items: first 4 to left, next 4 to right
-                    let leftItems = data.slice(0, 4);
-                    let rightItems = data.slice(4, 8);
+    $.ajax({
+        url: '{{ route('food.item.details') }}', // Updated to new route
+        method: 'GET',
+        beforeSend: function() {
+            $('#menuItemsLeft').html('<p>Loading...</p>');
+            $('#menuItemsRight').html('<p>Loading...</p>');
+        },
+        success: function(data) {
+            console.log('Menu items:', data);
+            let leftContainer = $('#menuItemsLeft');
+            let rightContainer = $('#menuItemsRight');
+            leftContainer.empty();
+            rightContainer.empty();
 
-                    leftItems.forEach(function(item) {
-                        let offerHtml = item.offer ?
-                            `<p class="special-offer">${item.offer}</p>` : '';
-                        leftContainer.append(`
-                                <div class="menu-item">
-                                    <div>
-                                        <h5>${item.name}</h5>
-                                        <p>${item.description}</p>
-                                        ${offerHtml}
-                                    </div>
-                                    <span class="price">$${item.price}</span>
-                                </div>
-                            `);
-                    });
+            if (data && Array.isArray(data) && data.length > 0) {
+                // Split items dynamically
+                let midPoint = Math.ceil(data.length / 2); // Split evenly
+                let leftItems = data.slice(0, midPoint);
+                let rightItems = data.slice(midPoint);
 
-                    rightItems.forEach(function(item) {
-                        let offerHtml = item.offer ?
-                            `<p class="special-offer">${item.offer}</p>` : '';
-                        rightContainer.append(`
-                                <div class="menu-item">
-                                    <div>
-                                        <h5>${item.name}</h5>
-                                        <p>${item.description}</p>
-                                        ${offerHtml}
-                                    </div>
-                                    <span class="price">$${item.price}</span>
-                                </div>
-                            `);
-                    });
-                } else {
-                    leftContainer.append('<p>No menu items available.</p>');
-                    rightContainer.append('<p>No menu items available.</p>');
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error fetching menu items:', status, error, xhr.responseText);
-                $('#menuItemsLeft').append('<p>Error loading menu items.</p>');
-                $('#menuItemsRight').append('<p>Error loading menu items.</p>');
+                leftItems.forEach(function(item) {
+                    let offerHtml = item.price ? `<p class="special-offer">${item.price}</p>` : '';
+                    leftContainer.append(`
+                        <div class="menu-item">
+                            <div>
+                                <h5>${item.name}</h5>
+                                <p>${item.description}</p>
+                            </div>
+                            <span class="price">₹${parseFloat(item.price).toFixed(2)}</span>
+                        </div>
+                    `);
+                });
+
+                rightItems.forEach(function(item) {
+                    let offerHtml = item.price ? `<p class="special-offer">${item.price}</p>` : '';
+                    rightContainer.append(`
+                        <div class="menu-item">
+                            <div>
+                                <h5>${item.name}</h5>
+                                <p>${item.description}</p>
+                            </div>
+                            <span class="price">₹${parseFloat(item.price).toFixed(2)}</span>
+                        </div>
+                    `);
+                });
+            } else {
+                leftContainer.append('<p>No menu items available.</p>');
+                rightContainer.append('<p>No menu items available.</p>');
             }
-        });
+        },
+        error: function(xhr, status, error) {
+            console.error('Error fetching menu items:', status, error, xhr.responseText);
+            $('#menuItemsLeft').html('<p>Error loading menu items. Please try again later.</p>');
+            $('#menuItemsRight').html('<p>Error loading menu items. Please try again later.</p>');
+        }
     });
+});
 </script>
 
 <style>
