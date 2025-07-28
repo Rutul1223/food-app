@@ -148,79 +148,8 @@
             <div class="subtitle">Food Items</div>
             <h2 class="title">Food Showcase</h2>
             <div class="swiper-container">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide">
-                        <div class="showcase-item">
-                            <img src="https://images.unsplash.com/photo-1608897013039-887f21d8c804"
-                                alt="Spaghetti alla Carbonara">
-                            <div class="showcase-content">
-                                <h5>Spaghetti alla Carbonara</h5>
-                                <p>Classic Italian pasta with creamy egg sauce and pancetta</p>
-                                <p class="special-offer">Extra free juice</p>
-                                <p class="price">$49</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="showcase-item">
-                            <img src="https://images.unsplash.com/photo-1608897013039-887f21d8c804"
-                                alt="Spaghetti alla Carbonara">
-                            <div class="showcase-content">
-                                <h5>Spaghetti alla Carbonara</h5>
-                                <p>Classic Italian pasta with creamy egg sauce and pancetta</p>
-                                <p class="special-offer">Extra free juice</p>
-                                <p class="price">$49</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="showcase-item">
-                            <img src="https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2"
-                                alt="Grilled Salmon">
-                            <div class="showcase-content">
-                                <h5>Grilled Salmon</h5>
-                                <p>Served with lemon herb sauce and seasonal vegetables</p>
-                                <p class="special-offer">Free dessert</p>
-                                <p class="price">$55</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="showcase-item">
-                            <img src="https://images.unsplash.com/photo-1608897013039-887f21d8c804"
-                                alt="Spaghetti alla Carbonara">
-                            <div class="showcase-content">
-                                <h5>Spaghetti alla Carbonara</h5>
-                                <p>Classic Italian pasta with creamy egg sauce and pancetta</p>
-                                <p class="special-offer">Extra free juice</p>
-                                <p class="price">$49</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="showcase-item">
-                            <img src="https://images.unsplash.com/photo-1608897013039-887f21d8c804"
-                                alt="Spaghetti alla Carbonara">
-                            <div class="showcase-content">
-                                <h5>Spaghetti alla Carbonara</h5>
-                                <p>Classic Italian pasta with creamy egg sauce and pancetta</p>
-                                <p class="special-offer">Extra free juice</p>
-                                <p class="price">$49</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="swiper-slide">
-                        <div class="showcase-item">
-                            <img src="https://images.unsplash.com/photo-1608897013039-887f21d8c804"
-                                alt="Spaghetti alla Carbonara">
-                            <div class="showcase-content">
-                                <h5>Spaghetti alla Carbonara</h5>
-                                <p>Classic Italian pasta with creamy egg sauce and pancetta</p>
-                                <p class="special-offer">Extra free juice</p>
-                                <p class="price">$49</p>
-                            </div>
-                        </div>
-                    </div>
+                <div class="swiper-wrapper" id="showcaseItems">
+                    <!-- Slides will be populated via AJAX -->
                 </div>
                 <div class="swiper-navigation-wrapper">
                     <div class="swiper-button-prev"></div>
@@ -232,34 +161,77 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const swiper = new Swiper('.swiper-container', {
-                slidesPerView: 4,
-                spaceBetween: 30,
-                loop: true,
-                navigation: {
-                    nextEl: '.swiper-button-next',
-                    prevEl: '.swiper-button-prev',
+        $(document).ready(function() {
+            $.ajax({
+                url: '{{ route('food.item.details') }}', // Same endpoint as menu section
+                method: 'GET',
+                beforeSend: function() {
+                    $('#showcaseItems').html('<div class="swiper-slide"><p>Loading...</p></div>');
                 },
-                breakpoints: {
-                    320: {
-                        slidesPerView: 1,
-                        spaceBetween: 10,
-                    },
-                    576: {
-                        slidesPerView: 2,
-                        spaceBetween: 20,
-                    },
-                    768: {
-                        slidesPerView: 3,
-                        spaceBetween: 20,
-                    },
-                    992: {
-                        slidesPerView: 4,
-                        spaceBetween: 30,
-                    },
+                success: function(data) {
+                    console.log('Showcase items:', data);
+                    let showcaseContainer = $('#showcaseItems');
+                    showcaseContainer.empty();
+
+                    if (data && Array.isArray(data) && data.length > 0) {
+                        data.forEach(function(item) {
+                            let offerHtml = item.price ?
+                                `<p class="special-offer">${item.price}</p>` : '';
+                            showcaseContainer.append(`
+                            <div class="swiper-slide">
+                                <div class="showcase-item">
+                                    <img src="${item.image}" alt="${item.name}">
+                                    <div class="showcase-content">
+                                        <h5>${item.name}</h5>
+                                        <p>${item.description}</p>
+                                        <p class="price">₹${parseFloat(item.price).toFixed(2)}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        `);
+                        });
+
+                        // Initialize Swiper after appending slides
+                        const swiper = new Swiper('.swiper-container', {
+                            slidesPerView: 4,
+                            spaceBetween: 30,
+                            loop: true,
+                            navigation: {
+                                nextEl: '.swiper-button-next',
+                                prevEl: '.swiper-button-prev',
+                            },
+                            breakpoints: {
+                                320: {
+                                    slidesPerView: 1,
+                                    spaceBetween: 10,
+                                },
+                                576: {
+                                    slidesPerView: 2,
+                                    spaceBetween: 20,
+                                },
+                                768: {
+                                    slidesPerView: 3,
+                                    spaceBetween: 20,
+                                },
+                                992: {
+                                    slidesPerView: 4,
+                                    spaceBetween: 30,
+                                },
+                            },
+                        });
+                    } else {
+                        showcaseContainer.append(
+                            '<div class="swiper-slide"><p>No showcase items available.</p></div>');
+                    }
                 },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching showcase items:', status, error, xhr.responseText);
+                    $('#showcaseItems').html(
+                        '<div class="swiper-slide"><p>Error loading showcase items. Please try again later.</p></div>'
+                        );
+                }
             });
         });
     </script>

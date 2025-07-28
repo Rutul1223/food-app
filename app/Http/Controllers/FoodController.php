@@ -88,7 +88,7 @@ class FoodController extends Controller
 
     public function getFoodItemDetails()
     {
-        $foodItems = Food::select('name', 'description', 'price')
+        $foodItems = Food::select('name', 'description', 'price', \DB::raw('CONCAT("' . asset('storage') . '/", image) as image'))
                         ->take(8) // Limit to 8 items to match frontend
                         ->get();
         return response()->json($foodItems);
