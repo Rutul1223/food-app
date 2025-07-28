@@ -12,3 +12,34 @@
         </div>
     </div>
 </section>
+
+<!-- GSAP Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+// GSAP Animation
+document.addEventListener('DOMContentLoaded', () => {
+    gsap.from(".hero-title", {
+        duration: 1.2,
+        opacity: 0,
+        y: 50,
+        ease: "power3.out",
+        delay: 0.3
+    });
+
+    gsap.from(".hero-subtitle", {
+        duration: 1.2,
+        opacity: 0,
+        y: 50,
+        ease: "power3.out",
+        delay: 0.6
+    });
+
+    gsap.from(".explore-button", {
+        duration: 1.2,
+        opacity: 0,
+        y: 50,
+        ease: "power3.out",
+        delay: 0.9
+    });
+});
+</script>

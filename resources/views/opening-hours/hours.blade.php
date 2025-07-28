@@ -32,7 +32,6 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        /* Align content to top */
         padding: 40px;
         background-color: #091E24;
         color: #333;
@@ -76,3 +75,43 @@
         border-radius: 5px;
     }
 </style>
+
+<!-- GSAP Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script>
+// GSAP Animation
+document.addEventListener('DOMContentLoaded', () => {
+    gsap.from(".opening-hours-content h2", {
+        duration: 1.2,
+        opacity: 0,
+        y: 50,
+        ease: "power3.out",
+        delay: 0.3
+    });
+
+    gsap.from(".opening-hours-subtitle", {
+        duration: 1.2,
+        opacity: 0,
+        y: 50,
+        ease: "power3.out",
+        delay: 0.6
+    });
+
+    gsap.from(".opening-hours-date p", {
+        duration: 1.2,
+        opacity: 0,
+        y: 50,
+        ease: "power3.out",
+        delay: 0.9,
+        stagger: 0.2
+    });
+
+    gsap.from(".text-btn1", {
+        duration: 1.2,
+        opacity: 0,
+        y: 50,
+        ease: "power3.out",
+        delay: 1.3
+    });
+});
+</script>

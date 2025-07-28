@@ -12,67 +12,108 @@
         </div>
     </div>
 </section>
+
+<!-- GSAP Library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-    $.ajax({
-        url: '{{ route('food.item.details') }}', // Updated to new route
-        method: 'GET',
-        beforeSend: function() {
-            $('#menuItemsLeft').html('<p>Loading...</p>');
-            $('#menuItemsRight').html('<p>Loading...</p>');
-        },
-        success: function(data) {
-            console.log('Menu items:', data);
-            let leftContainer = $('#menuItemsLeft');
-            let rightContainer = $('#menuItemsRight');
-            leftContainer.empty();
-            rightContainer.empty();
+        // Animate subtitle and title on page load
+        gsap.from(".subtitle", {
+            duration: 1.2,
+            opacity: 0,
+            y: 50,
+            ease: "power3.out",
+            delay: 0.3
+        });
 
-            if (data && Array.isArray(data) && data.length > 0) {
-                // Split items dynamically
-                let midPoint = Math.ceil(data.length / 2); // Split evenly
-                let leftItems = data.slice(0, midPoint);
-                let rightItems = data.slice(midPoint);
+        gsap.from(".title", {
+            duration: 1.2,
+            opacity: 0,
+            y: 50,
+            ease: "power3.out",
+            delay: 0.6
+        });
 
-                leftItems.forEach(function(item) {
-                    let offerHtml = item.price ? `<p class="special-offer">${item.price}</p>` : '';
-                    leftContainer.append(`
-                        <div class="menu-item">
-                            <div>
-                                <h5>${item.name}</h5>
-                                <p>${item.description}</p>
+        $.ajax({
+            url: '{{ route('food.item.details') }}',
+            method: 'GET',
+            beforeSend: function() {
+                $('#menuItemsLeft').html('<p>Loading...</p>');
+                $('#menuItemsRight').html('<p>Loading...</p>');
+            },
+            success: function(data) {
+                console.log('Menu items:', data);
+                let leftContainer = $('#menuItemsLeft');
+                let rightContainer = $('#menuItemsRight');
+                leftContainer.empty();
+                rightContainer.empty();
+
+                if (data && Array.isArray(data) && data.length > 0) {
+                    // Split items dynamically
+                    let midPoint = Math.ceil(data.length / 2);
+                    let leftItems = data.slice(0, midPoint);
+                    let rightItems = data.slice(midPoint);
+
+                    // Populate left menu items
+                    leftItems.forEach(function(item) {
+                        let offerHtml = item.price ? `<p class="special-offer">${item.price}</p>` : '';
+                        leftContainer.append(`
+                            <div class="menu-item">
+                                <div>
+                                    <h5>${item.name}</h5>
+                                    <p>${item.description}</p>
+                                </div>
+                                <span class="price">₹${parseFloat(item.price).toFixed(2)}</span>
                             </div>
-                            <span class="price">₹${parseFloat(item.price).toFixed(2)}</span>
-                        </div>
-                    `);
-                });
+                        `);
+                    });
 
-                rightItems.forEach(function(item) {
-                    let offerHtml = item.price ? `<p class="special-offer">${item.price}</p>` : '';
-                    rightContainer.append(`
-                        <div class="menu-item">
-                            <div>
-                                <h5>${item.name}</h5>
-                                <p>${item.description}</p>
+                    // Populate right menu items
+                    rightItems.forEach(function(item) {
+                        let offerHtml = item.price ? `<p class="special-offer">${item.price}</p>` : '';
+                        rightContainer.append(`
+                            <div class="menu-item">
+                                <div>
+                                    <h5>${item.name}</h5>
+                                    <p>${item.description}</p>
+                                </div>
+                                <span class="price">₹${parseFloat(item.price).toFixed(2)}</span>
                             </div>
-                            <span class="price">₹${parseFloat(item.price).toFixed(2)}</span>
-                        </div>
-                    `);
-                });
-            } else {
-                leftContainer.append('<p>No menu items available.</p>');
-                rightContainer.append('<p>No menu items available.</p>');
+                        `);
+                    });
+
+                    // Animate menu items after AJAX load
+                    gsap.from("#menuItemsLeft .menu-item", {
+                        duration: 1.2,
+                        opacity: 0,
+                        y: 50,
+                        ease: "power3.out",
+                        stagger: 0.2,
+                        delay: 0.9
+                    });
+
+                    gsap.from("#menuItemsRight .menu-item", {
+                        duration: 1.2,
+                        opacity: 0,
+                        y: 50,
+                        ease: "power3.out",
+                        stagger: 0.2,
+                        delay: 1.1
+                    });
+                } else {
+                    leftContainer.append('<p>No menu items available.</p>');
+                    rightContainer.append('<p>No menu items available.</p>');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error fetching menu items:', status, error, xhr.responseText);
+                $('#menuItemsLeft').html('<p>Error loading menu items. Please try again later.</p>');
+                $('#menuItemsRight').html('<p>Error loading menu items. Please try again later.</p>');
             }
-        },
-        error: function(xhr, status, error) {
-            console.error('Error fetching menu items:', status, error, xhr.responseText);
-            $('#menuItemsLeft').html('<p>Error loading menu items. Please try again later.</p>');
-            $('#menuItemsRight').html('<p>Error loading menu items. Please try again later.</p>');
-        }
+        });
     });
-});
 </script>
 
 <style>
