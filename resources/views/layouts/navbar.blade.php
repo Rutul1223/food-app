@@ -138,7 +138,7 @@
                         console.log('No categories found or invalid data format');
                         $('#foodDropdown').append(
                             '<li><a class="dropdown-item" href="#">No categories available</a></li>'
-                            );
+                        );
                     }
                 },
                 error: function(xhr, status, error) {
@@ -159,9 +159,9 @@
 
             // Toggle profile dropdown on click
             $('#dropdownToggle').on('click', function(e) {
-    e.stopPropagation();
-    $('#profileDropdown').toggleClass('show');
-});
+                e.stopPropagation();
+                $('#profileDropdown').toggleClass('show');
+            });
 
             // Close all dropdowns if clicked outside
             $(document).on('click', function(e) {
