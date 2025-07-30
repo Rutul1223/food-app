@@ -158,10 +158,10 @@
             });
 
             // Toggle profile dropdown on click
-            $('#dropdownToggle').on('click', function() {
-                const dropdown = $('#profileDropdown');
-                dropdown.toggleClass('show');
-            });
+            $('#dropdownToggle').on('click', function(e) {
+    e.stopPropagation();
+    $('#profileDropdown').toggleClass('show');
+});
 
             // Close all dropdowns if clicked outside
             $(document).on('click', function(e) {

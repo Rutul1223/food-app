@@ -115,7 +115,7 @@ body {
 }
 
 .dropdown-menu.show {
-    display: block;
+    display: block !important;
 }
 
 .dropdown-menu .dropdown-item {
