@@ -3,7 +3,7 @@
 <x-guest-layout>
     <div class="max-w-md mx-auto mt-12 bg-dark-800 p-12 rounded-lg shadow-xl border border-dark-700">
         <div class="text-center mb-8">
-            <h2 class="text-3xl font-serif font-bold text-gold-500 mb-2">Create Account</h2>
+            <h2 class="text-3xl font-serif font-bold text-white mb-2">Create Account</h2>
             <p class="text-gray-400">Join our culinary community</p>
         </div>
 
@@ -103,18 +103,18 @@
 
             <!-- Submit Button -->
             <div class="flex items-center justify-between">
-                <a class="text-sm text-gold-400 hover:text-gold-300 transition-colors" href="{{ route('login') }}">
+                <a class="text-sm text-white hover:text-gray-300 transition-colors" href="{{ route('login') }}">
                     {{ __('Already registered?') }}
                 </a>
 
-                <x-primary-button class="py-3 px-6 bg-gold-500 hover:bg-gold-600 text-dark-900 font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2 focus:ring-offset-dark-800">
+                <x-primary-button class="py-3 px-6 bg-black hover:bg-gray-500 text-dark-900 font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2 focus:ring-offset-dark-800">
                     {{ __('Register') }}
                 </x-primary-button>
             </div>
         </form>
 
         <div class="mt-8 text-center text-sm text-gray-500">
-            By registering, you agree to our <a href="#" class="text-gold-400 hover:text-gold-300 transition-colors">Terms of Service</a> and <a href="#" class="text-gold-400 hover:text-gold-300 transition-colors">Privacy Policy</a>
+            By registering, you agree to our <a href="#" class="text-white hover:text-gray-300 transition-colors">Terms of Service</a> and <a href="#" class="text-white hover:text-gray-300 transition-colors">Privacy Policy</a>
         </div>
     </div>
 
@@ -127,7 +127,7 @@
             this.classList.toggle('fa-eye');
             this.classList.toggle('fa-eye-slash');
             this.classList.toggle('text-gray-500');
-            this.classList.toggle('text-gold-400');
+            this.classList.toggle('text-white');
         });
 
         // Toggle confirm password visibility
@@ -138,7 +138,7 @@
             this.classList.toggle('fa-eye');
             this.classList.toggle('fa-eye-slash');
             this.classList.toggle('text-gray-500');
-            this.classList.toggle('text-gold-400');
+            this.classList.toggle('text-white');
         });
 
         // Update file input display
@@ -148,7 +148,7 @@
             const uploadText = label.querySelector('p:first-of-type');
             if (uploadText) {
                 uploadText.textContent = fileName;
-                uploadText.classList.add('text-gold-400');
+                uploadText.classList.add('text-white');
             }
         });
     </script>

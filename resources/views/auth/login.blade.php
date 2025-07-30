@@ -6,7 +6,7 @@
 
     <div class="max-w-md mx-auto mt-12 bg-dark-800 p-12 rounded-lg shadow-xl border border-dark-700">
         <div class="text-center mb-8">
-            <h2 class="text-3xl font-serif font-bold text-gold-500 mb-2">Welcome Back</h2>
+            <h2 class="text-3xl font-serif font-bold text-white mb-2">Welcome Back</h2>
             <p class="text-gray-400">Sign in to your account</p>
         </div>
 
@@ -51,7 +51,7 @@
                 </label>
 
                 @if (Route::has('password.request'))
-                    <a class="text-sm text-gold-400 hover:text-gold-300 transition-colors" href="{{ route('password.request') }}">
+                    <a class="text-sm text-blue-400 hover:text-blue-300 transition-colors" href="{{ route('password.request') }}">
                         {{ __('Forgot password?') }}
                     </a>
                 @endif
@@ -59,7 +59,7 @@
 
             <!-- Login Button -->
             <div>
-                <x-primary-button class="w-full py-3 px-4 bg-gold-500 hover:bg-gold-600 text-dark-900 font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-gold-500 focus:ring-offset-2 focus:ring-offset-dark-800">
+                <x-primary-button class="w-full py-3 px-4 bg-black hover:bg-gray-500 text-center text-dark-900 font-medium rounded-lg transition-colors focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2 focus:ring-offset-dark-800">
                     {{ __('Log in') }}
                 </x-primary-button>
             </div>
@@ -86,7 +86,7 @@
         </form>
 
         <div class="mt-8 text-center text-sm text-gray-500">
-            Don't have an account? <a href="/register" class="text-gold-400 hover:text-gold-300 transition-colors">Sign up</a>
+            Don't have an account? <a href="/register" class="text-white hover:text-gray-400 transition-colors">Sign up</a>
         </div>
     </div>
 
@@ -100,7 +100,7 @@
             this.classList.toggle('fa-eye');
             this.classList.toggle('fa-eye-slash');
             this.classList.toggle('text-gray-500');
-            this.classList.toggle('text-gold-400');
+            this.classList.toggle('text-white');
         });
     </script>
 </x-guest-layout>
