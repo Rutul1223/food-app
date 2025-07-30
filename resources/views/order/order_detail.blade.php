@@ -2,139 +2,218 @@
     <title>Order Details - #{{ $order->id }}</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url('{{ asset('empty_carts.webp') }}') no-repeat center center fixed;
+            background-size: cover;
+            color: #FFD700;
+            height: 100vh;
+            overflow: hidden;
+            /* Prevent scrolling */
+            position: relative;
+            font-family: 'Prompt', sans-serif;
+        }
+
+        /* Dark overlay for better readability */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: -1;
+        }
+
+        /* Navbar fixed */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+        }
+
+        /* Main content container */
+        .content-wrapper {
+            height: calc(100vh - 60px);
+            /* Full height minus navbar */
+            padding-top: 60px;
+            /* Space for navbar */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Order details container */
+        .order-container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        /* Order title */
+        .order-title {
+            font-family: 'Baskervville';
+            font-size: 28px;
+            text-align: center;
+            text-decoration: underline;
+            margin-bottom: 4rem;
+            color: #FFD28D;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Details row - left/right layout */
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .detail-label {
+            font-family: 'Baskervville';
+            font-weight: bold;
+            color: #FFD28D;
+        }
+
+        .detail-value {
+            font-family: 'Playfair Display';
+            color: #FFFFFF;
+            text-align: right;
+            max-width: 60%;
+        }
+
+        /* Status badge */
+        .badge {
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .bg-accept {
+            background: #4CAF50;
+            color: #fff !important;
+        }
+
+        .bg-reject {
+            background: #E53935;
+            color: #fff !important;
+        }
+
+        .bg-pending {
+            background: #FFD28D;
+            color: #000 !important;
+        }
+
+        /* Food list */
+        .food-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .food-list li {
+            display: flex;
+            justify-content: space-between;
+            padding: 4px 0;
+        }
+
+        /* QR code section */
+        .qr-section {
+            text-align: center;
+            margin: 25px 0;
+        }
+
+        .qr-code {
+            padding: 5px;
+            background: #fff;
+            display: inline-block;
+            border-radius: 5px;
+        }
+
+        /* Download button */
+        .download-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: #FFD28D;
+            color: #000;
+            border-radius: 5px;
+            text-decoration: none;
+            font-family: 'Playfair Display';
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #e6caa0;
+        }
+    </style>
 </head>
 @include('layouts.navbar')
-<style>
-    body{
-        background-color: #303030;
-    }
-    .container h2{
-        color:#929292;
-    }
-    .bg-accept {
-        background-color: green !important;
-        color: white !important;
-        padding: 5px;
-        border-radius: 20px;
-    }
 
-    .bg-reject {
-        background-color: red !important;
-        color: white !important;
-        padding: 5px;
-        border-radius: 20px;
-    }
-
-    .bg-pending {
-        background-color: yellow !important;
-        color: black !important;
-        padding: 5px;
-        border-radius: 20px;
-    }
-
-    .qr-container {
-        margin-top: 20px;
-    }
-
-    .qr-code {
-        border: 2px solid #007bff;
-        border-radius: 10px;
-        padding: 10px;
-        display: inline-block;
-
-    }
-
-    .download {
-        margin-left: auto;
-    }
-</style>
 <body>
-<div class="container">
-    <h2 class="text-center py-2">Order Details</h2>
+    <div class="content-wrapper">
+        <div class="order-container">
+            <h1 class="order-title">Order No: #{{ $order->id }}</h1>
+            <div style="margin-bottom: 8rem">
+                <div class="detail-row">
+                    <span class="detail-label">Total Amount:</span>
+                    <span class="detail-value">₹ {{ $order->total_amount }}</span>
+                </div>
 
-    <div class="card">
-        <div class="card-header">
-            Order #{{ $order->id }}
-        </div>
-        @if (session('success'))
-            <div class="alert alert-success">{{ session('success') }}</div>
-        @endif
-        @if (session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
-        <div class="card-body">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Item</th>
-                        <th>Details</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Total Amount</td>
-                        <td>₹ {{ $order->total_amount }}</td>
-                    </tr>
-                    <tr>
-                        <td>Address</td>
-                        <td>{{ $order->address }}</td>
-                    </tr>
-                    <tr>
-                        <td>Status</td>
-                        <td>
-                            <span
-                                class="{{ $order->status === 'accept' ? 'bg-accept' : ($order->status === 'reject' ? 'bg-reject' : 'bg-pending') }}">
-                                {{ $order->status }}
-                            </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Created At</td>
-                        <td>{{ $order->created_at->format('d-m-Y H:i') }}</td>
-                    </tr>
-                    <!-- Display Ordered Food Details -->
-                    <tr>
-                        <td>Ordered Food</td>
-                        <td>
-                            <ul>
-                                @foreach ($order->foods as $food)
-                                    <li>{{ $food->name }} (Quantity: {{ $food->pivot->quantity }})</li>
-                                @endforeach
-                            </ul>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>QR Code</td>
-                        <td class="qr-container">
-                            <div class="qr-code">
-                                <?php
-                                // Prepare the order details with line breaks for better readability
-                                $orderDetails = "Order ID: {$order->id}\n" . "Total Amount: ₹{$order->total_amount}\n" . "Address: {$order->address}\n" . "Status: {$order->status}\n" . "Created At: {$order->created_at->format('d-m-Y H:i')}";
+                <div class="detail-row">
+                    <span class="detail-label">Address:</span>
+                    <span class="detail-value">{{ $order->address }}</span>
+                </div>
 
-                                // Ensure the string is UTF-8 encoded
-                                $orderDetails = urlencode($orderDetails);
+                <div class="detail-row">
+                    <span class="detail-label">Status:</span>
+                    <span class="detail-value">
+                        <span
+                            class="badge {{ $order->status === 'accept' ? 'bg-accept' : ($order->status === 'reject' ? 'bg-reject' : 'bg-pending') }}">
+                            {{ $order->status }}
+                        </span>
+                    </span>
+                </div>
 
-                                // Generate the QR code
+                <div class="detail-row">
+                    <span class="detail-label">Created At:</span>
+                    <span class="detail-value">{{ $order->created_at->format('d-m-Y H:i') }}</span>
+                </div>
 
-                                ?>
-                                {!! QrCode::size(100)->generate($orderDetails) !!}
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
+                <div class="detail-row">
+                    <span class="detail-label">Ordered Food:</span>
+                    <span class="detail-value">
+                        <ul class="food-list">
+                            @foreach ($order->foods as $food)
+                                <li>
+                                    <span>{{ $food->name }} </span>&nbsp;
+                                    <span>x {{ $food->pivot->quantity }}</span>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </span>
+                </div>
 
-            </table>
-            <div class="download">
-                <a href="{{ route('orders.downloadCsv', $order->id) }}" class="btn btn-sm btn-secondary my-2 mx-1">
-                    <i class="fas fa-download"></i> Download
-                </a>
+                <div class="qr-section">
+                    <div class="qr-code">
+                        <?php
+                        $orderDetails = "Order ID: {$order->id}\n" . "Total Amount: ₹{$order->total_amount}\n" . "Address: {$order->address}\n" . "Status: {$order->status}\n" . "Created At: {$order->created_at->format('d-m-Y H:i')}";
+                        $orderDetails = urlencode($orderDetails);
+                        ?>
+                        {!! QrCode::size(100)->generate($orderDetails) !!}
+                    </div>
+                    <br>
+                    <a href="{{ route('orders.downloadCsv', $order->id) }}" class="download-btn">⬇ Download Order</a>
+                </div>
             </div>
-
         </div>
     </div>
-</div>
 </body>
 
-
-<!-- Include chat view -->
 @include('layouts.chat')
