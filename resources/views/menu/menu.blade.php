@@ -62,7 +62,7 @@
                         leftContainer.append(`
                             <div class="menu-item">
                                 <div>
-                                    <h5>${item.name}</h5>
+                                    <h5 style="color: #FFD28D; text-decoration: underline">${item.name}</h5>
                                     <p>${item.description}</p>
                                 </div>
                                 <span class="price">₹${parseFloat(item.price).toFixed(2)}</span>
@@ -76,7 +76,7 @@
                         rightContainer.append(`
                             <div class="menu-item">
                                 <div>
-                                    <h5>${item.name}</h5>
+                                    <h5 style="color: #FFD28D; text-decoration: underline">${item.name}</h5>
                                     <p>${item.description}</p>
                                 </div>
                                 <span class="price">₹${parseFloat(item.price).toFixed(2)}</span>
