@@ -38,7 +38,7 @@
             gap: 24px; /* Matches gap-6 */
         }
         .card {
-            background-color: #2c2c2c; /* Dark card background */
+            background-color: #0a0a0a; /* Dark card background */
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
             padding: 32px; /* Matches p-4 sm:p-8 */
