@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="{{ asset('css/welcome.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
 </head>
 
 <body style="background-color: #f8f5f0;">
@@ -45,58 +47,65 @@
                 </div>
             </div>
 
-            <!-- Gallery Filter -->
+            <!-- Gallery Filter Dropdown -->
             <div class="gallery-filter text-center mb-5">
-                <button class="filter-btn active" data-filter="all">All</button>
-                <button class="filter-btn" data-filter="breakfast">Breakfast</button>
-                <button class="filter-btn" data-filter="lunch">Lunch</button>
-                <button class="filter-btn" data-filter="dinner">Dinner</button>
-                <button class="filter-btn" data-filter="desserts">Desserts</button>
+                <select id="categoryFilter" class="form-select w-50 mx-auto" aria-label="Category filter">
+                    <option value="all" {{ $selectedCategory === 'all' ? 'selected' : '' }}>All Categories</option>
+                    @foreach ($categories as $category)
+                        <option value="{{ strtolower($category->category) }}"
+                            {{ strtolower($selectedCategory) === strtolower($category->category) ? 'selected' : '' }}>
+                            {{ $category->category }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <!-- Gallery Grid -->
             <div class="row gallery-grid">
                 @foreach ($foods as $food)
-                <div class="col-lg-4 col-md-6 gallery-item mb-4" data-category="{{ strtolower($food->category) }}">
-                    <div class="gallery-card">
-                        <div class="gallery-img">
-                            <a href="{{ route('food.show', $food->id) }}">
-                                @if ($food->image)
-                                    <img src="{{ asset('storage/' . $food->image) }}" class="img-fluid" alt="Food Image">
-                                @else
-                                    <div class="no-image-placeholder">No Image Available</div>
-                                @endif
-                            </a>
-                            <div class="time-badge">{{ $food->time ? \Carbon\Carbon::parse($food->time)->format('i') . ' mins' : 'N/A' }}</div>
-                        </div>
-                        <div class="gallery-card-body">
-                            <h3>{{ $food->name }}</h3>
-                            <div class="price">Rs. {{ $food->price }}</div>
-                            <div class="action-buttons">
-                                @auth
-                                <i data-food-id="{{ $food->id }}"
-                                    class="fas fa-heart like-heart {{ $food->isFavorite ? 'favorite-added' : '' }}"
-                                    onclick="addToFavorites({{ $food->id }})"></i>
-                                <form id="favoriteForm{{ $food->id }}" action="{{ route('food.favorite') }}"
-                                    method="POST" style="display: none;">
-                                    @csrf
-                                    <input type="hidden" name="food_id" value="{{ $food->id }}">
-                                </form>
-                                @endauth
+                    <div class="col-lg-4 col-md-6 gallery-item mb-4" data-category="{{ strtolower($food->category) }}">
+                        <div class="gallery-card">
+                            <div class="gallery-img">
+                                <a href="{{ route('food.show', $food->id) }}">
+                                    @if ($food->image)
+                                        <img src="{{ asset('storage/' . $food->image) }}" class="img-fluid"
+                                            alt="Food Image">
+                                    @else
+                                        <div class="no-image-placeholder">No Image Available</div>
+                                    @endif
+                                </a>
+                                <div class="time-badge">
+                                    {{ $food->time ? \Carbon\Carbon::parse($food->time)->format('i') . ' mins' : 'N/A' }}
+                                </div>
+                            </div>
+                            <div class="gallery-card-body">
+                                <h3>{{ $food->name }}</h3>
+                                <div class="price">Rs. {{ $food->price }}</div>
+                                <div class="action-buttons">
+                                    @auth
+                                        <i data-food-id="{{ $food->id }}"
+                                            class="fas fa-heart like-heart {{ $food->isFavorite ? 'favorite-added' : '' }}"
+                                            onclick="addToFavorites({{ $food->id }})"></i>
+                                        <form id="favoriteForm{{ $food->id }}" action="{{ route('food.favorite') }}"
+                                            method="POST" style="display: none;">
+                                            @csrf
+                                            <input type="hidden" name="food_id" value="{{ $food->id }}">
+                                        </form>
+                                    @endauth
 
-                                <form id="cartForm{{ $food->id }}" method="POST"
-                                    data-url="{{ route('cart.add') }}">
-                                    @csrf
-                                    <input type="hidden" name="food_id" value="{{ $food->id }}">
-                                    <input type="hidden" name="quantity" value="1">
-                                    <button type="submit" class="btn btn-cart">
-                                        <i class="fas fa-shopping-cart"></i> Add to Cart
-                                    </button>
-                                </form>
+                                    <form id="cartForm{{ $food->id }}" method="POST"
+                                        data-url="{{ route('cart.add') }}">
+                                        @csrf
+                                        <input type="hidden" name="food_id" value="{{ $food->id }}">
+                                        <input type="hidden" name="quantity" value="1">
+                                        <button type="submit" class="btn btn-cart">
+                                            <i class="fas fa-shopping-cart"></i> Add to Cart
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 @endforeach
             </div>
         </div>
@@ -107,24 +116,49 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
+        // Get category from URL query parameter
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
         // Filter functionality
-        document.querySelectorAll('.filter-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                // Update active button
-                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
+        document.getElementById('categoryFilter').addEventListener('change', function() {
+            const filter = this.value.toLowerCase(); // Ensure lowercase comparison
+            const items = document.querySelectorAll('.gallery-item');
 
-                const filter = this.getAttribute('data-filter');
-                const items = document.querySelectorAll('.gallery-item');
-
-                items.forEach(item => {
-                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
-                        item.style.display = 'block';
-                    } else {
-                        item.style.display = 'none';
-                    }
-                });
+            items.forEach(item => {
+                const itemCategory = item.getAttribute('data-category').toLowerCase();
+                if (filter === 'all' || itemCategory === filter) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
             });
+
+            // Update URL
+            const url = new URL(window.location);
+            if (filter === 'all') {
+                url.searchParams.delete('category');
+            } else {
+                url.searchParams.set('category', filter);
+            }
+            window.history.pushState({}, '', url);
+        });
+
+        // Set initial filter based on URL parameter
+        document.addEventListener('DOMContentLoaded', function() {
+            const category = getQueryParam('category');
+            const select = document.getElementById('categoryFilter');
+
+            if (category) {
+                // Find if the category exists in options
+                const options = Array.from(select.options).map(opt => opt.value);
+                if (options.includes(category.toLowerCase())) {
+                    select.value = category.toLowerCase();
+                    select.dispatchEvent(new Event('change'));
+                }
+            }
         });
 
         function addToFavorites(foodId) {
@@ -162,54 +196,25 @@
                 });
         }
 
+        // Set initial filter based on URL parameter
         document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('form[id^="cartForm"]').forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    const formData = new FormData(this);
-                    const url = this.getAttribute('data-url');
+            const category = getQueryParam('category');
+            const select = document.getElementById('categoryFilter');
 
-                    fetch(url, {
-                            method: 'POST',
-                            body: formData,
-                            headers: {
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                            }
-                        })
-                        .then(response => {
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            return response.json();
-                        })
-                        .then(data => {
-                            if (data.success) {
-                                Swal.fire({
-                                    toast: true,
-                                    position: 'top-end',
-                                    icon: 'success',
-                                    title: data.message,
-                                    showConfirmButton: false,
-                                    timer: 2000,
-                                    timerProgressBar: true,
-                                });
-                            } else {
-                                Swal.fire({
-                                    toast: true,
-                                    position: 'top-end',
-                                    icon: 'error',
-                                    title: data.message,
-                                    showConfirmButton: false,
-                                    timer: 2000,
-                                    timerProgressBar: true,
-                                });
-                            }
-                        })
-                        .catch((error) => {
-                            console.error('Error:', error);
-                        });
-                });
-            });
+            if (category) {
+                // Find the option that matches the category (case-insensitive)
+                const options = Array.from(select.options);
+                const matchingOption = options.find(opt =>
+                    opt.value.toLowerCase() === category.toLowerCase()
+                );
+
+                if (matchingOption) {
+                    select.value = matchingOption.value;
+                    // Trigger the change event to filter the items
+                    const event = new Event('change');
+                    select.dispatchEvent(event);
+                }
+            }
         });
     </script>
 </body>

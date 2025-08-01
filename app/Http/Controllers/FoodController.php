@@ -12,18 +12,18 @@ class FoodController extends Controller
 {
     public function show($id)
     {
-         $food = Food::findOrFail($id);
-    $foods = Food::all();
-    // Check if the authenticated user has marked the food as favorite
-    $user = Auth::user();
-    if ($user) {
-        $favoriteFoodIds = Favorite::where('user_id', $user->id)->pluck('food_id')->toArray();
-        foreach ($foods as $foodItem) {
-            $foodItem->isFavorite = in_array($foodItem->id, $favoriteFoodIds);
+        $food = Food::findOrFail($id);
+        $foods = Food::all();
+        // Check if the authenticated user has marked the food as favorite
+        $user = Auth::user();
+        if ($user) {
+            $favoriteFoodIds = Favorite::where('user_id', $user->id)->pluck('food_id')->toArray();
+            foreach ($foods as $foodItem) {
+                $foodItem->isFavorite = in_array($foodItem->id, $favoriteFoodIds);
+            }
         }
-    }
 
-    return view('food.show', compact('food', 'foods'));
+        return view('food.show', compact('food', 'foods'));
     }
 
     public function favorite(Request $request)
@@ -80,8 +80,8 @@ class FoodController extends Controller
     {
         // Group food items by category and count the items in each category
         $foodCategories = Food::select('category', DB::raw('count(*) as item_count'))
-                                ->groupBy('category')
-                                ->get();
+            ->groupBy('category')
+            ->get();
 
         return response()->json($foodCategories);
     }
@@ -89,21 +89,26 @@ class FoodController extends Controller
     public function getFoodItemDetails()
     {
         $foodItems = Food::select('name', 'description', 'price', \DB::raw('CONCAT("' . asset('storage') . '/", image) as image'))
-                        ->take(8) // Limit to 8 items to match frontend
-                        ->get();
+            ->take(8) // Limit to 8 items to match frontend
+            ->get();
         return response()->json($foodItems);
     }
 
-    public function categoryIndex($category = null){
+    public function categoryIndex($category = null)
+    {
+        $categories = Food::select('category')->distinct()->get();
+
         if ($category) {
             // Fetch items by the selected category
             $foods = Food::where('category', $category)->get();
+            // Pass the selected category name to the view
+            $selectedCategory = $category;
         } else {
             // Fetch all items if no category is selected
             $foods = Food::all();
+            $selectedCategory = 'all';
         }
 
-        // Pass the items to the view
-        return view('welcome', compact('foods'));
+        return view('welcome', compact('foods', 'categories', 'selectedCategory'));
     }
 }

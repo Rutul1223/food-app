@@ -18,9 +18,9 @@ Route::get('/', function () {
     return view('layouts.loading');
 });
 
-Route::get('/welcome', function () {
-    return view('welcome', compact('foods'));
-})->name('welcome');
+// Route::get('/welcome', function () {
+//     return view('welcome', compact('foods'));
+// })->name('welcome');
 Route::get('/dashboard', function () {})->name('dashboard');
 
 Route::get('/main', function () {
