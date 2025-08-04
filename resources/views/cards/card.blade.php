@@ -181,14 +181,17 @@
                                 `<p class="special-offer">${item.price}</p>` : '';
                             showcaseContainer.append(`
                             <div class="swiper-slide">
-                                <div class="showcase-item">
-                                    <img src="${item.image}" alt="${item.name}">
-                                    <div class="showcase-content">
-                                        <h5>${item.name}</h5>
-                                        <p>${item.description}</p>
-                                        <p class="price">₹${parseFloat(item.price).toFixed(2)}</p>
+                                <a href="{{ route('food.show', '') }}/${item.id}">
+                                    <div class="showcase-item">
+                                        <img src="${item.image}" alt="${item.name}">
+                                        <div class="showcase-content">
+                                            <h5>${item.name}</h5>
+                                            <p>${item.description}</p>
+                                            <p class="price">₹${parseFloat(item.price).toFixed(2)}</p>
+                                            ${offerHtml}
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         `);
                         });
