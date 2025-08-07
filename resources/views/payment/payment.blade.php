@@ -10,11 +10,12 @@
 
     <style>
         body {
-            background-color: #303030;
+            background-color: #091E24;
+            font-family: "Baskervville", serif;
         }
 
         .checkout-form {
-            background-color: #EEEDEB;
+            background-color: #040D10;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -23,11 +24,11 @@
 
         .checkout-header {
             font-size: 2rem; /* Increase font size for better emphasis */
-            color: #a2a3a5; /* Slightly lighter shade of white */
+            color: #ffd28d; /* Slightly lighter shade of white */
             font-weight: bold;
             margin-top: 3rem; /* Adjust top margin */
             text-align: center;
-            font-family: sans-serif;
+            font-family: "Baskervville", serif;
             text-transform: uppercase; /* Make text all uppercase for style */
             letter-spacing: 2px; /* Add spacing between letters for a modern look */
             padding: 10px; /* Add padding for better spacing */
@@ -38,11 +39,11 @@
             border-radius: 20px;
         }
 
-        .total-price {
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 20px;
+        .list-group-item {
+            color: #FFD28D;
+        }
+        .form-label {
+            color: #FFD28D;
         }
 
         /* Styles for suggestions */
@@ -65,7 +66,17 @@
         .suggestion-item:hover {
             background-color: #f0f0f0;
         }
+        #profile-address-note {
+            color: #FFD28D !important;
+        }
+        .card-details {
+            color: #FFD28D !important;
+        }
 
+        #payment-form input {
+            background-color: #040D10;
+            color: #FFD28D;
+        }
         /* Style for Stripe card element */
         #card-element {
             background-color: #FFF;
@@ -80,6 +91,10 @@
             color: red;
             font-size: 14px;
             margin-top: 5px;
+        }
+        #submit-payment {
+            background-color: #FFD28D !important;
+            color: #040D10 !important;
         }
     </style>
 </head>
@@ -113,7 +128,7 @@
                             <div id="card-element"></div>
                             <div id="card-errors" role="alert"></div>
                         </div>
-                        <button type="submit" id="submit-payment" class="btn btn-sm btn-success">Buy Now</button>
+                        <button type="submit" id="submit-payment" class="btn btn-sm">Buy Now</button>
                         <a href="/" class="btn btn-sm btn-danger">Cancel</a>
                     </form>
                 </div>

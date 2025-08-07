@@ -54,7 +54,7 @@
             </div>
         </div>
         <div class="btn-div">
-            <a href="{{ route('payment.payment') }}" class="btn btn-warning text-dark">Proceed to Pay</a>
+            <a href="{{ route('payment.payment') }}" class="btn proceed-btn">Proceed to Pay</a>
             <a href="/" class="btn btn-light">Cancel</a>
         </div>
     </div>
