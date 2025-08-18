@@ -15,7 +15,7 @@
         <!-- Hero Section -->
         <div class="hero-section">
             <h1>Delivering Happiness, One Order at a Time</h1>
-            <p>Your trusted food delivery partner since 2014.</p>
+            <p>Your trusted food delivery partner since 2024.</p>
         </div>
 
         <!-- Mission Section -->

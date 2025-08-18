@@ -17,6 +17,7 @@
         }
 
         .footer h4 {
+            font-family: 'Baskervville', serif;
             font-size: 1.8rem;
             color: #FFD28D;
             margin-bottom: 1.5rem;
@@ -26,6 +27,7 @@
 
         .footer p,
         .footer address {
+            font-family: 'Baskervville', serif;
             font-size: 1.1rem;
             color: #cccccc;
             line-height: 1.6;
@@ -44,6 +46,7 @@
         }
 
         .footer-bottom p {
+            font-family: 'Baskervville', serif;
             font-size: 1rem;
             color: #cccccc;
             margin-bottom: 1rem;
@@ -61,6 +64,7 @@
         }
 
         .social-links a {
+            font-family: 'Baskervville', serif;
             color: #FFD28D;
             font-size: 1.5rem;
             text-decoration: none;
