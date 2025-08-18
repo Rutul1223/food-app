@@ -204,6 +204,7 @@
                     title: 'Are you sure you want to log out?',
                     icon: 'warning',
                     showCancelButton: true,
+                    background: '#000000',
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, log out'
