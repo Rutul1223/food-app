@@ -62,7 +62,7 @@
                         leftContainer.append(`
                             <div class="menu-item">
                                 <div>
-                                    <h5 style="color: #FFD28D; text-decoration: underline">${item.name}</h5>
+                                    <a href="{{ route('food.show', '') }}/${item.id}" style="color: #FFD28D;">${item.name}</a>
                                     <p>${item.description}</p>
                                 </div>
                                 <span class="price">₹${parseFloat(item.price).toFixed(2)}</span>
@@ -76,7 +76,7 @@
                         rightContainer.append(`
                             <div class="menu-item">
                                 <div>
-                                    <h5 style="color: #FFD28D; text-decoration: underline">${item.name}</h5>
+                                    <a href="{{ route('food.show', '') }}/${item.id}" style="color: #FFD28D;">${item.name}</a>
                                     <p>${item.description}</p>
                                 </div>
                                 <span class="price">₹${parseFloat(item.price).toFixed(2)}</span>
