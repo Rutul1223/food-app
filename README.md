@@ -1,66 +1,282 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Food App - Online Food Ordering System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A modern, full-featured online food ordering application built with Laravel 11. This application allows users to browse food items, add them to cart, place orders, and manage their favorites. It includes a comprehensive admin dashboard for managing food items, orders, and user interactions.
 
-## About Laravel
+## 🚀 Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### User Features
+- **User Authentication**
+  - Email/Password registration and login
+  - Google OAuth integration for quick sign-in
+  - User profile management
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+- **Food Browsing**
+  - Browse food items by categories
+  - Search functionality
+  - Detailed food item pages with descriptions
+  - Responsive gallery view with filtering
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- **Shopping Cart**
+  - Add items to cart
+  - Update quantities
+  - Remove items
+  - Real-time price calculation
 
-## Learning Laravel
+- **Favorites**
+  - Add/remove food items to favorites
+  - View favorite items in a dedicated page
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- **Order Management**
+  - Place orders
+  - View order history
+  - Track order status
+  - Download order details as CSV
+  - Order comments and feedback
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- **Payment Processing**
+  - Integrated payment system
+  - Payment success tracking
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### Admin Features
+- **Dashboard**
+  - Overview of foods, users, and orders
+  - Activity log tracking
+  - Pending orders count
+  - User management
 
-## Laravel Sponsors
+- **Food Management**
+  - Create, read, update, and delete food items
+  - Category management
+  - Image uploads
+  - Activity logging for changes
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Order Management**
+  - View all orders
+  - Update order status
+  - Order details view
+  - Email notifications on status updates
 
-### Premium Partners
+- **Comments & Feedback**
+  - View customer comments
+  - Reply to comments
+  - Mark comments as read/unread
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- **Analytics**
+  - Super admin analytics dashboard
+  - Activity log with filtering
 
-## Contributing
+## 🛠️ Technology Stack
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Backend**: Laravel 11
+- **Frontend**: Blade Templates, Bootstrap 5, JavaScript
+- **Database**: MySQL/PostgreSQL
+- **Authentication**: Laravel Breeze, Laravel Socialite
+- **Additional Packages**:
+  - Spatie Activity Log - For tracking admin activities
+  - Laravel Cashier - Payment processing
+  - Simple QR Code - QR code generation
+  - Laravel Reverb - Real-time features
 
-## Code of Conduct
+## 📋 Requirements
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- PHP >= 8.2
+- Composer
+- Node.js & NPM
+- MySQL/PostgreSQL database
+- Web server (Apache/Nginx)
 
-## Security Vulnerabilities
+## 🔧 Installation
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd food-app
+   ```
 
-## License
+2. **Install PHP dependencies**
+   ```bash
+   composer install
+   ```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+3. **Install Node dependencies**
+   ```bash
+   npm install
+   ```
+
+4. **Environment setup**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+
+5. **Configure your `.env` file**
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=127.0.0.1
+   DB_PORT=3306
+   DB_DATABASE=your_database_name
+   DB_USERNAME=your_username
+   DB_PASSWORD=your_password
+
+   # Google OAuth (optional)
+   GOOGLE_CLIENT_ID=your_google_client_id
+   GOOGLE_CLIENT_SECRET=your_google_client_secret
+   GOOGLE_REDIRECT_URI=http://localhost:8000/auth/google/callback
+   ```
+
+6. **Run migrations**
+   ```bash
+   php artisan migrate
+   ```
+
+7. **Create storage link**
+   ```bash
+   php artisan storage:link
+   ```
+
+8. **Build assets**
+   ```bash
+   npm run build
+   # or for development
+   npm run dev
+   ```
+
+9. **Start the development server**
+   ```bash
+   php artisan serve
+   ```
+
+## 📁 Project Structure
+
+```
+food-app/
+├── app/
+│   ├── Http/
+│   │   └── Controllers/
+│   │       ├── CartController.php
+│   │       ├── CommentController.php
+│   │       ├── FoodController.php
+│   │       ├── HomeController.php (Admin)
+│   │       ├── OrderController.php
+│   │       ├── ProfileController.php
+│   │       ├── SocialiteController.php
+│   │       └── SuperAdminController.php
+│   └── Models/
+│       ├── Food.php
+│       ├── Order.php
+│       ├── Cart.php
+│       ├── Favorite.php
+│       └── User.php
+├── resources/
+│   └── views/
+│       ├── admin/          # Admin dashboard views
+│       ├── cart/           # Cart views
+│       ├── food/           # Food item views
+│       ├── layouts/        # Layout components
+│       └── welcome.blade.php
+├── routes/
+│   └── web.php            # Application routes
+├── database/
+│   └── migrations/        # Database migrations
+└── public/
+    ├── css/              # Custom stylesheets
+    └── storage/          # Uploaded files
+```
+
+## 🔐 User Roles
+
+- **Regular User**: Can browse, add to cart, place orders, manage favorites
+- **Admin**: Can manage food items, orders, view activity logs, respond to comments
+- **Super Admin**: Additional analytics and system-wide access
+
+## 🎨 Key Pages
+
+- `/` - Landing page with loading animation
+- `/main` - Main homepage with food categories
+- `/welcome` - Food gallery with category filtering
+- `/food/{id}` - Individual food item details
+- `/cart/view` - Shopping cart
+- `/favorites` - User's favorite items
+- `/orders` - Order history
+- `/profile` - User profile management
+- `/admin/dashboard` - Admin dashboard
+- `/about-us` - About page
+- `/contact-us` - Contact page
+
+## 🚦 Usage
+
+### For Users
+1. Register/Login or use Google OAuth
+2. Browse food items by category
+3. Add items to cart or favorites
+4. Proceed to checkout
+5. Complete payment
+6. Track your orders
+
+### For Admins
+1. Login with admin credentials
+2. Access admin dashboard
+3. Manage food items (CRUD operations)
+4. View and update order statuses
+5. Respond to customer comments
+6. Monitor activity logs
+
+## 📝 API Endpoints
+
+- `GET /food-items` - Get all food items (JSON)
+- `GET /food-item-details` - Get food item details (JSON)
+- `POST /cart/add` - Add item to cart
+- `POST /cart/update-quantity/{id}` - Update cart quantity
+- `DELETE /remove-from-cart/{id}` - Remove from cart
+- `POST /favorite` - Toggle favorite status
+- `POST /process-order` - Process order
+- `GET /orders/{id}/download-csv` - Download order CSV
+
+## 🔒 Security Features
+
+- CSRF protection
+- Authentication middleware
+- Role-based access control
+- Input validation
+- SQL injection prevention (Eloquent ORM)
+- XSS protection (Blade templating)
+
+## 🧪 Testing
+
+```bash
+php artisan test
+```
+
+## 📦 Deployment
+
+1. Set `APP_ENV=production` in `.env`
+2. Set `APP_DEBUG=false` in `.env`
+3. Run `php artisan config:cache`
+4. Run `php artisan route:cache`
+5. Run `php artisan view:cache`
+6. Ensure storage is linked: `php artisan storage:link`
+7. Set proper file permissions for `storage/` and `bootstrap/cache/`
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## 📄 License
+
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## 👨‍💻 Author
+
+Developed as a comprehensive food ordering system with modern web technologies.
+
+## 🙏 Acknowledgments
+
+- Laravel Framework
+- Bootstrap
+- Font Awesome
+- GSAP for animations
+- SweetAlert2 for notifications
+
+---
+
+**Note**: Make sure to configure your database, storage, and environment variables before running the application.
