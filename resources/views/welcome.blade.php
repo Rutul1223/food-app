@@ -79,9 +79,8 @@
                                 </div>
                             </div>
                             <div class="gallery-card-body">
-                                <h3>{{ $food->name }}</h3>
-                                <div class="price">Rs. {{ $food->price }}</div>
-                                <div class="action-buttons">
+                                <div class="food-name-row">
+                                    <h3>{{ $food->name }}</h3>
                                     @auth
                                         <i data-food-id="{{ $food->id }}"
                                             class="fas fa-heart like-heart {{ $food->isFavorite ? 'favorite-added' : '' }}"
@@ -92,7 +91,9 @@
                                             <input type="hidden" name="food_id" value="{{ $food->id }}">
                                         </form>
                                     @endauth
-
+                                </div>
+                                <div class="price-row">
+                                    <div class="price">Rs. {{ $food->price }}</div>
                                     <form id="cartForm{{ $food->id }}" method="POST"
                                         data-url="{{ route('cart.add') }}">
                                         @csrf
