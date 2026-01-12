@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Favorites - Elegencia</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Favorites - Food</title>
     <link rel="icon" type="image/x-icon" href="/storage/images/foods/burger.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Roboto:wght@400&display=swap" rel="stylesheet">
@@ -96,6 +97,10 @@
             transition: transform 0.3s ease;
         }
 
+        .food-details-container .d-flex {
+            width: 100%;
+        }
+
         .food-details-container:hover {
             transform: scale(1.02);
         }
@@ -126,18 +131,24 @@
 
         .price {
             margin-top: 10px;
-            margin-left: 4rem;
+            margin: 10px 0 0 0;
             font-family: 'Baskervville', serif;
             font-size: 1.2rem;
             font-weight: 600;
-            color: #d4a373;
+            color: #FFD28D;
+        }
+
+        .food-info {
+            flex: 1;
         }
 
         .like-heart {
-            margin-left: 4rem;
-            font-size: 1.2rem;
+            font-size: 1.5rem;
             cursor: pointer;
             transition: transform 0.3s ease;
+            color: #ff0000 !important;
+            align-self: flex-start;
+            margin-top: 5px;
         }
 
         .like-heart:hover {
@@ -146,8 +157,10 @@
 
         .cont {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
+            justify-content: space-between;
             gap: 20px;
+            width: 100%;
         }
 
         @media (max-width: 768px) {
@@ -165,9 +178,14 @@
             }
 
             .cont {
-                flex-direction: column;
+                flex-direction: row;
                 align-items: flex-start;
-                gap: 10px;
+                gap: 15px;
+            }
+
+            .like-heart {
+                align-self: flex-start;
+                margin-top: 0;
             }
         }
     </style>
@@ -177,7 +195,7 @@
     @include('layouts.navbar')
     <section class="favorites-section">
         <div class="container">
-            <div class="subtitle">Your Favorites</div>
+            {{-- <div class="subtitle">Your Favorites</div> --}}
             <h2 class="title">Favorite Dishes</h2>
             <div class="row justify-content-center">
                 <div class="col-md-8">
@@ -201,10 +219,14 @@
                                 <div class="card-img-top text-center py-3">No Image</div>
                                 @endif
                             </div>
-                            <div class="cont ms-3">
-                                <h5 class="card-title" style="color: #FFD28D">{{ $favorite->food->name }}</h5>
-                                <p class="price">₹{{ number_format($favorite->food->price, 2) }}</p>
-                                <i class="fas fa-heart like-heart" style="color: red;">
+                            <div class="cont ms-3 flex-grow-1">
+                                <div class="food-info">
+                                    <a href="{{ route('food.show', $favorite->food->id) }}" style="text-decoration: none; color: #FFD28D;">
+                                        <h5 class="card-title" style="color: #FFD28D">{{ $favorite->food->name }}</h5>
+                                    </a>
+                                    <p class="price">₹{{ number_format($favorite->food->price, 2) }}</p>
+                                </div>
+                                <i class="fas fa-heart like-heart" onclick="removeFromFavorites({{ $favorite->food->id }})">
                                     <form id="favoriteForm{{ $favorite->food->id }}" action="{{ route('food.favorite') }}" method="POST" style="display: none;">
                                         @csrf
                                         <input type="hidden" name="food_id" value="{{ $favorite->food->id }}">
@@ -221,7 +243,43 @@
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script>
+        function removeFromFavorites(foodId) {
+            const form = document.getElementById(`favoriteForm${foodId}`);
+            const formData = new FormData(form);
+
+            fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        Swal.fire({
+                            toast: true,
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Removed from favorites!',
+                            showConfirmButton: false,
+                            timer: 2000,
+                            timerProgressBar: true,
+                        }).then(() => {
+                            // Reload the page to update the favorites list
+                            window.location.reload();
+                        });
+                    } else {
+                        console.error('Error:', data.error);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
+
         // GSAP Animations
         document.addEventListener('DOMContentLoaded', () => {
             // Animate subtitle and title
