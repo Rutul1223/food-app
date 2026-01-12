@@ -186,9 +186,9 @@
                                         <img src="${item.image}" alt="${item.name}">
                                         <div class="showcase-content">
                                             <h5>${item.name}</h5>
-                                            <p>${item.description}</p>
+                                            <!-- <p>${item.description}</p> -->
                                             <p class="price">₹${parseFloat(item.price).toFixed(2)}</p>
-                                            ${offerHtml}
+                                            <!-- ${offerHtml} -->
                                         </div>
                                     </div>
                                 </a>
