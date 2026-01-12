@@ -98,15 +98,35 @@ class FoodController extends Controller
     {
         $categories = Food::select('category')->distinct()->get();
 
-        if ($category) {
-            // Fetch items by the selected category
-            $foods = Food::where('category', $category)->get();
-            // Pass the selected category name to the view
-            $selectedCategory = $category;
+        // Determine selected category and fetch foods
+        if ($category && $category !== 'all') {
+            // Find the actual category name (preserve original casing) for case-insensitive matching
+            $actualCategory = $categories->first(function($cat) use ($category) {
+                return strtolower($cat->category) === strtolower($category);
+            });
+
+            if ($actualCategory) {
+                // Use the actual category name from database for query
+                $foods = Food::where('category', $actualCategory->category)->get();
+                $selectedCategory = $actualCategory->category;
+            } else {
+                // Category not found, return all foods
+                $foods = Food::all();
+                $selectedCategory = 'all';
+            }
         } else {
             // Fetch all items if no category is selected
             $foods = Food::all();
             $selectedCategory = 'all';
+        }
+
+        // Add favorite status for authenticated users
+        $user = Auth::user();
+        if ($user) {
+            $favoriteFoodIds = Favorite::where('user_id', $user->id)->pluck('food_id')->toArray();
+            foreach ($foods as $foodItem) {
+                $foodItem->isFavorite = in_array($foodItem->id, $favoriteFoodIds);
+            }
         }
 
         return view('welcome', compact('foods', 'categories', 'selectedCategory'));

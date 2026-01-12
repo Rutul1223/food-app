@@ -52,8 +52,8 @@
                 <select id="categoryFilter" class="form-select w-50 mx-auto" aria-label="Category filter">
                     <option value="all" {{ $selectedCategory === 'all' ? 'selected' : '' }}>All Categories</option>
                     @foreach ($categories as $category)
-                        <option value="{{ strtolower($category->category) }}"
-                            {{ strtolower($selectedCategory) === strtolower($category->category) ? 'selected' : '' }}>
+                        <option value="{{ $category->category }}"
+                            {{ $selectedCategory === $category->category ? 'selected' : '' }}>
                             {{ $category->category }}
                         </option>
                     @endforeach
@@ -63,7 +63,7 @@
             <!-- Gallery Grid -->
             <div class="row gallery-grid">
                 @foreach ($foods as $food)
-                    <div class="col-lg-4 col-md-6 gallery-item mb-4" data-category="{{ strtolower($food->category) }}">
+                    <div class="col-lg-4 col-md-6 gallery-item mb-4" data-category="{{ $food->category }}">
                         <div class="gallery-card">
                             <div class="gallery-img">
                                 <a href="{{ route('food.show', $food->id) }}">
@@ -116,49 +116,20 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // Get category from URL query parameter
-        function getQueryParam(param) {
-            const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(param);
-        }
-
-        // Filter functionality
+        // Category filter functionality - navigates to the proper route
         document.getElementById('categoryFilter').addEventListener('change', function() {
-            const filter = this.value.toLowerCase(); // Ensure lowercase comparison
-            const items = document.querySelectorAll('.gallery-item');
+            const selectedCategory = this.value;
 
-            items.forEach(item => {
-                const itemCategory = item.getAttribute('data-category').toLowerCase();
-                if (filter === 'all' || itemCategory === filter) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-
-            // Update URL
-            const url = new URL(window.location);
-            if (filter === 'all') {
-                url.searchParams.delete('category');
-            } else {
-                url.searchParams.set('category', filter);
+            // Build the URL based on the selected category
+            // Route pattern: /welcome/{category?}
+            let url = '/welcome';
+            if (selectedCategory && selectedCategory !== 'all') {
+                // Encode the category to handle special characters and spaces
+                url += '/' + encodeURIComponent(selectedCategory);
             }
-            window.history.pushState({}, '', url);
-        });
 
-        // Set initial filter based on URL parameter
-        document.addEventListener('DOMContentLoaded', function() {
-            const category = getQueryParam('category');
-            const select = document.getElementById('categoryFilter');
-
-            if (category) {
-                // Find if the category exists in options
-                const options = Array.from(select.options).map(opt => opt.value);
-                if (options.includes(category.toLowerCase())) {
-                    select.value = category.toLowerCase();
-                    select.dispatchEvent(new Event('change'));
-                }
-            }
+            // Navigate to the new URL
+            window.location.href = url;
         });
 
         function addToFavorites(foodId) {
@@ -195,27 +166,6 @@
                     console.error('Error:', error);
                 });
         }
-
-        // Set initial filter based on URL parameter
-        document.addEventListener('DOMContentLoaded', function() {
-            const category = getQueryParam('category');
-            const select = document.getElementById('categoryFilter');
-
-            if (category) {
-                // Find the option that matches the category (case-insensitive)
-                const options = Array.from(select.options);
-                const matchingOption = options.find(opt =>
-                    opt.value.toLowerCase() === category.toLowerCase()
-                );
-
-                if (matchingOption) {
-                    select.value = matchingOption.value;
-                    // Trigger the change event to filter the items
-                    const event = new Event('change');
-                    select.dispatchEvent(event);
-                }
-            }
-        });
     </script>
 </body>
 </html>
