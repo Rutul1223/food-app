@@ -171,7 +171,7 @@
         <div class="row">
             <div class="col-12 footer-bottom">
                 <hr>
-                <p><i class="fas fa-copyright"></i> 2025 Created By <span class="font-semibold">Rutul Prajapati</span>.
+                <p><i class="fas fa-copyright"></i> 2024 Created By <span class="font-semibold">Rutul Prajapati</span>.
                     All rights reserved.</p>
                 <div class="social-links">
                     <a href="https://www.instagram.com/rutul_1223" aria-label="Instagram"><i
