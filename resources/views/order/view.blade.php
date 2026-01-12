@@ -14,7 +14,7 @@
         rel="stylesheet">
     <style>
         body {
-            background-color: #1a1a1a !important;
+            background-color: #091E24 !important;
             color: #FFD28D;
             font-family: 'Poppins', sans-serif;
             margin: 0;
@@ -25,9 +25,9 @@
             max-width: 1200px;
             margin: 1rem auto;
             padding: 15px;
-            background-color: #222222;
+            background-color: #040D10;
             border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .container h2 {
@@ -39,7 +39,7 @@
         }
 
         .card {
-            background-color: #2b2b2b !important;
+            background-color: #040D10 !important;
             border: 1px solid #FFD28D !important;
             border-radius: 10px;
             margin-bottom: 1.5rem;
