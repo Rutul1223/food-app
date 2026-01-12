@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Cart - Elegencia</title>
+    <title>Cart - Food</title>
     <link rel="icon" type="image/x-icon" href="/storage/images/foods/burger.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&family=Roboto:wght@400&display=swap" rel="stylesheet">
@@ -100,51 +100,88 @@
         }
 
         .food-details-container:hover {
-            transform: scale(1.02);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
         }
 
-        .food-details-container img {
-            width: 100px;
-            height: 100px;
+        .cart-item-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            width: 100%;
+        }
+
+        .cart-item-image {
+            flex-shrink: 0;
+        }
+
+        .cart-item-image img {
+            width: 120px;
+            height: 120px;
             object-fit: cover;
             border-radius: 10px;
             transition: transform 0.3s ease;
         }
 
-        .food-details-container:hover img {
+        .food-details-container:hover .cart-item-image img {
             transform: scale(1.05);
+        }
+
+        .cart-item-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .card-title {
             font-family: 'Baskervville', serif;
             font-size: 1.5rem;
-            color: #FFD28D;
+            color: #FFD28D !important;
             margin: 0;
         }
 
+        .price-section {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
         .price {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 600;
-            color: #d4a373;
+            color: #FFD28D;
+            font-family: 'Baskervville', serif;
         }
 
         .original-price {
             font-size: 1rem;
-            color: #ccc;
+            color: #888;
             text-decoration: line-through;
-            margin-right: 5px;
-        }
-
-        .cont {
-            display: flex;
-            align-items: center;
-            gap: 20px;
         }
 
         .quantity-controls {
             display: flex;
             align-items: center;
             gap: 10px;
+            margin-top: 5px;
+        }
+
+        .quantity-input {
+            width: 50px;
+            height: 35px;
+            text-align: center;
+            border-radius: 5px;
+            background-color: #040D10;
+            color: #FFD28D;
+            border: 2px solid #FFD28D;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .quantity-input:focus {
+            outline: none;
+            border-color: #FFD28D;
         }
 
         .btn1 {
@@ -152,51 +189,71 @@
             color: #FFD28D;
             border: 2px solid #FFD28D;
             border-radius: 50%;
-            width: 30px;
-            height: 30px;
+            width: 35px;
+            height: 35px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1rem;
-            transition: background-color 0.3s, color 0.3s;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            padding: 0;
         }
 
         .btn1:hover {
             background-color: #FFD28D;
             color: #091E24;
+            transform: scale(1.1);
+        }
+
+        .btn1:active {
+            transform: scale(0.95);
+        }
+
+        .cart-item-actions {
+            flex-shrink: 0;
+            align-self: flex-start;
         }
 
         .btn-danger {
             background-color: transparent;
-            color: #FFD28D;
-            border: 2px solid #FFD28D;
+            color: #ff6b6b;
+            border: 2px solid #ff6b6b;
             border-radius: 5px;
-            font-size: 1rem;
-            transition: background-color 0.3s, color 0.3s;
+            font-size: 0.9rem;
+            padding: 8px 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
         }
 
         .btn-danger:hover {
-            background-color: #FFD28D;
-            color: #091E24;
+            background-color: #ff6b6b;
+            color: #fff;
+            transform: translateY(-2px);
         }
 
         .btn-checkout {
-            background-color: transparent;
-            color: #FFD28D;
-            border: 2px solid #FFD28D;
+            background-color: #FFD28D !important;
+            color: #040D10 !important;
+            border: 2px solid #FFD28D !important;
             border-radius: 5px;
-            font-size: 1rem;
-            font-weight: bold;
-            transition: background-color 0.3s, color 0.3s;
+            font-size: 1rem !important;
+            font-weight: bold !important;
+            padding: 10px 25px !important;
+            transition: all 0.3s ease !important;
         }
 
         .btn-checkout:hover {
-            background-color: #FFD28D;
-            color: #091E24;
+            background-color: #d4a373 !important;
+            border-color: #d4a373 !important;
+            color: #040D10 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255, 210, 141, 0.3) !important;
         }
 
         .total-price-container {
-            background-color: #040D10;
+            background-color: #040D10 !important;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
@@ -214,29 +271,60 @@
                 font-size: 36px;
             }
 
-            .food-details-container img {
-                width: 80px;
-                height: 80px;
+            .cart-item-wrapper {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .cart-item-image img {
+                width: 100px;
+                height: 100px;
+            }
+
+            .cart-item-info {
+                width: 100%;
             }
 
             .card-title {
                 font-size: 1.2rem;
             }
 
-            .cont {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 10px;
+            .cart-item-actions {
+                align-self: flex-end;
+                width: 100%;
+            }
+
+            .btn-danger {
+                width: 100%;
             }
 
             .quantity-controls {
-                gap: 5px;
+                gap: 8px;
             }
 
             .btn1 {
-                width: 25px;
-                height: 25px;
-                font-size: 0.8rem;
+                width: 32px;
+                height: 32px;
+                font-size: 1rem;
+            }
+
+            .quantity-input {
+                width: 45px;
+                height: 32px;
+            }
+
+            .total-price-container {
+                padding: 15px;
+            }
+
+            .total-price {
+                font-size: 1.2rem;
+            }
+
+            .btn-checkout {
+                padding: 8px 20px;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -259,27 +347,31 @@
                     @else
                         @foreach ($carts as $cart)
                             <div class="food-details-container">
-                                <div class="d-flex align-items-center">
-                                    <div>
+                                <div class="cart-item-wrapper">
+                                    <div class="cart-item-image">
                                         <img src="{{ asset('storage/' . $cart->food->image) }}" alt="{{ $cart->food->name }}">
                                     </div>
-                                    <div class="cont ms-3">
-                                        <h2 class="card-title" style="color: #FFD28D">{{ $cart->food->name }}</h2>
-                                        <div>
+                                    <div class="cart-item-info">
+                                        <h2 class="card-title">{{ $cart->food->name }}</h2>
+                                        <div class="price-section">
                                             <span class="original-price">₹{{ number_format($cart->food->price + 50, 2) }}</span>
-                                            <span class="price">₹<span id="price-{{ $cart->id }}" data-original-price="{{ $cart->food->price }}">{{ number_format($cart->food->price, 2) }}</span></span>
+                                            <span class="price">₹<span id="price-{{ $cart->id }}" data-original-price="{{ $cart->food->price }}">{{ number_format($cart->food->price * $cart->quantity, 2) }}</span></span>
                                         </div>
                                         <div class="quantity-controls">
-                                            <button type="button" class="btn1 btn-sm" onclick="decreaseQuantity({{ $cart->id }})">-</button>
-                                            <input type="text" name="quantity" id="quantity-{{ $cart->id }}" value="1" class="form-control d-inline" style="width: 40px; height: 33px; text-align: center; border-radius: 50%; background-color: #040D10; color: #FFD28D; border: 2px solid #FFD28D;" readonly>
-                                            <button type="button" class="btn1 btn-sm" onclick="increaseQuantity({{ $cart->id }})">+</button>
+                                            <button type="button" class="btn1" onclick="decreaseQuantity({{ $cart->id }})">-</button>
+                                            <input type="text" name="quantity" id="quantity-{{ $cart->id }}" value="{{ $cart->quantity }}" class="quantity-input" readonly>
+                                            <button type="button" class="btn1" onclick="increaseQuantity({{ $cart->id }})">+</button>
                                         </div>
                                     </div>
-                                    <form id="removeCartForm{{ $cart->id }}" data-url="{{ route('remove-from-cart', ['id' => $cart->id]) }}" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-sm btn-danger">Remove</button>
-                                    </form>
+                                    <div class="cart-item-actions">
+                                        <form id="removeCartForm{{ $cart->id }}" data-url="{{ route('remove-from-cart', ['id' => $cart->id]) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                <i class="fas fa-trash"></i> Remove
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         @endforeach
@@ -292,7 +384,7 @@
                         <div class="total-price-container">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="total-price">Total Price: ₹<span id="total-price">0.00</span></div>
-                                <a href="{{ route('cart.checkout') }}" class="btn btn-sm btn-checkout" style="background-color: #FFD28D; color: #040D10;">Check out</a>
+                                <a href="{{ route('cart.checkout') }}" class="btn btn-checkout">Check out</a>
                             </div>
                         </div>
                     </div>
@@ -367,7 +459,8 @@
         }
 
         function updatePrice(cartId) {
-            let quantity = parseInt(document.getElementById('quantity-' + cartId).value);
+            let quantityElement = document.getElementById('quantity-' + cartId);
+            let quantity = parseInt(quantityElement.value);
             let price = parseFloat(document.getElementById('price-' + cartId).getAttribute('data-original-price'));
             let newPrice = (price * quantity).toFixed(2);
             document.getElementById('price-' + cartId).innerText = newPrice;
